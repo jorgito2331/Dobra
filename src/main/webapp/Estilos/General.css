@@ -1,0 +1,63 @@
+/*
+    El estilo principal es para las pantallas de pc
+*/
+/* 
+    Created on : 29-jul-2018, 2:24:23
+    Author     : Jorge-PC
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+:root{
+    --main-principal: #00AA72;
+    --main-error: #D94F4F;
+    --main-exito: #4BB867;
+    --main-alerta: #F0B849;
+    --main-info: #0087BE;
+}
+
+*{
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+.pantallaCarga{
+    
+}
+
+.pantallaCarga .esconder{
+    
+}
+
+div, form, .menu {    
+    display: flex;
+}
+
+
+
+/* Tablet */
+@media screen and (max-width: 720px) and (max-height: 1024px){
+
+}
+
+/* Celular */
+@media screen and (max-width: 420px) and (max-height: 820px){
+    
+}
