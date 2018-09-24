@@ -5,7 +5,12 @@
     Created on : 29-jul-2018, 2:24:23
     Author     : Jorge-PC
 */
-
+@import "Bread.css";
+@import "Carga.css";
+@import "Formulario.css";
+@import "General.css";
+@import "Menu.css";
+@import "Modal.css";
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 ::-webkit-scrollbar {

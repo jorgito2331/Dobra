@@ -12,6 +12,7 @@ package edu.polijic.garantizar.obraspublicas.garantizar.DTOs;
 public class ObraDTO {
 
     String nombre;
+    String contratista;
     DireccionDTO direccion;
     String tipo;
     String valor;
@@ -91,5 +92,13 @@ public class ObraDTO {
 
     public void setDesfaces(String desfaces) {
         this.desfaces = desfaces;
+    }
+    
+    public String getContratista() {
+        return contratista;
+    }
+
+    public void setContratista(String contratista) {
+        this.contratista = contratista;
     }
 }
