@@ -24,14 +24,6 @@
     background: #555; 
 }
 
-:root{
-    --main-principal: #00AA72;
-    --main-error: #D94F4F;
-    --main-exito: #4BB867;
-    --main-alerta: #F0B849;
-    --main-info: #0087BE;
-}
-
 *{
     font-family: 'Roboto', sans-serif;
     margin: 0;
