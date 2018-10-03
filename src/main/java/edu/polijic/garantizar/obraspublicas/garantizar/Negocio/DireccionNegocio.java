@@ -15,4 +15,5 @@ public interface DireccionNegocio {
     public void crearDireccion(DireccionDTO direccion);
     public DireccionDTO obtenerDireccion(DireccionDTO direccion); 
     public void actualizarDireccion(DireccionDTO direccion);
+    public String obtenerId();
 }

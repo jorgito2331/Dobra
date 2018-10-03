@@ -5,7 +5,12 @@
     Created on : 29-jul-2018, 2:24:23
     Author     : Jorge-PC
 */
-
+@import "Bread.css";
+@import "Carga.css";
+@import "Formulario.css";
+@import "General.css";
+@import "Menu.css";
+@import "Modal.css";
 @import url('https://fonts.googleapis.com/css?family=Roboto');
 
 ::-webkit-scrollbar {
@@ -24,40 +29,26 @@
     background: #555; 
 }
 
-:root{
-    --main-principal: #00AA72;
-    --main-error: #D94F4F;
-    --main-exito: #4BB867;
-    --main-alerta: #F0B849;
-    --main-info: #0087BE;
-}
-
 *{
     font-family: 'Roboto', sans-serif;
+    font-size: medium;
     margin: 0;
     padding: 0;
+    transition: 0.3s;
 }
 
-.pantallaCarga{
-    
+body{
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
 }
 
-.pantallaCarga .esconder{
-    
-}
-
-div, form, .menu {    
+div, form {    
     display: flex;
 }
 
-
-
-/* Tablet */
-@media screen and (max-width: 720px) and (max-height: 1024px){
-
-}
-
-/* Celular */
-@media screen and (max-width: 420px) and (max-height: 820px){
-    
+.contenedor{
+    flex-direction: column;
+    width: 10vw;
+    height: 100vh;
 }

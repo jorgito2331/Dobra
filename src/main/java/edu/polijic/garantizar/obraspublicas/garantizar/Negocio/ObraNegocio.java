@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public interface ObraNegocio {
     public void crearObra(ObraDTO obra);
     public ObraDTO obtenerObra(ObraDTO obra);
-    public ArrayList<ObraDTO> obtenerObras(ObraDTO obra); 
+    public ArrayList<ObraDTO> obtenerObras(String parametro); 
     public void actualizarObra(ObraDTO obra);
     public void eliminarObra(ObraDTO obra);
     public void eliminarObras(ObraDTO obra);

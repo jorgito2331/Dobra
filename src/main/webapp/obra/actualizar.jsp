@@ -9,7 +9,11 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Actualizar obra</title>
+        <link href="../Estilos/Menu.css" rel="stylesheet">
+        <link href="../Estilos/Bread.css" rel="stylesheet">
+        <link href="../Estilos/General.css" rel="stylesheet">
+        <link href="../Estilos/Formulario.css" rel="stylesheet">
     </head>
     <body>
         <h1>Hello World!</h1>

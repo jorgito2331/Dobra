@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-sep-2018, 22:39:42
+    Author     : Jorge-PC
+*/
+.modal{
+    width: 100vw;
+    height: 100vh;
+    position: absolute;
+    z-index: 10;
+    background: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-items: center;
+}
+
+.direccion{
+    width: 70vw;
+    height: 65vh;
+    background: white;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border-radius: 0.2vw;
+}
+
+#direccionModal{
+    display: none;
+}
+
+#direccionModal.mostrar{
+    display: flex;
+}

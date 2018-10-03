@@ -5,19 +5,50 @@
  */
 package edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion;
 
+import com.mysql.jdbc.Connection;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ContratistaDTO;
+import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.DireccionDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ContratistaNegocio;
+import edu.polijic.garantizar.obraspublicas.garantizar.Persistencia.ConexionPersistencia;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Jorge-PC
  */
-public class ContratistaImplementacion implements ContratistaNegocio{
+public class ContratistaImplementacion implements ContratistaNegocio {
+
+    ConexionPersistencia conexion;
+    Connection connection;
+    ResultSet resultSet;
+    PreparedStatement statement;
+
+    public ContratistaImplementacion() throws SQLException, ClassNotFoundException {
+        conexion = new ConexionPersistencia();
+        connection = conexion.obtener();
+        resultSet = null;
+        statement = null;
+    }
 
     @Override
     public void crearContratista(ContratistaDTO contratista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            statement = connection.serverPrepareStatement("INSERT INTO `contratista` (`NOMBRE`, `CORREO`, `TIPO_ID`, `IDENTIFICACION`, `TELEFONO`, `DIRECCION`) VALUES (?, ?, ?, ?, ?, ?)");
+            statement.setString(1, contratista.getNombre());
+            statement.setString(2, contratista.getCorreo());
+            statement.setInt(3, Integer.parseInt(contratista.getTipoID()));
+            statement.setString(4, contratista.getIdentificacion());
+            statement.setString(5, contratista.getTelefono());
+            statement.setInt(6, Integer.parseInt(contratista.getDireccion().getId()));
+            statement.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -26,8 +57,36 @@ public class ContratistaImplementacion implements ContratistaNegocio{
     }
 
     @Override
-    public ArrayList<ContratistaDTO> obtenerContratistas(ContratistaDTO contratista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public ArrayList<ContratistaDTO> obtenerContratistas(String criterio) {
+        ArrayList<ContratistaDTO> contratistas = new ArrayList<>();
+        ContratistaDTO cdto;
+        String sql = "";
+        try {
+            if (criterio.equals("3")) {
+                sql = "SELECT cn.NOMBRE, cn.CORREO,ti.DESCRIPCION, cn.IDENTIFICACION, cn.TELEFONO, dir.DIR_COMPLETA FROM contratista cn INNER JOIN tipo_id ti ON cn.TIPO_ID = ti.ID INNER JOIN direccion dir ON cn.DIRECCION = dir.ID";                
+            } else {
+                sql = "SELECT cn.NOMBRE, cn.CORREO,ti.DESCRIPCION, cn.IDENTIFICACION, cn.TELEFONO, dir.DIR_COMPLETA FROM contratista cn INNER JOIN tipo_id ti ON cn.TIPO_ID = ti.ID INNER JOIN direccion dir ON cn.DIRECCION = dir.ID WHERE cn.ESTADO = " + criterio;
+            }
+            
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            resultSet.first();
+            do {
+                cdto = new ContratistaDTO();
+                cdto.setNombre(resultSet.getString(1));
+                cdto.setCorreo(resultSet.getString(2));
+                cdto.setTipoID(resultSet.getString(3));
+                cdto.setIdentificacion(resultSet.getString(4));
+                cdto.setTelefono(resultSet.getString(5));
+                DireccionDTO dTO = new DireccionDTO();
+                dTO.setCompleta(resultSet.getString(6));
+                cdto.setDireccion(dTO);
+                contratistas.add(cdto);
+            } while (resultSet.next());
+        } catch (SQLException ex) {
+            Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return contratistas;
     }
 
     @Override
@@ -44,5 +103,5 @@ public class ContratistaImplementacion implements ContratistaNegocio{
     public void eliminarContratistas(ContratistaDTO contratista) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+
 }

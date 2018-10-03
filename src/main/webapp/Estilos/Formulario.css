@@ -1,0 +1,81 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-sep-2018, 22:23:43
+    Author     : Jorge-PC
+*/
+.formulario{
+    flex-direction: row;
+    flex-flow: wrap;
+    width: 90vw;
+    height: 93vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.campo{
+    box-sizing: border-box;
+    flex-direction: column;
+    width: 20vw;
+    height: 10vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.campo label{
+    height: 4vh;
+    width: 15vw;
+}
+
+.campo input{
+    height: 6vh;
+    width: 15vw;
+    color: black;
+    padding-left: 0.5vw;
+}
+
+.campo select{
+    height: 7vh;
+    width: 15vw;    
+    color: black;
+}
+
+#nombre{
+    text-transform: uppercase;
+}
+
+option{
+    color: black;
+}
+
+.control{
+    width: 70vw;
+    height: 7vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.control button{
+    border: none;
+    height: 7vh;
+    width: 15vw;
+    margin: 0 1vw;
+    color: white;
+    border: 1px solid;
+}
+
+.guardar{    
+    background: #4BB867;
+}
+
+.cancelar{    
+    background: tomato;
+}
+
+.control button:hover{
+    background: white;
+    color: black;
+}

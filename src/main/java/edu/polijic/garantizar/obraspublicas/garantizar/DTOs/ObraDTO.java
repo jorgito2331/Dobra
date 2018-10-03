@@ -12,14 +12,16 @@ package edu.polijic.garantizar.obraspublicas.garantizar.DTOs;
 public class ObraDTO {
 
     String nombre;
+    String contratista;
     DireccionDTO direccion;
     String tipo;
     String valor;
     String fechaInicio;
     String fechaFin;
     String tiempoDuracion;
-    boolean estado;
+    String estado;
     String desfaces;
+    String argumentos;
 
     public String getNombre() {
         return nombre;
@@ -77,11 +79,11 @@ public class ObraDTO {
         this.tiempoDuracion = tiempoDuracion;
     }
 
-    public boolean isEstado() {
+    public String getEstado() {
         return estado;
     }
 
-    public void setEstado(boolean estado) {
+    public void setEstado(String estado) {
         this.estado = estado;
     }
 
@@ -92,4 +94,21 @@ public class ObraDTO {
     public void setDesfaces(String desfaces) {
         this.desfaces = desfaces;
     }
+    
+    public String getContratista() {
+        return contratista;
+    }
+
+    public void setContratista(String contratista) {
+        this.contratista = contratista;
+    }
+
+    public String getArgumentos() {
+        return argumentos;
+    }
+
+    public void setArgumentos(String argumentos) {
+        this.argumentos = argumentos;
+    }
+    
 }

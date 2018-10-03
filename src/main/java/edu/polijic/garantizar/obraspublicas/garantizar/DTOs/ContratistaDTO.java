@@ -16,6 +16,7 @@ public class ContratistaDTO {
     DireccionDTO direccion;
     String telefono;
     boolean estado;
+    String correo;
 
     public String getNombre() {
         return nombre;
@@ -63,5 +64,13 @@ public class ContratistaDTO {
 
     public void setEstado(boolean estado) {
         this.estado = estado;
+    }
+
+    public String getCorreo() {
+        return correo;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
     }
 }

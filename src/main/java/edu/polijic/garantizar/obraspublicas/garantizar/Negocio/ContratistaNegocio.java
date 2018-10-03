@@ -15,7 +15,7 @@ import java.util.ArrayList;
 public interface ContratistaNegocio {
     public void crearContratista(ContratistaDTO contratista);
     public ContratistaDTO obtenerContratista(ContratistaDTO contratista);
-    public ArrayList<ContratistaDTO> obtenerContratistas(ContratistaDTO contratista); 
+    public ArrayList<ContratistaDTO> obtenerContratistas(String criterio); 
     public void actualizarContratista(ContratistaDTO contratista);
     public void eliminarContratista(ContratistaDTO contratista);
     public void eliminarContratistas(ContratistaDTO contratista);

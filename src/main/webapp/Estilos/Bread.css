@@ -1,0 +1,31 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 23-sep-2018, 22:21:42
+    Author     : Jorge-PC
+*/
+.bread a{
+    display: flex;
+    height: 7vh;
+    width: 12vw;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; 
+    color: white;
+}
+
+.bread a:hover{       
+    background-color: white;
+    color: #231f20;
+}
+
+.bread{
+    height: 7vh;
+    width: 90vw;
+    display: flex;
+    flex-direction: row;    
+    background-color: #00aa72;
+}
