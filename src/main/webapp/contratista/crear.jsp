@@ -80,7 +80,7 @@
                 </div>
                 <div class="campo">
                     <label>Dirección</label>
-                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa">
+                    <input id="Dircompleta" onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa">
                 </div>
                 <div class="control">
                     <button type="submit" class="cancelar" id="cancelarBtn" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
@@ -204,7 +204,7 @@
                             direccion = direccion + $('#segNum').val() + " ";
                             direccion = direccion + $('#sufSegNum').val() + " ";
                             $('#GuardarForm').val(direccion);
-
+                            $("#Dircompleta").val(direccion)
                         }
         </script>
     </body>
