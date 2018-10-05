@@ -58,13 +58,21 @@ option{
     align-items: center;
 }
 
-.control button{
+.control button, .control a{
     border: none;
     height: 7vh;
     width: 15vw;
     margin: 0 1vw;
     color: white;
     border: 1px solid;
+}
+
+.control a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #47525E;
+    text-decoration: none;
 }
 
 .guardar{    
@@ -75,7 +83,8 @@ option{
     background: tomato;
 }
 
-.control button:hover{
+.control button:hover, .control a:hover{
     background: white;
     color: black;
+    cursor: pointer;
 }

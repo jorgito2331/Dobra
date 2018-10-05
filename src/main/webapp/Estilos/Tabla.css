@@ -14,7 +14,6 @@ and open the template in the editor.
 
 .tabla, .tabla div{    
     display: block;
-    padding: 1vh 1vw;
 }
 
 #table_id_filter{

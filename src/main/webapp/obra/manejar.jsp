@@ -44,7 +44,6 @@
         <div class="contenedor">
             <div class="bread">
                 <a href="manejar.jsp">Contratista &#8250;</a>
-                <a href="crear.jsp">Crear Contratista &#8250;</a>
             </div>
             <form class="formulario" action="buscar.jsp" method="POST">              
                 <div class="campo">
@@ -62,7 +61,7 @@
                     <input name="nombre" id="nombre">
                 </div>
                 <div class="control">
-                    <button type="submit" class="cancelar" id="cancelarBtn" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
+                    <a id="cancelarBtn" href="crear.jsp">Crear</a>
                     <button type="submit" class="guardar" id="GuardarForm" name="guarManejar" value="guardar">Guardar</button>
                 </div>
             </form>
