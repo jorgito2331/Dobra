@@ -45,7 +45,7 @@
         </div>
         <div class="contenedor">
             <div class="bread">
-                <a href="datos-basicos.jsp">Crear Obra &#8250;</a>
+                <a href="manejar.jsp">Obra &#8250;</a>
             </div>
             <div class="tabla">
                 <table id="table_id" class="display">

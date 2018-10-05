@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Crear contratista</title>
+        <title>Contratista</title>
         <link href="../Estilos/Menu.css" rel="stylesheet">
         <link href="../Estilos/Bread.css" rel="stylesheet">
         <link href="../Estilos/General.css" rel="stylesheet">
@@ -62,7 +62,7 @@
                 </div>
                 <div class="control">
                     <a id="cancelarBtn" href="crear.jsp">Crear</a>
-                    <button type="submit" class="guardar" id="GuardarForm" name="guarManejar" value="guardar">Guardar</button>
+                    <button type="submit" class="guardar" id="GuardarForm" name="guarManejar" value="guardar">Buscar</button>
                 </div>
             </form>
         </div>

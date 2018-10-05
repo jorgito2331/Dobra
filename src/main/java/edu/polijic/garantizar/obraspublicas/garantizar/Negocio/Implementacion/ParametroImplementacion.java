@@ -57,8 +57,20 @@ public class ParametroImplementacion implements ParametroNegocio {
                 Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
             }
             return par;
+        }else{
+            String sql = "SELECT par.ARGUMENTO FROM parametro par WHERE par.ID IN (4)";
+            String datos = "";
+            ParametroDTO par = new ParametroDTO();
+            try {
+                statement = connection.prepareStatement(sql);
+                resultSet = statement.executeQuery();
+                resultSet.first();
+                par.setNombre(resultSet.getString(1));
+            } catch (SQLException ex) {
+                Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            return par;
         }
-        return null;
     }
 
     @Override

@@ -60,7 +60,7 @@
                     <input name="nombre" id="nombre">
                 </div>
                 <div class="control">
-                    <button type="submit" class="cancelar" id="cancelarBtn" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
+                    <a id="cancelarBtn" href="crear.jsp">Crear</a>
                     <button type="submit" class="guardar" id="GuardarForm" name="guarManejar" value="guardar">Buscar</button>
                 </div>
             </form>

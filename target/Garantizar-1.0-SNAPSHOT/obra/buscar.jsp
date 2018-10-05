@@ -18,7 +18,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Buscar contratista</title>        
+        <title>Buscar Obra</title>        
         <link href="../Estilos/Menu.css" rel="stylesheet">
         <link href="../Estilos/Bread.css" rel="stylesheet">
         <link href="../Estilos/General.css" rel="stylesheet">
@@ -73,7 +73,7 @@
         </div>
         <div class="contenedor">
             <div class="bread">
-                <a href="datos-basicos.jsp">Crear Obra &#8250;</a>
+                <a href="manejar.jsp">Obra &#8250;</a>
             </div>
             <div class="tabla">
                 <table id="table_id" class="display">

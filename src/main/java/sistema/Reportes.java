@@ -6,10 +6,14 @@
 package sistema;
 
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ObraDTO;
+import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ParametroImplementacion;
+import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ParametroNegocio;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.BorderStyle;
 import org.apache.poi.ss.usermodel.Cell;
@@ -25,7 +29,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  *
  * @author Jorge-PC
  */
-public class Reportes extends Thread{
+public class Reportes extends Thread {
 
     private static final String[] columns = {"NOMBRE_OBRA", "CONTRATISTA", "TIPO", "DIRECCION", "FECHA_INICIO", "FECHA_FIN", "VALOR", "ESTADO", "DESFASES"};
     private String respuesta = "";
@@ -34,7 +38,7 @@ public class Reportes extends Thread{
     public Reportes(ArrayList<ObraDTO> obras) {
         this.obras = obras;
     }
-    
+
     @Override
     public void run() {
         try (Workbook workbook = new XSSFWorkbook()) {
@@ -59,7 +63,7 @@ public class Reportes extends Thread{
             borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             borderStyle.setBorderTop(BorderStyle.THIN);
             borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            for(int i = 0; i < columns.length; i++) {
+            for (int i = 0; i < columns.length; i++) {
                 Cell cell = headerRow.createCell(i);
                 cell.setCellValue(columns[i]);
                 cell.setCellStyle(backgroundStyle);
@@ -68,47 +72,48 @@ public class Reportes extends Thread{
             dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
             // Create Other rows and cells with employees data
             int rowNum = 1;
-            for(ObraDTO obra: obras) {
+            for (ObraDTO obra : obras) {
                 Row row = sheet.createRow(rowNum++);
-                
+
                 row.createCell(0)
                         .setCellValue(obra.getNombre());
-                
+
                 row.createCell(1)
                         .setCellValue(obra.getContratista());
-                
+
                 row.createCell(2)
                         .setCellValue(obra.getTipo());
-                
+
                 row.createCell(3)
                         .setCellValue(obra.getDireccion().getCompleta());
-                
+
                 Cell dateOfBirthCell = row.createCell(4);
                 dateOfBirthCell.setCellValue(obra.getFechaInicio());
                 dateOfBirthCell.setCellStyle(dateCellStyle);
-                
+
                 Cell dateOfBirthCell1 = row.createCell(5);
                 dateOfBirthCell1.setCellValue(obra.getFechaFin());
                 dateOfBirthCell1.setCellStyle(dateCellStyle);
-                
+
                 row.createCell(6)
                         .setCellValue(obra.getValor());
-                
+
                 row.createCell(7)
                         .setCellValue(obra.getEstado());
-                
+
                 row.createCell(8)
                         .setCellValue(obra.getDesfaces());
             }   // Resize all columns to fit the content size
-            for(int i = 0; i < columns.length; i++) {
+            for (int i = 0; i < columns.length; i++) {
                 sheet.autoSizeColumn(i);
             }   // Write the output to a file
-            try (FileOutputStream fileOut = new FileOutputStream("C:/Users/Jorge-PC/Desktop/bd_Service_Desl/poi-generated-file.xlsx", false)) {
-                System.out.println("generado");
+            ParametroNegocio parametroNegocio = new ParametroImplementacion();
+            SimpleDateFormat ft = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+            try (FileOutputStream fileOut = new FileOutputStream(parametroNegocio.obtenerParametro("4").getNombre() + "Reporte" + ft.format(new Date()) + ".xlsx", false)) {
                 workbook.write(fileOut);
                 // Closing the workbook
             }
-        }catch(Exception ex){
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
         respuesta = null;
