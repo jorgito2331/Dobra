@@ -24,19 +24,19 @@
     </head>
     <body>
         <div class="menu">
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../obra/manejar.jsp')">
                 <div class="image" id="obras"></div>
                 <label>Obras</label>
             </div>
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../contratista/manejar.jsp')">
                 <div class="image" id="contratistas"></div>
                 <label>Contratistas</label>
             </div>
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../funcionario/manejar.jsp')">
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
             </div>

@@ -29,19 +29,19 @@
             tipoId = negocio.obtenerParametros("2");
         %>
         <div class="menu">
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../obra/manejar.jsp')">
                 <div class="image" id="obras"></div>
                 <label>Obras</label>
             </div>
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../contratista/manejar.jsp')">
                 <div class="image" id="contratistas"></div>
                 <label>Contratistas</label>
             </div>
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../funcionario/manejar.jsp')">
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
             </div>
@@ -80,7 +80,7 @@
                 </div>
                 <div class="campo">
                     <label>Dirección</label>
-                    <input id="Dircompleta" onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa">
+                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa">
                 </div>
                 <div class="control">
                     <button type="submit" class="cancelar" id="cancelarBtn" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
@@ -204,7 +204,7 @@
                             direccion = direccion + $('#segNum').val() + " ";
                             direccion = direccion + $('#sufSegNum').val() + " ";
                             $('#GuardarForm').val(direccion);
-                            $("#Dircompleta").val(direccion)
+
                         }
         </script>
     </body>
