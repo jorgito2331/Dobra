@@ -48,11 +48,7 @@ public class login extends HttpServlet {
             HttpSession session = request.getSession();
             validador.setClave("");
             session.setAttribute("usuario", validador);
-            if (validador.getTipo().equals("ADMIN")) {
-                response.sendRedirect("https://www.youtube.com/watch?v=4ghlSROVuH8&t=432s");
-            }else{
-                System.out.println("operario");
-            }
+            response.sendRedirect("/Garantizar/obra/manejar.jsp");
         }else{
             System.err.println("error");
         }

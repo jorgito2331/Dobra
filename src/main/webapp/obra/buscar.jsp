@@ -45,7 +45,12 @@
                     porcentaje = (Integer.parseInt(parametros[0]) / 100d);
                     porcentaje = Integer.parseInt(obra.getValor()) * porcentaje;
                     porcentajeDias = (int) (Math.round(days * (Integer.parseInt(parametros[1]) / 100d)));
-                    desfases = Math.round((((Double.parseDouble(obra.getValor()) * (Integer.parseInt(parametros[2]) / 100d)) * (diasDesfasados / porcentajeDias)) + porcentaje) * 100d) / 100d;
+                    try {
+                        desfases = Math.round((((Double.parseDouble(obra.getValor()) * (Integer.parseInt(parametros[2]) / 100d)) * (diasDesfasados / porcentajeDias)) + porcentaje) * 100d) / 100d;
+                    } catch (Exception e) {
+                        System.out.println(obra.getFechaFin());
+                        continue;
+                    }
                 }
                 obra.setDesfaces(desfases + "");
                 obra.setTiempoDuracion(days + "");
@@ -99,7 +104,7 @@
                             <td><%= cdto.getNombre()%></td>
                             <td><%= cdto.getContratista()%></td>
                             <td><%= cdto.getTipo()%></td>
-                            <td><%= cdto.getDireccion().getCompleta() %></td>
+                            <td><%= cdto.getDireccion().getCompleta()%></td>
                             <td><%= cdto.getFechaInicio()%></td>
                             <td><%= cdto.getFechaFin()%></td>
                             <td><%= cdto.getTiempoDuracion()%></td>

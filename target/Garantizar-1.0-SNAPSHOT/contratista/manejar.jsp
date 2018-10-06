@@ -44,7 +44,6 @@
         <div class="contenedor">
             <div class="bread">
                 <a href="manejar.jsp">Contratista &#8250;</a>
-                <a href="crear.jsp">Crear Contratista &#8250;</a>
             </div>
             <form class="formulario" action="buscar.jsp" method="POST">              
                 <div class="campo">

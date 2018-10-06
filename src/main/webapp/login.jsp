@@ -12,10 +12,10 @@
         <title>Dobra</title>
     </head>
     <body>
-        <form action="./login" method="get">
-            <input type="text" name="indentificacion">
-            <input type="password" name="clave">
-            <button type="submit"></button>
+        <form action="./login" method="POST">
+            <input type="text" name="indentificacion" min="10" maxlength="15">
+            <input type="password" name="clave" min="8" maxlength="15">
+            <button type="submit">Guardar</button>
         </form>
     </body>
 </html>

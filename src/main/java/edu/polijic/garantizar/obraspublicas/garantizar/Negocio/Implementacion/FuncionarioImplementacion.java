@@ -94,7 +94,6 @@ public class FuncionarioImplementacion implements FuncionarioNegocio{
                     }
                 }
                 dTO.setPermisos(permiso);
-                connection.close();
                 return dTO;
             }
         } catch (SQLException ex) {

@@ -47,7 +47,7 @@ public class ObraImplementacion implements ObraNegocio {
             statement.setInt(4, Integer.parseInt(obra.getDireccion().getId()));
             statement.setString(5, obra.getFechaInicio());
             statement.setString(6, obra.getFechaFin());
-            statement.setString(7, obra.getValor());                        
+            statement.setString(7, obra.getValor());
             statement.setString(8, obra.getArgumentos());
             statement.execute();
         } catch (SQLException ex) {
@@ -64,26 +64,33 @@ public class ObraImplementacion implements ObraNegocio {
     public ArrayList<ObraDTO> obtenerObras(String parametro) {
         ArrayList<ObraDTO> obras = new ArrayList<>();
         ObraDTO obra;
-        String sql = "SELECT ob.ID, ob.CONTRATISTA, tob.DESCRIPCION, dir.DIR_COMPLETA, ob.FEC_INI, ob.FEC_FIN, ob.VALOR, ob.DES_ARG, ob.ESTADO FROM obra ob INNER JOIN direccion dir ON ob.DIRECCION = dir.ID INNER JOIN tipo_obra tob ON ob.DIRECCION = tob.ID WHERE ob.ESTADO = 1" ;
+        String sql = "SELECT ob.ID, ob.CONTRATISTA, tob.DESCRIPCION, dir.DIR_COMPLETA, ob.FEC_INI, ob.FEC_FIN, ob.VALOR, ob.DES_ARG, ob.ESTADO FROM obra ob INNER JOIN direccion dir ON ob.DIRECCION = dir.ID INNER JOIN tipo_obra tob ON ob.TIPO = tob.ID";
+        if (!parametro.equals("4")) {
+            sql = "SELECT ob.ID, ob.CONTRATISTA, tob.DESCRIPCION, dir.DIR_COMPLETA, ob.FEC_INI, ob.FEC_FIN, ob.VALOR, ob.DES_ARG, ob.ESTADO FROM obra ob INNER JOIN direccion dir ON ob.DIRECCION = dir.ID INNER JOIN tipo_obra tob ON ob.TIPO = tob.ID WHERE ob.ESTADO = ?";
+        }
         try {
             statement = connection.prepareStatement(sql);
+            if (!parametro.equals("4")) {
+                statement.setInt(1, Integer.parseInt(parametro));
+            }
             resultSet = statement.executeQuery();
-            resultSet.first();
-            do{
-               obra = new ObraDTO();
-               obra.setNombre(resultSet.getString(1));
-               obra.setContratista(resultSet.getString(2));
-               obra.setTipo(resultSet.getString(3));
-               DireccionDTO dTO = new DireccionDTO();
-               dTO.setCompleta(resultSet.getString(4));
-               obra.setDireccion(dTO);
-               obra.setFechaInicio(resultSet.getString(5));
-               obra.setFechaFin(resultSet.getString(6));
-               obra.setValor(resultSet.getString(7));
-               obra.setArgumentos(resultSet.getString(8));
-               obra.setEstado(resultSet.getString(9));
-               obras.add(obra);
-            }while(resultSet.next());
+            if (resultSet.first()) {
+                do {
+                    obra = new ObraDTO();
+                    obra.setNombre(resultSet.getString(1));
+                    obra.setContratista(resultSet.getString(2));
+                    obra.setTipo(resultSet.getString(3));
+                    DireccionDTO dTO = new DireccionDTO();
+                    dTO.setCompleta(resultSet.getString(4));
+                    obra.setDireccion(dTO);
+                    obra.setFechaInicio(resultSet.getString(5));
+                    obra.setFechaFin(resultSet.getString(6));
+                    obra.setValor(resultSet.getString(7));
+                    obra.setArgumentos(resultSet.getString(8));
+                    obra.setEstado(resultSet.getString(9));
+                    obras.add(obra);
+                } while (resultSet.next());
+            }
         } catch (SQLException ex) {
             Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
         }
