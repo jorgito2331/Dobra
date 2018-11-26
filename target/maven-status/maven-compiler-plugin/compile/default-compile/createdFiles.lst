@@ -17,6 +17,7 @@ edu\polijic\garantizar\obraspublicas\garantizar\Negocio\Implementacion\ObraImple
 edu\polijic\garantizar\obraspublicas\garantizar\Negocio\TipoNegocio.class
 edu\polijic\garantizar\obraspublicas\garantizar\Negocio\ContratistaNegocio.class
 edu\polijic\garantizar\obraspublicas\garantizar\DTOs\LogDTO.class
+sistema\parametro\parametro.class
 edu\polijic\garantizar\obraspublicas\garantizar\DTOs\ContratistaDTO.class
 edu\polijic\garantizar\obraspublicas\garantizar\DTOs\FuncionarioDTO.class
 edu\polijic\garantizar\obraspublicas\garantizar\Negocio\Implementacion\DireccionImplementacion.class
@@ -24,5 +25,6 @@ sistema\Reportes.class
 sistema\login.class
 edu\polijic\garantizar\obraspublicas\garantizar\Negocio\Implementacion\LogImplementacion.class
 edu\polijic\garantizar\obraspublicas\garantizar\Negocio\ParametroNegocio.class
+sistema\funcionario\funcionario.class
 edu\polijic\garantizar\obraspublicas\garantizar\DTOs\ObraDTO.class
 edu\polijic\garantizar\obraspublicas\garantizar\Negocio\Implementacion\ParametroImplementacion.class

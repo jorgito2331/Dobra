@@ -8,6 +8,7 @@ package sistema;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ObraDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ParametroImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ParametroNegocio;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -41,7 +42,10 @@ public class Reportes extends Thread {
 
     @Override
     public void run() {
-        try (Workbook workbook = new XSSFWorkbook()) {
+        try (Workbook workbook = new XSSFWorkbook()) {            
+            ParametroNegocio parametroNegocio = new ParametroImplementacion();
+            SimpleDateFormat ft = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
+            File archivo = new File("../reportes/Reporte" + ft.format(new Date()) + ".xlsx");
             CreationHelper createHelper = workbook.getCreationHelper();
             Sheet sheet = workbook.createSheet("Obras");
             Row headerRow = sheet.createRow(0);
@@ -107,11 +111,22 @@ public class Reportes extends Thread {
             for (int i = 0; i < columns.length; i++) {
                 sheet.autoSizeColumn(i);
             }   // Write the output to a file
-            ParametroNegocio parametroNegocio = new ParametroImplementacion();
-            SimpleDateFormat ft = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-            try (FileOutputStream fileOut = new FileOutputStream(parametroNegocio.obtenerParametro("4").getNombre() + "Reporte" + ft.format(new Date()) + ".xlsx", false)) {
-                workbook.write(fileOut);
-                // Closing the workbook
+            try {
+                // Creamos el flujo de salida de datos,
+                // apuntando al archivo donde queremos 
+                // almacenar el libro de Excel
+                FileOutputStream salida = new FileOutputStream(archivo);
+
+                // Almacenamos el libro de 
+                // Excel via ese 
+                // flujo de datos
+                workbook.write(salida);
+
+                // Cerramos el libro para concluir operaciones
+                workbook.close();
+
+            } catch (FileNotFoundException ex) {
+            } catch (IOException ex) {
             }
         } catch (Exception ex) {
             System.out.println(ex.getMessage());

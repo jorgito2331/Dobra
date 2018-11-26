@@ -47,7 +47,7 @@ public class login extends HttpServlet {
         if (validador != null) {
             HttpSession session = request.getSession();
             validador.setClave("");
-            session.setAttribute("usuario", validador);
+            session.setAttribute("tipo", validador.getTipo());
             response.sendRedirect("/Garantizar/obra/manejar.jsp");
         }else{
             System.err.println("error");

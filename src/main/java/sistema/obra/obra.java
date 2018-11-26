@@ -41,12 +41,29 @@ public class obra extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
-        if (request.getParameter("guarManejar") != null) {
-            request.setAttribute("busqueda", request.getParameter("busq"));
-            if (request.getParameter("nombre") != null) {
-                request.setAttribute("nombre", request.getParameter("nombre"));
-            }
-            response.sendRedirect("obra/buscar.jsp");
+        if (request.getParameter("guardarValor") != null) {
+            ObraDTO obraDTO = new ObraDTO();
+            obraDTO.setNombre(request.getParameter("guardarValor"));
+            obraDTO.setValor(request.getParameter("nuevoValor"));    
+            ObraNegocio negocioObra = new ObraImplementacion();
+            negocioObra.actualizarObra(obraDTO);
+            response.sendRedirect("obra/manejar.jsp");
+        } else if (request.getParameter("guardarNombre") != null) {
+            ObraDTO obraDTO = new ObraDTO();
+            obraDTO.setNombre(request.getParameter("guardarValor"));
+            obraDTO.setArgumentos(request.getParameter("nuevoValor"));    
+            ObraNegocio negocioObra = new ObraImplementacion();
+            negocioObra.actualizarObra(obraDTO);
+            response.sendRedirect("obra/manejar.jsp");
+        } else if (request.getParameter("guarManejar") != null) {
+            response.sendRedirect("obra/buscar.jsp?busq=" + request.getParameter("busq"));
+        } else if (request.getParameter("finalizar") != null) {
+            ObraDTO dTO = new ObraDTO();
+            String[] datos = request.getParameter("finalizar").toUpperCase().split(";");
+            dTO.setNombre(datos[0]);
+            ObraNegocio negocioObra = new ObraImplementacion();
+            negocioObra.eliminarObra(dTO);
+            response.sendRedirect("obra/buscar.jsp?busq=" + datos[1]);
         } else {
             String[] direccion = request.getParameter("guar").split(" ");
             ObraDTO dTO = new ObraDTO();
@@ -76,6 +93,7 @@ public class obra extends HttpServlet {
             dTO.setContratista(request.getParameter("contratista"));
             ObraNegocio negocioObra = new ObraImplementacion();
             negocioObra.crearObra(dTO);
+            response.sendRedirect("obra/manejar.jsp");
         }
     }
 

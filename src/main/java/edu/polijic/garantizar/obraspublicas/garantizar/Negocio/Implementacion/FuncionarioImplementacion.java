@@ -16,6 +16,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -23,19 +24,19 @@ import java.util.logging.Logger;
  *
  * @author Jorge-PC
  */
-public class FuncionarioImplementacion implements FuncionarioNegocio{
-    
+public class FuncionarioImplementacion implements FuncionarioNegocio {
+
     ConexionPersistencia persistencia;
     Connection connection;
     PreparedStatement statement;
     ResultSet rs;
-            
-    public FuncionarioImplementacion() throws SQLException, ClassNotFoundException{
+
+    public FuncionarioImplementacion() throws SQLException, ClassNotFoundException {
         persistencia = new ConexionPersistencia();
         connection = persistencia.obtener();
         statement = null;
     }
-    
+
     @Override
     public void actualizar(FuncionarioDTO funcionarioDTO) {
         String sql = "UPDATE `funcionario` SET `CLAVE`= ?,`PRI_NOMBRE`= ?,`SEG_NOMBRE`= ?,`PRI_APELLIDO`= ?,`SEG_APELLIDO`= ? WHERE `ID` = ?";
@@ -45,7 +46,7 @@ public class FuncionarioImplementacion implements FuncionarioNegocio{
             statement.setString(2, funcionarioDTO.getPriNombre());
             statement.setString(3, funcionarioDTO.getSegNombre());
             statement.setString(4, funcionarioDTO.getPriApellido());
-            statement.setString(5, funcionarioDTO.getSegApellido());            
+            statement.setString(5, funcionarioDTO.getSegApellido());
             statement.setString(1, funcionarioDTO.getId());
             statement.execute();
         } catch (SQLException ex) {
@@ -89,7 +90,7 @@ public class FuncionarioImplementacion implements FuncionarioNegocio{
                 for (int i = 0; i < permisos.length; i++) {
                     if (permisos[i].equals("0")) {
                         permiso[i] = false;
-                    }else{
+                    } else {
                         permiso[i] = true;
                     }
                 }
@@ -104,7 +105,7 @@ public class FuncionarioImplementacion implements FuncionarioNegocio{
 
     @Override
     public void crear(FuncionarioDTO funcionarioDTO) {
-        String sql = "INSERT INTO `funcionario` (`ID`, `CLAVE`, `PRI_NOMBRE`, `SEG_NOMBRE`, `PRI_APELLIDO`, `SEG_APELLIDO`) VALUES (?, MD5(?), ?, ?, ?, ?)";
+        String sql = "INSERT INTO `funcionario` (`ID`, `CLAVE`, `PRI_NOM`, `SEG_NOM`, `PRI_APE`, `SEG_APE`) VALUES (?, MD5(?), ?, ?, ?, ?)";
         try {
             statement = connection.prepareStatement(sql);
             statement.setString(1, funcionarioDTO.getId());
@@ -118,7 +119,7 @@ public class FuncionarioImplementacion implements FuncionarioNegocio{
             Logger.getLogger(FuncionarioImplementacion.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
+
     public static String getMD5(String input) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -133,5 +134,31 @@ public class FuncionarioImplementacion implements FuncionarioNegocio{
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public ArrayList<FuncionarioDTO> obtenerTodos() {
+        ArrayList<FuncionarioDTO> funcionarioDTOs = new ArrayList<>();
+        FuncionarioDTO cdto;
+        String sql = "";
+        try {
+            sql = "SELECT `ID`, `PRI_NOM`, `SEG_NOM`, `PRI_APE`, `SEG_APE`, `TIPO_ROL` FROM `funcionario`";
+            statement = connection.prepareStatement(sql);
+            rs = statement.executeQuery();
+            rs.first();
+            do {
+                cdto = new FuncionarioDTO();
+                cdto.setId(rs.getString(1));
+                cdto.setPriNombre(rs.getString(2));
+                cdto.setSegNombre(rs.getString(3));
+                cdto.setPriApellido(rs.getString(4));
+                cdto.setSegApellido(rs.getString(5));
+                cdto.setTipo(rs.getString(6));
+                funcionarioDTOs.add(cdto);
+            } while (rs.next());
+        } catch (SQLException ex) {
+            Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return funcionarioDTOs;
     }
 }

@@ -23,7 +23,7 @@
         <link href="../Estilos/Formulario.css" rel="stylesheet">
     </head>
     <body>
-        <% 
+        <%
             ArrayList<ContratistaDTO> contratistas;
             ArrayList<ParametroDTO> tipoObras;
             ContratistaNegocio contratista = new ContratistaImplementacion();
@@ -32,22 +32,24 @@
             tipoObras = negocio.obtenerParametros("1");
         %>
         <div class="menu">
-            <div class="menuItem">
+            <div class="menuItem seleccionado" onclick="window.location.replace('../obra/manejar.jsp')">
                 <div class="image" id="obras"></div>
                 <label>Obras</label>
             </div>
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../contratista/manejar.jsp')">
                 <div class="image" id="contratistas"></div>
                 <label>Contratistas</label>
             </div>
-            <div class="menuItem">
+            <div class="menuItem" onclick="window.location.replace('../funcionario/manejar.jsp')">
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
-            <div class="menuItem">
+            <% if (session.getAttribute("tipo").equals("ADMIN")) {%>
+            <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
             </div>
+            <% }%>
         </div>
         <div class="contenedor">
             <div class="bread">
@@ -63,7 +65,7 @@
                     <label>Tipo de obra</label>
                     <select name="tipo" id="tipoObra">
                         <option value="0">Seleccione</option>
-                        <% for(ParametroDTO contratis : tipoObras){
+                        <% for (ParametroDTO contratis : tipoObras) {
                         %>
                         <option value="<%= contratis.getId()%>"><%= contratis.getNombre()%></option>
                         <% }%>
@@ -83,13 +85,13 @@
                 </div>
                 <div class="campo">
                     <label>Dirección</label>
-                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa">
+                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa" id="dirr">
                 </div>
                 <div class="campo">
                     <label>Contratista</label>
                     <select name="contratista">
                         <option value="0">Seleccione</option>
-                        <% for(ContratistaDTO contratis : contratistas){
+                        <% for (ContratistaDTO contratis : contratistas) {
                         %>
                         <option value="<%= contratis.getNombre()%>"><%= contratis.getNombre()%></option>
                         <% }%>
@@ -106,7 +108,7 @@
                 <div class="campo">
                     <label>Tipo de via</label>
                     <select name="TVia" id="tipVia">
-                        <option value="0">Seleccione</option>
+                        <option value="">Seleccione</option>
                         <option value="Calle">Calle</option>
                         <option value="Carrera">Carrera</option>
                         <option value="Transversal">Transversal</option>
@@ -116,12 +118,12 @@
                 </div>
                 <div class="campo">
                     <label>Número de via</label>
-                    <input type="number" maxlength="" pattern="" id="numVia" value="0">
+                    <input type="number" maxlength="" pattern="" id="numVia" value="">
                 </div>
                 <div class="campo">
                     <label>Sufijo de via</label>
                     <select id="sufVia">
-                        <option value="0">Seleccione</option>
+                        <option value="">Seleccione</option>
                         <%
                             for (int i = 0; i <= 25; i++) {
                         %>
@@ -134,7 +136,7 @@
                 <div class="campo">
                     <label>Cardinalidad de via</label>
                     <select id="cardVia">
-                        <option value="0">Seleccione</option>
+                        <option value="">Seleccione</option>
                         <option value="Norte">Norte</option>
                         <option value="Este">Este</option>
                         <option value="Sur">Sur</option>
@@ -147,12 +149,12 @@
                 </div>
                 <div class="campo">
                     <label>Primer número</label>
-                    <input type="number" maxlength="" pattern="" id="priNum" value="0">
+                    <input type="number" maxlength="" pattern="" id="priNum" value="">
                 </div>
                 <div class="campo">
                     <label>Sufijo primer número</label>
                     <select id="sufPriNum">
-                        <option value="0">Seleccione</option>
+                        <option value="">Seleccione</option>
                         <%
                             for (int i = 0; i <= 25; i++) {
                         %>
@@ -165,7 +167,7 @@
                 <div class="campo">
                     <label>Cardinalidad primer número</label>
                     <select id="cardPriNum">
-                        <option value="0">Seleccione</option>
+                        <option value="">Seleccione</option>
                         <option value="Norte">Norte</option>
                         <option value="Este">Este</option>
                         <option value="Sur">Sur</option>
@@ -178,12 +180,12 @@
                 </div>
                 <div class="campo">
                     <label>Segundo número</label>
-                    <input type="number" maxlength="" pattern="" id="segNum" value="0">
+                    <input type="number" maxlength="" pattern="" id="segNum" value="">
                 </div>
                 <div class="campo">
                     <label>Sufijo segundo número</label>
                     <select id="sufSegNum">
-                        <option value="0">Seleccione</option>
+                        <option value="">Seleccione</option>
                         <%
                             for (int i = 0; i <= 25; i++) {
                         %>
@@ -204,21 +206,31 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
         <script>
-            function guardar(){
-                $('#direccionModal').removeClass('mostrar');
-                var direccion = "";
-                direccion = direccion + $('#tipVia').val() + " ";
-                direccion = direccion + $('#numVia').val() + " ";
-                direccion = direccion + $('#sufVia').val() + " ";
-                direccion = direccion + $('#cardVia').val() + " ";
-                direccion = direccion + $('#priNum').val() + " ";
-                direccion = direccion + $('#sufPriNum').val() + " ";
-                direccion = direccion + $('#cardPriNum').val() + " ";
-                direccion = direccion + $('#segNum').val() + " ";
-                direccion = direccion + $('#sufSegNum').val() + " ";
-                $('#GuardarForm').val(direccion);
-                
-            }
+                        function guardar() {
+                            $('#direccionModal').removeClass('mostrar');
+                            var direccion = "";
+                            direccion = direccion + (($('#tipVia').val() == "") ? "0" : $('#tipVia').val()) + " ";
+                            direccion = direccion + (($('#numVia').val() == "") ? "0" : $('#numVia').val()) + " ";
+                            direccion = direccion + (($('#sufVia').val() == "") ? "0" : $('#sufVia').val()) + " ";
+                            direccion = direccion + (($('#cardVia').val() == "") ? "0" : $('#cardVia').val()) + " ";
+                            direccion = direccion + (($('#priNum').val() == "") ? "0" : $('#priNum').val()) + " ";
+                            direccion = direccion + (($('#sufPriNum').val() == "") ? "0" : $('#sufPriNum').val()) + " ";
+                            direccion = direccion + (($('#cardPriNum').val() == "") ? "0" : $('#cardPriNum').val()) + " ";
+                            direccion = direccion + (($('#segNum').val() == "") ? "0" : $('#segNum').val()) + " ";
+                            direccion = direccion + (($('#sufSegNum').val() == "") ? "0" : $('#sufSegNum').val()) + " ";
+                            $('#GuardarForm').val(direccion);
+                            var direccion = "";
+                            direccion = direccion + $('#tipVia').val() + " ";
+                            direccion = direccion + $('#numVia').val() + " ";
+                            direccion = direccion + $('#sufVia').val() + " ";
+                            direccion = direccion + $('#cardVia').val() + " ";
+                            direccion = direccion + $('#priNum').val() + " ";
+                            direccion = direccion + $('#sufPriNum').val() + " ";
+                            direccion = direccion + $('#cardPriNum').val() + " ";
+                            direccion = direccion + $('#segNum').val() + " ";
+                            direccion = direccion + $('#sufSegNum').val() + " ";
+                            $('#dirr').val(direccion);
+                        }
         </script>
     </body>
 </html>

@@ -18,6 +18,7 @@ public class ObraDTO {
     String valor;
     String fechaInicio;
     String fechaFin;
+    String finalizado;
     String tiempoDuracion;
     String estado;
     String desfaces;
@@ -110,5 +111,15 @@ public class ObraDTO {
     public void setArgumentos(String argumentos) {
         this.argumentos = argumentos;
     }
+
+    public String getFinalizado() {
+        return finalizado;
+    }
+
+    public void setFinalizado(String finalizado) {
+        this.finalizado = finalizado;
+    }
+    
+    
     
 }

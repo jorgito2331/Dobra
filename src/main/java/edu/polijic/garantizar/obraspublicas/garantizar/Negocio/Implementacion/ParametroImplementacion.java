@@ -105,7 +105,40 @@ public class ParametroImplementacion implements ParametroNegocio {
 
     @Override
     public void actualizarParametro(ParametroDTO parametro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String sql = "UPDATE `parametro` SET `ARGUMENTO` = ? WHERE `parametro`.`ID` = ?";
+        try {
+            statement = connection.prepareStatement(sql);
+            statement.setInt(1, Integer.parseInt(parametro.getId()));
+            statement.setString(2, parametro.getArgumento());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ParametroImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    @Override
+    public ArrayList<ParametroDTO> obtenerParametrosTBL() {
+        ArrayList<ParametroDTO> parametros = new ArrayList<>();
+        ParametroDTO pdto;
+        String sql = "SELECT * FROM `parametro`";
+        try {
+            statement = connection.prepareStatement(sql);
+            resultSet = statement.executeQuery();
+            resultSet.first();
+            do {
+                pdto = new ParametroDTO();
+                pdto.setId(resultSet.getString(1));
+                pdto.setNombre(resultSet.getString(2));
+                pdto.setArgumento(resultSet.getString(3));
+                pdto.setDescripcion(resultSet.getString(4));
+                pdto.setReglas(resultSet.getString(5));
+                pdto.setMensaje(resultSet.getString(6));
+                parametros.add(pdto);
+            } while (resultSet.next());
+        } catch (SQLException ex) {
+            Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return parametros;
     }
 
 }

@@ -4,6 +4,9 @@
     Author     : Jorge-PC
 --%>
 
+<%@page import="edu.polijic.garantizar.obraspublicas.garantizar.DTOs.FuncionarioDTO"%>
+<%@page import="edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.FuncionarioImplementacion"%>
+<%@page import="edu.polijic.garantizar.obraspublicas.garantizar.Negocio.FuncionarioNegocio"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ContratistaDTO"%>
 <%@page import="edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ContratistaImplementacion"%>
@@ -23,29 +26,31 @@
     <body>
         <%
             ContratistaNegocio contratistaNegocio = new ContratistaImplementacion();
-            ArrayList<ContratistaDTO> dTO = contratistaNegocio.obtenerContratistas(request.getParameter("busq"));
+            ArrayList<ContratistaDTO> dTO = contratistaNegocio.obtenerContratistas("3");
         %>
         <div class="menu">
             <div class="menuItem" onclick="window.location.replace('../obra/manejar.jsp')">
                 <div class="image" id="obras"></div>
                 <label>Obras</label>
             </div>
-            <div class="menuItem" onclick="window.location.replace('../contratista/manejar.jsp')">
+            <div class="menuItem seleccionado" onclick="window.location.replace('../contratista/manejar.jsp')">
                 <div class="image" id="contratistas"></div>
                 <label>Contratistas</label>
             </div>
-            <div class="menuItem" onclick="window.location.replace('../funcionario/manejar.jsp')">
+            <div class="menuItem " onclick="window.location.replace('../funcionario/manejar.jsp')">
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
+            <% if (session.getAttribute("tipo").equals("ADMIN")) {%>
             <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
             </div>
+            <% }%>
         </div>
         <div class="contenedor">
             <div class="bread">
-                <a href="manejar.jsp">Obra &#8250;</a>
+                <a href="manejar.jsp">Contratistas &#8250;</a>
             </div>
             <div class="tabla">
                 <table id="table_id" class="display">
@@ -53,7 +58,6 @@
                         <tr>
                             <th>Nombre</th>
                             <th>Correo</th>
-                            <th>Tipo Id</th>
                             <th>Identificación</th>
                             <th>Teléfono</th>
                             <th>Dirección</th>
@@ -64,11 +68,10 @@
                         <%
                             if (dTO != null) {
                                 for (ContratistaDTO cdto : dTO) {%>
-                        <tr>
+                        <tr>                           
                             <td><%= cdto.getNombre()%></td>
                             <td><%= cdto.getCorreo()%></td>
-                            <td><%= cdto.getTipoID()%></td>
-                            <td><%= cdto.getIdentificacion()%></td>
+                            <td><%= cdto.getTipoID() + " - " + cdto.getIdentificacion()%></td>
                             <td><%= cdto.getTelefono()%></td>
                             <td><%= cdto.getDireccion().getCompleta()%></td>
                         </tr>

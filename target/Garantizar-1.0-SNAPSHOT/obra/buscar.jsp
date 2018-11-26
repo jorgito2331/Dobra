@@ -4,6 +4,8 @@
     Author     : Jorge-PC
 --%>
 
+<%@page import="edu.polijic.garantizar.obraspublicas.garantizar.DTOs.FuncionarioDTO"%>
+<%@page import="java.text.DecimalFormat"%>
 <%@page import="sistema.Reportes"%>
 <%@page import="org.joda.time.DateMidnight"%>
 <%@page import="org.joda.time.Days"%>
@@ -29,28 +31,43 @@
         <%
             ObraNegocio obraNegocio = new ObraImplementacion();
             ArrayList<ObraDTO> dTO = obraNegocio.obtenerObras(request.getParameter("busq"));
+            float tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
+            float precioDuracionPorc = 0; //guarda el precio por cada porcentaje de tiempo
+            float tiempoDesfXPorcDias = 0; //guarda la division entre la cantidad de dias desfasados y tiempoDuracionPorc
+            int diasDesfasados = 0;
+            double desfases = 0;
+            int days = 0;
+            DecimalFormat df = new DecimalFormat("#.##");
+            DateMidnight d1;
+            DateMidnight d2;
+            String rol = session.getAttribute("tipo").toString();
+            DateMidnight hoy = new DateMidnight(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
             for (ObraDTO obra : dTO) {
-                int diasDesfasados;
-                double porcentaje = 0;
-                int porcentajeDias;
-                double desfases = 0;
-                DateMidnight d1 = new DateMidnight(obra.getFechaInicio());
-                DateMidnight d2 = new DateMidnight(obra.getFechaFin());
-                DateMidnight hoy = new DateMidnight(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-                int days = Days.daysBetween(d1, d2).getDays();
+                tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
+                precioDuracionPorc = 0; //guarda el precio por cada porcentaje de tiempo
+                tiempoDesfXPorcDias = 0; //guarda la division entre la cantidad de dias desfasados y tiempoDuracionPorc
+                diasDesfasados = 0;
+                desfases = 0;
+                days = 0;
+                d1 = new DateMidnight(obra.getFechaInicio());
+                d2 = new DateMidnight(obra.getFechaFin());
+                days = Days.daysBetween(d1, d2).getDays();
                 obra.setTiempoDuracion(days + "");
+                if (obra.getFinalizado() != null) {
+                    d1 = new DateMidnight(obra.getFechaFin());
+                    d2 = new DateMidnight(obra.getFinalizado());
+                    diasDesfasados = Days.daysBetween(d1, d2).getDays();
+                } else {
+                    d2 = new DateMidnight(obra.getFechaFin());
+                    diasDesfasados = Days.daysBetween(d2, hoy).getDays();
+                }
                 String[] parametros = obra.getArgumentos().split(",");
-                diasDesfasados = Days.daysBetween(d2, hoy).getDays();
                 if (diasDesfasados > 0) {
-                    porcentaje = (Integer.parseInt(parametros[0]) / 100d);
-                    porcentaje = Integer.parseInt(obra.getValor()) * porcentaje;
-                    porcentajeDias = (int) (Math.round(days * (Integer.parseInt(parametros[1]) / 100d)));
-                    try {
-                        desfases = Math.round((((Double.parseDouble(obra.getValor()) * (Integer.parseInt(parametros[2]) / 100d)) * (diasDesfasados / porcentajeDias)) + porcentaje) * 100d) / 100d;
-                    } catch (Exception e) {
-                        System.out.println(obra.getFechaFin());
-                        continue;
-                    }
+                    desfases = Float.valueOf(df.format(desfases + Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[0]) / 100f)).replace(",", "."))).replace(",", "."));
+                    tiempoDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getTiempoDuracion()) * (Float.parseFloat(parametros[1]) / 100f)).replace(",", "."));
+                    precioDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[2]) / 100f)).replace(",", "."));
+                    tiempoDesfXPorcDias = Float.valueOf(df.format(diasDesfasados / ((tiempoDuracionPorc == 0) ? 1f : tiempoDuracionPorc)).replace(",", "."));
+                    desfases = Float.valueOf(df.format(desfases + (Float.valueOf(df.format(tiempoDesfXPorcDias * precioDuracionPorc).replace(",", ".")))).replace(",", "."));
                 }
                 obra.setDesfaces(desfases + "");
                 obra.setTiempoDuracion(days + "");
@@ -59,7 +76,7 @@
             reportes.start();
         %>
         <div class="menu">
-            <div class="menuItem" onclick="window.location.replace('../obra/manejar.jsp')">
+            <div class="menuItem seleccionado" onclick="window.location.replace('../obra/manejar.jsp')">
                 <div class="image" id="obras"></div>
                 <label>Obras</label>
             </div>
@@ -71,10 +88,12 @@
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
+            <% if (rol.equals("ADMIN")) {%>
             <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
             </div>
+            <% }%>
         </div>
         <div class="contenedor">
             <div class="bread">
@@ -93,6 +112,9 @@
                             <th>Duración</th>
                             <th>Valor</th>
                             <th>Desfase</th>
+                                <%if (session.getAttribute("tipo").equals("ADMIN")) {%>
+                            <th>Acciones</th>
+                                <%}%>
                         </tr>
                     </thead>
                     <tbody>
@@ -101,15 +123,36 @@
                             if (dTO != null) {
                                 for (ObraDTO cdto : dTO) {%>
                         <tr>
-                            <td><%= cdto.getNombre()%></td>
+                            <td>
+                                <form class="campoForm" action="../obra" method="POST">
+                                    <input name="nuevoValor" value="<%= cdto.getNombre()%>"
+                                           onkeyup="guardar<%= cdto.getNombre()%>.style.display = 'flex'"
+                                           required="true">
+                                    <button id="guardar<%= cdto.getNombre()%>" name="guardarNombre" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
+                                </form>
+                            </td>
                             <td><%= cdto.getContratista()%></td>
                             <td><%= cdto.getTipo()%></td>
                             <td><%= cdto.getDireccion().getCompleta()%></td>
                             <td><%= cdto.getFechaInicio()%></td>
                             <td><%= cdto.getFechaFin()%></td>
                             <td><%= cdto.getTiempoDuracion()%></td>
-                            <td><%= cdto.getValor()%></td>
+                            <td>
+                                <form class="campoForm" action="../obra" method="POST">
+                                    <input name="nuevoValor" value="<%= cdto.getValor()%>"
+                                           onkeyup="guardar<%= cdto.getNombre()%>Valor.style.display = 'flex'"
+                                           required="true">
+                                    <button id="guardar<%= cdto.getNombre()%>Valor" name="guardarValor" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
+                                </form>
+                            </td>
                             <td><%= cdto.getDesfaces()%></td>
+                            <%if (rol.equals("ADMIN") && cdto.getFinalizado() == null) {%>
+                            <td>
+                                <form action="../obra" method="POST">
+                                    <button type="submit" name="finalizar" value="<%= cdto.getNombre()%>;<%= request.getParameter("busq")%>">Finalizar</button>
+                                </form>
+                            </td>
+                            <%}%>
                         </tr>
                         <% }
                         } else {

@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public interface ParametroNegocio {
     public void crearParametro(ParametroDTO parametro);
     public ParametroDTO obtenerParametro(String parametro);
-    public ArrayList<ParametroDTO> obtenerParametros(String parametro); 
+    public ArrayList<ParametroDTO> obtenerParametros(String parametro);
+    public ArrayList<ParametroDTO> obtenerParametrosTBL();
     public void actualizarParametro(ParametroDTO parametro);
 }

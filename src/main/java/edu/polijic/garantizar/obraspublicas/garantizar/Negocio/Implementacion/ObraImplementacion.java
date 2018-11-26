@@ -15,7 +15,9 @@ import edu.polijic.garantizar.obraspublicas.garantizar.Persistencia.ConexionPers
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,7 +42,7 @@ public class ObraImplementacion implements ObraNegocio {
     @Override
     public void crearObra(ObraDTO obra) {
         try {
-            statement = connection.prepareStatement("INSERT INTO `obra` (`ID`, `CONTRATISTA`, `TIPO`, `DIRECCION`, `FEC_INI`, `FEC_FIN`, `VALOR`, `DES_ARG`) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            statement = connection.prepareStatement("INSERT INTO `obra` (`ID`, `CONTRATISTA`, `TIPO`, `DIRECCION`, `FEC_INI`, `FEC_FIN`, `VALOR`, `ESTADO`, `DES_ARG`) VALUES (?, ?, ?, ?, ?, ?, ?, '0', ?)");
             statement.setString(1, obra.getNombre());
             statement.setString(2, obra.getContratista());
             statement.setInt(3, Integer.parseInt(obra.getTipo()));
@@ -64,9 +66,9 @@ public class ObraImplementacion implements ObraNegocio {
     public ArrayList<ObraDTO> obtenerObras(String parametro) {
         ArrayList<ObraDTO> obras = new ArrayList<>();
         ObraDTO obra;
-        String sql = "SELECT ob.ID, ob.CONTRATISTA, tob.DESCRIPCION, dir.DIR_COMPLETA, ob.FEC_INI, ob.FEC_FIN, ob.VALOR, ob.DES_ARG, ob.ESTADO FROM obra ob INNER JOIN direccion dir ON ob.DIRECCION = dir.ID INNER JOIN tipo_obra tob ON ob.TIPO = tob.ID";
+        String sql = "SELECT ob.ID, ob.CONTRATISTA, tob.DESCRIPCION, dir.DIR_COMPLETA, ob.FEC_INI, ob.FEC_FIN, ob.FINALIZADO, ob.VALOR, ob.DES_ARG, ob.ESTADO FROM obra ob INNER JOIN direccion dir ON ob.DIRECCION = dir.ID INNER JOIN tipo_obra tob ON ob.TIPO = tob.ID";
         if (!parametro.equals("4")) {
-            sql = "SELECT ob.ID, ob.CONTRATISTA, tob.DESCRIPCION, dir.DIR_COMPLETA, ob.FEC_INI, ob.FEC_FIN, ob.VALOR, ob.DES_ARG, ob.ESTADO FROM obra ob INNER JOIN direccion dir ON ob.DIRECCION = dir.ID INNER JOIN tipo_obra tob ON ob.TIPO = tob.ID WHERE ob.ESTADO = ?";
+            sql = "SELECT ob.ID, ob.CONTRATISTA, tob.DESCRIPCION, dir.DIR_COMPLETA, ob.FEC_INI, ob.FEC_FIN, ob.FINALIZADO, ob.VALOR, ob.DES_ARG, ob.ESTADO FROM obra ob INNER JOIN direccion dir ON ob.DIRECCION = dir.ID INNER JOIN tipo_obra tob ON ob.TIPO = tob.ID WHERE ob.ESTADO = ?";
         }
         try {
             statement = connection.prepareStatement(sql);
@@ -85,9 +87,10 @@ public class ObraImplementacion implements ObraNegocio {
                     obra.setDireccion(dTO);
                     obra.setFechaInicio(resultSet.getString(5));
                     obra.setFechaFin(resultSet.getString(6));
-                    obra.setValor(resultSet.getString(7));
-                    obra.setArgumentos(resultSet.getString(8));
-                    obra.setEstado(resultSet.getString(9));
+                    obra.setFinalizado(resultSet.getString(7));
+                    obra.setValor(resultSet.getString(8));
+                    obra.setArgumentos(resultSet.getString(9));
+                    obra.setEstado(resultSet.getString(10));
                     obras.add(obra);
                 } while (resultSet.next());
             }
@@ -99,12 +102,34 @@ public class ObraImplementacion implements ObraNegocio {
 
     @Override
     public void actualizarObra(ObraDTO obra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "";
+            if (obra.getArgumentos() != null) {
+                sql = "UPDATE `obra` SET `ID` = ? WHERE `obra`.`ID` = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, obra.getArgumentos());
+            } else {
+                sql = "UPDATE `obra` SET `VALOR` = ? WHERE `obra`.`ID` = ?";
+                statement = connection.prepareStatement(sql);
+                statement.setString(1, obra.getValor());
+            }
+            statement.setString(2, obra.getNombre());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
     public void eliminarObra(ObraDTO obra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            statement = connection.prepareStatement("UPDATE `obra` SET `ESTADO` = '1', `FINALIZADO` = ?  WHERE `obra`.`ID` = ? ");
+            statement.setString(1, new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            statement.setString(2, obra.getNombre());
+            statement.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override

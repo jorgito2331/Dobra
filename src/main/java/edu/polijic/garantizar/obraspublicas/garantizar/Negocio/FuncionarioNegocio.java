@@ -6,6 +6,7 @@
 package edu.polijic.garantizar.obraspublicas.garantizar.Negocio;
 
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.FuncionarioDTO;
+import java.util.ArrayList;
 
 /**
  *
@@ -14,6 +15,7 @@ import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.FuncionarioDTO;
 public interface FuncionarioNegocio {
     public void actualizar(FuncionarioDTO funcionarioDTO);
     public void borrar(FuncionarioDTO funcionarioDTO);
+    public ArrayList<FuncionarioDTO> obtenerTodos();
     public FuncionarioDTO validar(FuncionarioDTO funcionarioDTO);
     public void crear(FuncionarioDTO funcionarioDTO);
 }

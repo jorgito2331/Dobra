@@ -62,12 +62,7 @@ public class ContratistaImplementacion implements ContratistaNegocio {
         ContratistaDTO cdto;
         String sql = "";
         try {
-            if (criterio.equals("3")) {
-                sql = "SELECT cn.NOMBRE, cn.CORREO,ti.DESCRIPCION, cn.IDENTIFICACION, cn.TELEFONO, dir.DIR_COMPLETA FROM contratista cn INNER JOIN tipo_id ti ON cn.TIPO_ID = ti.ID INNER JOIN direccion dir ON cn.DIRECCION = dir.ID";                
-            } else {
-                sql = "SELECT cn.NOMBRE, cn.CORREO,ti.DESCRIPCION, cn.IDENTIFICACION, cn.TELEFONO, dir.DIR_COMPLETA FROM contratista cn INNER JOIN tipo_id ti ON cn.TIPO_ID = ti.ID INNER JOIN direccion dir ON cn.DIRECCION = dir.ID WHERE cn.ESTADO = " + criterio;
-            }
-            
+            sql = "SELECT cn.NOMBRE, cn.CORREO,ti.DESCRIPCION, cn.IDENTIFICACION, cn.TELEFONO, dir.DIR_COMPLETA FROM contratista cn INNER JOIN tipo_id ti ON cn.TIPO_ID = ti.ID INNER JOIN direccion dir ON cn.DIRECCION = dir.ID";           
             statement = connection.prepareStatement(sql);
             resultSet = statement.executeQuery();
             resultSet.first();

@@ -14,6 +14,8 @@ public class ParametroDTO {
     String nombre;
     String descripcion;
     String argumento;
+    String reglas;
+    String mensaje;
 
     public String getId() {
         return id;
@@ -46,4 +48,22 @@ public class ParametroDTO {
     public void setArgumento(String argumento) {
         this.argumento = argumento;
     }
+
+    public String getReglas() {
+        return reglas;
+    }
+
+    public void setReglas(String reglas) {
+        this.reglas = reglas;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+    
+    
 }

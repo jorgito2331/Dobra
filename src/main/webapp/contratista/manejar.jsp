@@ -28,7 +28,7 @@
                 <div class="image" id="obras"></div>
                 <label>Obras</label>
             </div>
-            <div class="menuItem" onclick="window.location.replace('../contratista/manejar.jsp')">
+            <div class="menuItem seleccionado" onclick="window.location.replace('../contratista/manejar.jsp')">
                 <div class="image" id="contratistas"></div>
                 <label>Contratistas</label>
             </div>
@@ -36,31 +36,23 @@
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
+            <% if (session.getAttribute("tipo").equals("ADMIN")) {%>
             <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
             </div>
+            <% }%>
         </div>
         <div class="contenedor">
             <div class="bread">
                 <a href="manejar.jsp">Contratista &#8250;</a>
             </div>
-            <form class="formulario" action="buscar.jsp" method="POST">              
-                <div class="campo">
-                    <label>Criterio</label>
-                    <select id="busq" name="busq">
-                        <option value="3">Todos</option>
-                        <option value="0">Inactivos</option>
-                        <option value="1">Activos</option>
-                    </select>
-                </div>
-                <div class="campo">
-                    <label>Nombre</label>
-                    <input name="nombre" id="nombre">
-                </div>
+            <form class="formulario" action="buscar.jsp" method="POST">        
                 <div class="control">
+                     <%if (session.getAttribute("tipo").equals("ADMIN")) {%>
                     <a id="cancelarBtn" href="crear.jsp">Crear</a>
-                    <button type="submit" class="guardar" id="GuardarForm" name="guarManejar" value="guardar">Buscar</button>
+                    <%}%>
+                    <button type="submit" class="guardar" id="GuardarForm" name="guarManejar" value="guardar">Buscar Todos</button>
                 </div>
             </form>
         </div>
