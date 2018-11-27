@@ -36,7 +36,7 @@ public class ContratistaImplementacion implements ContratistaNegocio {
     }
 
     @Override
-    public void crearContratista(ContratistaDTO contratista) {
+    public boolean crearContratista(ContratistaDTO contratista) {
         try {
             statement = connection.serverPrepareStatement("INSERT INTO `contratista` (`NOMBRE`, `CORREO`, `TIPO_ID`, `IDENTIFICACION`, `TELEFONO`, `DIRECCION`) VALUES (?, ?, ?, ?, ?, ?)");
             statement.setString(1, contratista.getNombre());
@@ -45,10 +45,12 @@ public class ContratistaImplementacion implements ContratistaNegocio {
             statement.setString(4, contratista.getIdentificacion());
             statement.setString(5, contratista.getTelefono());
             statement.setInt(6, Integer.parseInt(contratista.getDireccion().getId()));
-            statement.execute();
+            statement.execute();            
         } catch (SQLException ex) {
             Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
+        return true;
     }
 
     @Override

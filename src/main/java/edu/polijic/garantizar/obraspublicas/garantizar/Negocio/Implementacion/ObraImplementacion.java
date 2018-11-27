@@ -40,7 +40,7 @@ public class ObraImplementacion implements ObraNegocio {
     }
 
     @Override
-    public void crearObra(ObraDTO obra) {
+    public boolean crearObra(ObraDTO obra) {
         try {
             statement = connection.prepareStatement("INSERT INTO `obra` (`ID`, `CONTRATISTA`, `TIPO`, `DIRECCION`, `FEC_INI`, `FEC_FIN`, `VALOR`, `ESTADO`, `DES_ARG`) VALUES (?, ?, ?, ?, ?, ?, ?, '0', ?)");
             statement.setString(1, obra.getNombre());
@@ -54,7 +54,11 @@ public class ObraImplementacion implements ObraNegocio {
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+            return false;
         }
+        
+        return true;
+        
     }
 
     @Override

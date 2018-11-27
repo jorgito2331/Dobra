@@ -1,0 +1,228 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 27/11/2018, 04:12:25 PM
+    Author     : Usuario
+*/
+
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+
+@import url('https://fonts.googleapis.com/css?family=Roboto+Condensed:300');
+
+* {
+    font-family: 'Roboto', sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+    text-decoration: none;
+    font-size: 3vh;
+}
+
+body {
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+#modal {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 10;
+}
+
+#modal form {
+    background: white;
+}
+
+#modal form h1 {
+    z-index: 10;
+    text-align: center;
+    font-size: 5vh;
+    font-weight: 100;
+}
+
+.modal form .enviar {
+    height: 7vh;
+    width: 15vw;
+    border: solid #348658 3px;  
+    background: white;
+    transition: 0.3s;
+    margin-right: 1vw;     
+    color: black;
+}
+
+#modal form .enviar:hover {
+    cursor: pointer;    
+    background: #348658;    
+    color: white; 
+}
+
+#modal form #cancel {
+    height: 7vh;
+    width: 15vw;
+    transition: 0.3s;
+    margin-right: 1vw;
+    background: white;
+    color: black;    
+    border: solid #e13831 3px;
+}
+
+#modal form #cancel:hover {
+    cursor: pointer;
+    background: #e13831;
+    color: white;
+}
+
+.banner {
+    height: 100vh;
+    width: 60vw;
+    background: url(../Imagenes/guzman-barquin-595897-unsplash.jpg);
+    background-position: center;
+    background-size: cover;
+    z-index: -1;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.banner h1 {
+    font-family: 'Roboto Condensed', sans-serif;
+    z-index: 10;
+    color: white;
+    text-align: center;
+    font-size: 15vh;
+    font-weight: 100;
+}
+
+.banner p {
+    color: white;
+    padding: 0vh 6vh 3vw 6vh;
+    text-align: justify;
+}
+
+.banner b {
+    font-weight: 600;
+    font-size: 120%;
+    color: white;
+}
+
+.banner:before {
+    content: "";
+    position: absolute;
+    height: 100vh;
+    width: 60vw;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+
+.contenedor {
+    z-index: 1;
+    height: 100vh;
+    width: 50vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    background: white;
+    justify-content: center;
+    align-items: center;
+}
+
+.contenedor h1 {
+    font-size: 5vh;
+}
+
+form {
+    height: 40vh;
+    width: 40vw;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    justify-content: center;
+    align-items: center;
+    margin: 2vh;
+    border-radius: 0.5%;
+}
+
+.in {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    height: 5vh;
+    width: 30vw;
+    padding-left: 0.5vw;
+    border-bottom: #348658 solid 2px;
+    margin: 3vh 0;
+}
+
+span {
+    width: 2vw;
+    height: 4vh;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#cor {
+    background-image: url(../Imagen/email.png);
+}
+
+#cla {
+    background-image: url(../Imagen/lock.png);
+}
+
+input {
+    height: 4vh;
+    width: 25vw;
+    padding-left: 2%;
+    border: none;
+}
+
+input:focus {
+    outline: none;
+}
+
+input[type="submit"] {
+    height: 7vh;
+    width: 15vw;    
+    background: white;
+    color: black;
+    transition: 0.3s;
+    border: solid #348658 3px;
+}
+
+input[type="submit"]:hover {
+    background: #348658;
+    cursor: pointer;    
+    color: white;
+}
+
+.control {
+    margin-top: 3vh;
+}
+
+.control a{    
+    margin-right: 1vw;
+}
+
+#modal.esconder{
+    display: none;
+}

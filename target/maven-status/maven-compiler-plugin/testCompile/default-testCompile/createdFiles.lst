@@ -1,4 +1,2 @@
-Flujo\Buscar.class
-Contratista\Crear.class
-Obras\Buscar.class
-Obras\Crear.class
+sistema\Contratista.class
+sistema\Obra.class

@@ -33,7 +33,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class Reportes extends Thread {
 
     private static final String[] columns = {"NOMBRE_OBRA", "CONTRATISTA", "TIPO", "DIRECCION", "FECHA_INICIO", "FECHA_FIN", "VALOR", "ESTADO", "DESFASES"};
-    private String respuesta = "";
+    private boolean respuesta= true;
     private ArrayList<ObraDTO> obras;
 
     public Reportes(ArrayList<ObraDTO> obras) {
@@ -131,7 +131,11 @@ public class Reportes extends Thread {
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
-        respuesta = null;
+        respuesta = true;
     }
 
+    public boolean getRespuesta(){
+        return respuesta;
+    }
+    
 }

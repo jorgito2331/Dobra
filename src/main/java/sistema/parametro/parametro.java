@@ -5,8 +5,11 @@
  */
 package sistema.parametro;
 
+import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.LogDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ParametroDTO;
+import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.LogImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ParametroImplementacion;
+import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.LogNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ParametroNegocio;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -42,6 +45,12 @@ public class parametro extends HttpServlet {
         dTO.setArgumento(request.getParameter("id"));
         ParametroNegocio negocio = new ParametroImplementacion();
         negocio.actualizarParametro(dTO);
+        LogDTO logDTO = new LogDTO();
+        logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+        logDTO.setTipoCambio("3");
+        logDTO.setTipoObjeto("2");
+        LogNegocio logNegocio = new LogImplementacion();
+        logNegocio.crearLog(logDTO);
         response.sendRedirect("/Garantizar/parametro/manejar.jsp");
     }
 

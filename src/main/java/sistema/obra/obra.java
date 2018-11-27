@@ -6,11 +6,14 @@
 package sistema.obra;
 
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.DireccionDTO;
+import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.LogDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ObraDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.DireccionNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.DireccionImplementacion;
+import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.LogImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ObraImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ParametroImplementacion;
+import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.LogNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ObraNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ParametroNegocio;
 import java.io.IOException;
@@ -22,6 +25,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  *
@@ -47,13 +51,25 @@ public class obra extends HttpServlet {
             obraDTO.setValor(request.getParameter("nuevoValor"));    
             ObraNegocio negocioObra = new ObraImplementacion();
             negocioObra.actualizarObra(obraDTO);
+            LogDTO logDTO = new LogDTO();
+            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+            logDTO.setTipoCambio("2");
+            logDTO.setTipoObjeto("1");
+            LogNegocio logNegocio = new LogImplementacion();
+            logNegocio.crearLog(logDTO);
             response.sendRedirect("obra/manejar.jsp");
         } else if (request.getParameter("guardarNombre") != null) {
             ObraDTO obraDTO = new ObraDTO();
-            obraDTO.setNombre(request.getParameter("guardarValor"));
+            obraDTO.setNombre(request.getParameter("guardarNombre"));
             obraDTO.setArgumentos(request.getParameter("nuevoValor"));    
             ObraNegocio negocioObra = new ObraImplementacion();
             negocioObra.actualizarObra(obraDTO);
+            LogDTO logDTO = new LogDTO();
+            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+            logDTO.setTipoCambio("2");
+            logDTO.setTipoObjeto("1");
+            LogNegocio logNegocio = new LogImplementacion();
+            logNegocio.crearLog(logDTO);
             response.sendRedirect("obra/manejar.jsp");
         } else if (request.getParameter("guarManejar") != null) {
             response.sendRedirect("obra/buscar.jsp?busq=" + request.getParameter("busq"));
@@ -63,6 +79,12 @@ public class obra extends HttpServlet {
             dTO.setNombre(datos[0]);
             ObraNegocio negocioObra = new ObraImplementacion();
             negocioObra.eliminarObra(dTO);
+            LogDTO logDTO = new LogDTO();
+            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+            logDTO.setTipoCambio("3");
+            logDTO.setTipoObjeto("1");
+            LogNegocio logNegocio = new LogImplementacion();
+            logNegocio.crearLog(logDTO);
             response.sendRedirect("obra/buscar.jsp?busq=" + datos[1]);
         } else {
             String[] direccion = request.getParameter("guar").split(" ");
@@ -93,6 +115,12 @@ public class obra extends HttpServlet {
             dTO.setContratista(request.getParameter("contratista"));
             ObraNegocio negocioObra = new ObraImplementacion();
             negocioObra.crearObra(dTO);
+            LogDTO logDTO = new LogDTO();
+            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+            logDTO.setTipoCambio("1");
+            logDTO.setTipoObjeto("1");
+            LogNegocio logNegocio = new LogImplementacion();
+            logNegocio.crearLog(logDTO);
             response.sendRedirect("obra/manejar.jsp");
         }
     }

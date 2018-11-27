@@ -7,10 +7,13 @@ package sistema.contratista;
 
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ContratistaDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.DireccionDTO;
+import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.LogDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ContratistaNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.DireccionNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ContratistaImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.DireccionImplementacion;
+import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.LogImplementacion;
+import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.LogNegocio;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
@@ -71,6 +74,13 @@ public class contratista extends HttpServlet {
             cdto.setDireccion(dTO1);
             ContratistaNegocio contratistaNegocio = new ContratistaImplementacion();
             contratistaNegocio.crearContratista(cdto);
+            LogDTO logDTO = new LogDTO();
+            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+            logDTO.setTipoCambio("1");
+            logDTO.setTipoObjeto("2");
+            LogNegocio logNegocio = new LogImplementacion();
+            logNegocio.crearLog(logDTO);
+            response.sendRedirect("contratista/manejar.jsp");
         }
     }
 
