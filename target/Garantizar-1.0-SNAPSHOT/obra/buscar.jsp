@@ -29,6 +29,9 @@
     </head>
     <body>
         <%
+            if (session.getAttribute("tipo") == null) {
+                response.sendRedirect("/Garantizar/login.jsp");
+            }
             ObraNegocio obraNegocio = new ObraImplementacion();
             ArrayList<ObraDTO> dTO = obraNegocio.obtenerObras(request.getParameter("busq"));
             float tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
@@ -42,6 +45,7 @@
             DateMidnight d2;
             String rol = session.getAttribute("tipo").toString();
             DateMidnight hoy = new DateMidnight(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+            
             for (ObraDTO obra : dTO) {
                 tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
                 precioDuracionPorc = 0; //guarda el precio por cada porcentaje de tiempo
@@ -62,6 +66,7 @@
                     diasDesfasados = Days.daysBetween(d2, hoy).getDays();
                 }
                 String[] parametros = obra.getArgumentos().split(",");
+                System.out.println(obra.getArgumentos());
                 if (diasDesfasados > 0) {
                     desfases = Float.valueOf(df.format(desfases + Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[0]) / 100f)).replace(",", "."))).replace(",", "."));
                     tiempoDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getTiempoDuracion()) * (Float.parseFloat(parametros[1]) / 100f)).replace(",", "."));
@@ -94,6 +99,13 @@
                 <label>Ajustes</label>
             </div>
             <% }%>
+            <div class="menuItem" onclick="document.getElementById('logout').submit();">
+                <div class="image" id="salir"></div>
+                <label>Salir</label>
+                <form id="logout" method="POST" action="../login">
+                    <input type="hidden" name="logout" value="salir">
+                </form>
+            </div>
         </div>
         <div class="contenedor">
             <div class="bread">
@@ -112,7 +124,7 @@
                             <th>Duración</th>
                             <th>Valor</th>
                             <th>Desfase</th>
-                                <%if (session.getAttribute("tipo").equals("ADMIN")) {%>
+                                <%if ( session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN") ) {%>
                             <th>Acciones</th>
                                 <%}%>
                         </tr>

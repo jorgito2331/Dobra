@@ -39,19 +39,45 @@ public class login extends HttpServlet {
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
-        FuncionarioNegocio funcionarioNegocio = new FuncionarioImplementacion();
-        FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
-        funcionarioDTO.setId(request.getParameter("indentificacion"));
-        funcionarioDTO.setClave(request.getParameter("clave"));
-        FuncionarioDTO validador = funcionarioNegocio.validar(funcionarioDTO);
-        if (validador != null) {
+        String error = "";
+        if (request.getParameter("logout") != null) {
             HttpSession session = request.getSession();
-            validador.setClave("");
-            session.setAttribute("tipo", validador.getTipo());
-            session.setAttribute("id", validador.getId());
-            response.sendRedirect("/Garantizar/obra/manejar.jsp");
-        }else{
-            System.err.println("error");
+            session.invalidate();
+            response.sendRedirect("/Garantizar/login.jsp");
+        } else {
+            FuncionarioNegocio funcionarioNegocio = new FuncionarioImplementacion();
+            FuncionarioDTO funcionarioDTO = new FuncionarioDTO();
+            funcionarioDTO.setId(request.getParameter("indentificacion"));
+            funcionarioDTO.setClave(request.getParameter("clave"));
+            if (funcionarioDTO.getId() == null || funcionarioDTO.getClave() == null
+                    || funcionarioDTO.getId().isEmpty() || funcionarioDTO.getClave().isEmpty()) {
+                error = "Rellene todos los campos";
+            } else {
+                FuncionarioDTO validador = funcionarioNegocio.validar(funcionarioDTO);
+                if (validador != null) {
+                    HttpSession session = request.getSession();
+                    validador.setClave("");
+                    session.setAttribute("tipo", validador.getTipo());
+                    session.setAttribute("id", validador.getId());
+                    response.sendRedirect("/Garantizar/obra/manejar.jsp");
+                } else {
+                    error = "Usuario o contraseña incorrectos";
+                }
+            }
+        }
+            response.setContentType("text/html;charset=UTF-8");
+            try (PrintWriter out = response.getWriter()) {
+                /* TODO output your page here. You may use following sample code. */
+                out.println("<!DOCTYPE html>");
+                out.println("<html>");
+                out.println("<head>");
+                out.println("<title>Ha courrido un error</title>");
+                out.println("</head>");
+                out.println("<body>");
+                out.println("<script>alert('" + error + "');window.location.replace('/Garantizar/login.jsp')</script>");
+                out.println("</body>");
+                out.println("</html>");
+            
         }
     }
 
@@ -94,6 +120,7 @@ public class login extends HttpServlet {
         } catch (ClassNotFoundException ex) {
             Logger.getLogger(login.class.getName()).log(Level.SEVERE, null, ex);
         }
+
     }
 
     /**

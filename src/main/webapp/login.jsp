@@ -20,17 +20,20 @@
             <h1>Inicio de sesión</h1>
             <form  action="./login" method="POST">
                 <div class="in">
-                    <input type="text" name="indentificacion" min="10" maxlength="15" placeholder="Id"></div>
+                    <input type="text" name="indentificacion" min="10" maxlength="15" placeholder="Id" required="true"></div>
                 <div class="in">
-                    <input type="password" name="clave" min="8" maxlength="15" placeholder="Clave"></div>
+                    <input type="password" name="clave" min="8" maxlength="15" placeholder="Clave" required="true"></div>
                 <div class="control">
                     <input type="submit" class="enviar" value="Iniciar sesión">
 
                 </div>
             </form>
         </div>
-
-
-
+        <script type="text/javascript">
+            history.pushState(null, null, location.href);
+            window.onpopstate = function () {
+                history.go(1);
+            };
+        </script>
     </body>
 </html>

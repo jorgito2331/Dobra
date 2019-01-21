@@ -25,6 +25,9 @@
     </head>
     <body>
         <%
+            if (session.getAttribute("tipo") == null) {
+                response.sendRedirect("/Garantizar/login.jsp");
+            }
             ContratistaNegocio contratistaNegocio = new ContratistaImplementacion();
             ArrayList<ContratistaDTO> dTO = contratistaNegocio.obtenerContratistas("3");
         %>
@@ -41,12 +44,19 @@
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
-            <% if (session.getAttribute("tipo").equals("ADMIN")) {%>
+             <% if ( session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN") ) {%>
             <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
             </div>
             <% }%>
+            <div class="menuItem" onclick="document.getElementById('logout').submit();">
+                <div class="image" id="salir"></div>
+                <label>Salir</label>
+                <form id="logout" method="POST" action="../login">
+                    <input type="hidden" name="logout" value="salir">
+                </form>
+            </div>
         </div>
         <div class="contenedor">
             <div class="bread">

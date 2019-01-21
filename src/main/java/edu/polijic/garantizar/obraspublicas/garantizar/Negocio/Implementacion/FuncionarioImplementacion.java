@@ -74,28 +74,32 @@ public class FuncionarioImplementacion implements FuncionarioNegocio {
             statement = connection.prepareStatement(sql);
             statement.setString(1, funcionarioDTO.getId());
             rs = statement.executeQuery();
-            rs.first();
-            if (rs.getString(2).equals(getMD5(funcionarioDTO.getClave()))) {
-                FuncionarioDTO dTO = new FuncionarioDTO();
-                dTO.setId(rs.getString(1));
-                dTO.setClave(rs.getString(2));
-                dTO.setPriNombre(rs.getString(3));
-                dTO.setSegNombre(rs.getString(4));
-                dTO.setPriApellido(rs.getString(5));
-                dTO.setSegApellido(rs.getString(6));
-                dTO.setTipo(rs.getString(7));
-                dTO.setEstado(rs.getInt(8));
-                String[] permisos = rs.getString(9).split(",");
-                boolean[] permiso = new boolean[permisos.length];
-                for (int i = 0; i < permisos.length; i++) {
-                    if (permisos[i].equals("0")) {
-                        permiso[i] = false;
-                    } else {
-                        permiso[i] = true;
+            if (rs.first()) {
+                
+
+                if (rs.getString(2) != null && rs.getString(2).equals(getMD5(funcionarioDTO.getClave()))) {
+                    FuncionarioDTO dTO = new FuncionarioDTO();
+                    dTO.setId(rs.getString(1));
+                    dTO.setClave(rs.getString(2));
+                    dTO.setPriNombre(rs.getString(3));
+                    dTO.setSegNombre(rs.getString(4));
+                    dTO.setPriApellido(rs.getString(5));
+                    dTO.setSegApellido(rs.getString(6));
+                    dTO.setTipo(rs.getString(7));
+                    dTO.setEstado(rs.getInt(8));
+                    String[] permisos = rs.getString(9).split(",");
+                    boolean[] permiso = new boolean[permisos.length];
+                    for (int i = 0; i < permisos.length; i++) {
+                        if (permisos[i].equals("0")) {
+                            permiso[i] = false;
+                        } else {
+                            permiso[i] = true;
+                        }
                     }
+                    dTO.setPermisos(permiso);
+                    return dTO;
                 }
-                dTO.setPermisos(permiso);
-                return dTO;
+
             }
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioImplementacion.class.getName()).log(Level.SEVERE, null, ex);

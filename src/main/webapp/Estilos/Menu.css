@@ -17,15 +17,17 @@ and open the template in the editor.
 
 .menuItem{
     width: 7vw;
-    height: 17vh;
+    height: 15vh;
     flex-direction: column;
     padding: 1vh 0;
     color: white;
+    cursor: pointer;
+    transition: 0.3s;
 }
 
 .menuItem .image{
     width: 7vw;
-    height: 15vh;    
+    height: 14vh;    
 }
 
 #obras{
@@ -56,18 +58,25 @@ and open the template in the editor.
     background-position: top;
 }
 
+#salir{
+    background: url(../Imagenes/exit.png);
+    background-size: 80%;
+    background-repeat: no-repeat;
+    background-position: top;
+}
+
 .menuItem label{
     display: flex;
     width: 7vw;
     height: 1vh;
     justify-content: center;
     align-items: flex-end;
+    cursor: pointer;
 }
 
 .menuItem:hover{
     background: white;
     color: black;
-    cursor: pointer;
 }
 
 .menuItem.seleccionado{
