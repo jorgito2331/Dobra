@@ -45,7 +45,7 @@ public class Reportes extends Thread {
         try (Workbook workbook = new XSSFWorkbook()) {            
             ParametroNegocio parametroNegocio = new ParametroImplementacion();
             SimpleDateFormat ft = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-            File archivo = new File("../reportes/Reporte" + ft.format(new Date()) + ".xlsx");
+            File archivo = new File(parametroNegocio.obtenerParametro("4").getNombre() + "/"+ ft.format(new Date()) + ".xlsx");
             CreationHelper createHelper = workbook.getCreationHelper();
             Sheet sheet = workbook.createSheet("Obras");
             Row headerRow = sheet.createRow(0);
@@ -124,10 +124,11 @@ public class Reportes extends Thread {
 
                 // Cerramos el libro para concluir operaciones
                 workbook.close();
-
+                salida.close();
             } catch (FileNotFoundException ex) {
             } catch (IOException ex) {
             }
+            System.out.println(archivo.getPath());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }

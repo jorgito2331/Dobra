@@ -60,8 +60,8 @@
         </div>
         <div class="contenedor">
             <div class="bread">
-                <a href="manejar.jsp">Contratista &#8250;</a>
-                <a href="crear.jsp">Crear Contratista &#8250;</a>
+                <a href="manejar.jsp">Funcionario &#8250;</a>
+                <a href="crear.jsp">Crear Funcionario &#8250;</a>
             </div>
             <form class="formulario" action="../funcionario" method="POST">
                 <div class="campo">
@@ -89,7 +89,7 @@
                     <input name="segApe" id="segApe">
                 </div>
                 <div class="control">
-                    <button type="submit" class="cancelar" id="cancelarBtn" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
+                    <button type="submit" class="cancelar" id="cancelarBtn" name="cancelar" value="cancelar">Cancelar</button>
                     <button type="submit" class="guardar" id="GuardarForm" name="guar">Guardar</button>
                 </div>
             </form>

@@ -108,8 +108,8 @@ public class ParametroImplementacion implements ParametroNegocio {
         String sql = "UPDATE `parametro` SET `ARGUMENTO` = ? WHERE `parametro`.`ID` = ?";
         try {
             statement = connection.prepareStatement(sql);
-            statement.setInt(1, Integer.parseInt(parametro.getId()));
-            statement.setString(2, parametro.getArgumento());
+            statement.setString(1, parametro.getArgumento());
+            statement.setInt(2, Integer.parseInt(parametro.getId()));
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ParametroImplementacion.class.getName()).log(Level.SEVERE, null, ex);

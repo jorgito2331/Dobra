@@ -66,7 +66,6 @@
                     diasDesfasados = Days.daysBetween(d2, hoy).getDays();
                 }
                 String[] parametros = obra.getArgumentos().split(",");
-                System.out.println(obra.getArgumentos());
                 if (diasDesfasados > 0) {
                     desfases = Float.valueOf(df.format(desfases + Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[0]) / 100f)).replace(",", "."))).replace(",", "."));
                     tiempoDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getTiempoDuracion()) * (Float.parseFloat(parametros[1]) / 100f)).replace(",", "."));
@@ -110,6 +109,7 @@
         <div class="contenedor">
             <div class="bread">
                 <a href="manejar.jsp">Obra &#8250;</a>
+                <a href="buscar.jsp">Buscar Obra &#8250;</a>
             </div>
             <div class="tabla">
                 <table id="table_id" class="display">
@@ -138,8 +138,9 @@
                             <td>
                                 <form class="campoForm" action="../obra" method="POST">
                                     <input name="nuevoValor" value="<%= cdto.getNombre()%>"
-                                           onkeyup="guardar<%= cdto.getNombre()%>.style.display = 'flex'"
-                                           required="true">
+                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar"  + cdto.getNombre() + ".style.display = 'flex'\"" %>
+                                           required="true"
+                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "" %>>
                                     <button id="guardar<%= cdto.getNombre()%>" name="guardarNombre" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
                                 </form>
                             </td>
@@ -152,8 +153,9 @@
                             <td>
                                 <form class="campoForm" action="../obra" method="POST">
                                     <input name="nuevoValor" value="<%= cdto.getValor()%>"
-                                           onkeyup="guardar<%= cdto.getNombre()%>Valor.style.display = 'flex'"
-                                           required="true">
+                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar"  + cdto.getNombre() + ".style.display = 'flex'" %>
+                                           required="true"
+                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "" %>>
                                     <button id="guardar<%= cdto.getNombre()%>Valor" name="guardarValor" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
                                 </form>
                             </td>

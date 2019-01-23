@@ -86,7 +86,10 @@ public class obra extends HttpServlet {
             LogNegocio logNegocio = new LogImplementacion();
             logNegocio.crearLog(logDTO);
             response.sendRedirect("obra/buscar.jsp?busq=" + datos[1]);
+        } else if(request.getParameter("cancelar") != null){
+            response.sendRedirect("obra/manejar.jsp");
         } else {
+            System.out.println(request.getParameter("cancelar"));
             String[] direccion = request.getParameter("guar").split(" ");
             ObraDTO dTO = new ObraDTO();
             dTO.setNombre(request.getParameter("nombre").toUpperCase());

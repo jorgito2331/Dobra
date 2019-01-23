@@ -41,8 +41,8 @@ public class parametro extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         ParametroDTO dTO = new ParametroDTO();
-        dTO.setId(request.getParameter("nuevoValor"));
-        dTO.setArgumento(request.getParameter("id"));
+        dTO.setId(request.getParameter("id"));
+        dTO.setArgumento(request.getParameter("nuevoValor"));
         ParametroNegocio negocio = new ParametroImplementacion();
         negocio.actualizarParametro(dTO);
         LogDTO logDTO = new LogDTO();

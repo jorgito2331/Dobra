@@ -49,7 +49,9 @@ public class contratista extends HttpServlet {
                 request.setAttribute("nombre", request.getParameter("nombre"));
             }
             response.sendRedirect("contratista/buscar.jsp");
-        } else {
+        } if(request.getParameter("cancelar") != null){
+            response.sendRedirect("contratista/manejar.jsp");
+        }else {
             String[] direccion = request.getParameter("guar").split(" ");
             ContratistaDTO cdto = new ContratistaDTO();
             cdto.setNombre(request.getParameter("nombre").toUpperCase());

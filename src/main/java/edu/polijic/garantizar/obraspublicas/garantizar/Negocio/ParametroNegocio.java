@@ -5,7 +5,6 @@
  */
 package edu.polijic.garantizar.obraspublicas.garantizar.Negocio;
 
-import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ObraDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ParametroDTO;
 import java.util.ArrayList;
 

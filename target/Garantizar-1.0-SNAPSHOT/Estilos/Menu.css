@@ -10,7 +10,7 @@ and open the template in the editor.
 .menu{
     width: 7vw;
     height: 100vh;
-    background: #00aa72;
+    background: #606cd3;
     padding-top: 7vh;
     flex-direction: column;
 }
@@ -31,7 +31,7 @@ and open the template in the editor.
 }
 
 #obras{
-    background: url(../Imagenes/digger.png);
+    background: url(../Imagenes/school.png);
     background-size: 80%;
     background-repeat: no-repeat;
     background-position: top;

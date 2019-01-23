@@ -95,7 +95,7 @@
                     <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa">
                 </div>
                 <div class="control">
-                    <button type="submit" class="cancelar" id="cancelarBtn" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
+                    <button type="submit" class="cancelar" id="cancelarBtn" name="cancelar" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
                     <button type="submit" class="guardar" id="GuardarForm" name="guar">Guardar</button>
                 </div>
             </form>

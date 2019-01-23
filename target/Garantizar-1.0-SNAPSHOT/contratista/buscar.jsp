@@ -61,6 +61,7 @@
         <div class="contenedor">
             <div class="bread">
                 <a href="manejar.jsp">Contratistas &#8250;</a>
+                <a href="buscar.jsp">Buscar contratista &#8250;</a>
             </div>
             <div class="tabla">
                 <table id="table_id" class="display">

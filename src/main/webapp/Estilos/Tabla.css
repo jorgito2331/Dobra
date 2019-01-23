@@ -19,3 +19,26 @@ and open the template in the editor.
 #table_id_filter{
     display: none;
 }
+
+table{
+    text-transform: uppercase;
+}
+
+table input{
+    height: 3.5vh;
+}
+
+table form button{
+    margin: 0 1vw;
+    padding: 0.5vh 1vw;
+    color: white;
+    border: none;
+    background: #4BB86B;
+    transition: 0.3s;
+}
+
+table form button:hover{
+    background: white;
+    color: black;
+    cursor: pointer;
+}
