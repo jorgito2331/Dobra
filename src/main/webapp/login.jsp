@@ -24,7 +24,7 @@
                 <div class="in">
                     <input type="password" name="clave" min="8" maxlength="15" placeholder="Clave" required="true"></div>
                 <div class="control">
-                    <input type="submit" class="enviar" value="Iniciar sesión">
+                    <input type="submit" id="iniciar" class="enviar" value="Iniciar sesión">
 
                 </div>
             </form>
