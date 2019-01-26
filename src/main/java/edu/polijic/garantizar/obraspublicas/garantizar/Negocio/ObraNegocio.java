@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Jorge-PC
  */
 public interface ObraNegocio {
-    public boolean crearObra(ObraDTO obra);
+    public String crearObra(ObraDTO obra);
     public ObraDTO obtenerObra(ObraDTO obra);
     public ArrayList<ObraDTO> obtenerObras(String parametro); 
     public void actualizarObra(ObraDTO obra);

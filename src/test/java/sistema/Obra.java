@@ -85,8 +85,8 @@ public class Obra {
         objeto.setArgumentos(negocio.obtenerParametro("2").getNombre());
         objeto.setContratista("JIC");
         ObraNegocio negocioObra = new ObraImplementacion();
-        boolean respuesta = negocioObra.crearObra(objeto);
-        assertTrue(respuesta);
+        String respuesta = negocioObra.crearObra(objeto);
+        assertTrue(respuesta != null);
     }
 
     @Test

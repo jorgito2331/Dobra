@@ -44,7 +44,7 @@
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
-            <% if ( session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN") ) {%>
+            <% if (session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN")) {%>
             <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
@@ -74,7 +74,7 @@
                 </div>                
                 <div class="campo">
                     <label>Tipo de identificación</label>
-                    <select name="tipoId" name="tipoIdenti">
+                    <select name="tipoId">
                         <option value="0">Seleccione</option>
                         <% for (ParametroDTO parametro : tipoId) {
                         %>
@@ -92,7 +92,7 @@
                 </div>
                 <div class="campo">
                     <label>Dirección</label>
-                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa">
+                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa" id="dirr">
                 </div>
                 <div class="control">
                     <button type="submit" class="cancelar" id="cancelarBtn" name="cancelar" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
@@ -194,7 +194,7 @@
                 </div>
                 <div class="control">
                     <button class="cancelar" onclick="$('#direccionModal').removeClass('mostrar')">Cancelar</button>
-                    <button class="guardar" onclick="guardar()">Guardar</button>
+                    <button class="guardar" onclick="guardar()" id="guardar">Guardar</button>
                 </div>
             </div>
         </div>
@@ -203,20 +203,42 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
         <script>
+                        var direccion = "";
+                        direccion = direccion + (($('#tipVia').val() === "0") ? "" : $('#tipVia').val() + " ");
+                        direccion = direccion + (($('#numVia').val() === "0") ? "" : $('#numVia').val() + " ");
+                        direccion = direccion + (($('#sufVia').val() === "0") ? "" : $('#sufVia').val() + " ");
+                        direccion = direccion + (($('#cardVia').val() === "0") ? "" : $('#cardVia').val() + " ");
+                        direccion = direccion + (($('#priNum').val() === "0") ? "" : $('#priNum').val() + " ");
+                        direccion = direccion + (($('#sufPriNum').val() === "0") ? "" : $('#sufPriNum').val() + " ");
+                        direccion = direccion + (($('#cardPriNum').val() === "0") ? "" : $('#cardPriNum').val() + " ");
+                        direccion = direccion + (($('#segNum').val() === "0") ? "" : $('#segNum').val() + " ");
+                        direccion = direccion + (($('#sufSegNum').val() === "0") ? "" : $('#sufSegNum').val() + " ");
+                        $('#dirr').val(direccion);
                         function guardar() {
                             $('#direccionModal').removeClass('mostrar');
                             var direccion = "";
-                            direccion = direccion + $('#tipVia').val() + " ";
-                            direccion = direccion + $('#numVia').val() + " ";
-                            direccion = direccion + $('#sufVia').val() + " ";
-                            direccion = direccion + $('#cardVia').val() + " ";
-                            direccion = direccion + $('#priNum').val() + " ";
-                            direccion = direccion + $('#sufPriNum').val() + " ";
-                            direccion = direccion + $('#cardPriNum').val() + " ";
-                            direccion = direccion + $('#segNum').val() + " ";
-                            direccion = direccion + $('#sufSegNum').val() + " ";
+                            direccion = direccion + (($('#tipVia').val() === "0") ? "" : $('#tipVia').val() + " ");
+                            direccion = direccion + (($('#numVia').val() === "0") ? "" : $('#numVia').val() + " ");
+                            direccion = direccion + (($('#sufVia').val() === "0") ? "" : $('#sufVia').val() + " ");
+                            direccion = direccion + (($('#cardVia').val() === "0") ? "" : $('#cardVia').val() + " ");
+                            direccion = direccion + (($('#priNum').val() === "0") ? "" : $('#priNum').val() + " ");
+                            direccion = direccion + (($('#sufPriNum').val() === "0") ? "" : $('#sufPriNum').val() + " ");
+                            direccion = direccion + (($('#cardPriNum').val() === "0") ? "" : $('#cardPriNum').val() + " ");
+                            direccion = direccion + (($('#segNum').val() === "0") ? "" : $('#segNum').val() + " ");
+                            direccion = direccion + (($('#sufSegNum').val() === "0") ? "" : $('#sufSegNum').val() + " ");
+                            $('#dirr').val(direccion);
+                            direccion = "";
+                            direccion = direccion + (($('#tipVia').val() == "0") ? "0@" : $('#tipVia').val()) + " ";
+                            direccion = direccion + (($('#numVia').val() == "0") ? "0@" : $('#numVia').val()) + " ";
+                            direccion = direccion + (($('#sufVia').val() == "0") ? "0@" : $('#sufVia').val()) + " ";
+                            direccion = direccion + (($('#cardVia').val() == "0") ? "0@" : $('#cardVia').val()) + " ";
+                            direccion = direccion + (($('#priNum').val() == "0") ? "0@" : $('#priNum').val()) + " ";
+                            direccion = direccion + (($('#sufPriNum').val() == "0") ? "0@" : $('#sufPriNum').val()) + " ";
+                            direccion = direccion + (($('#cardPriNum').val() == "0") ? "0@" : $('#cardPriNum').val()) + " ";
+                            direccion = direccion + (($('#segNum').val() == "0") ? "0@" : $('#segNum').val()) + " ";
+                            direccion = direccion + (($('#sufSegNum').val() == "0") ? "0@" : $('#sufSegNum').val()) + " ";
+                            console.log(direccion);
                             $('#GuardarForm').val(direccion);
-
                         }
         </script>
     </body>

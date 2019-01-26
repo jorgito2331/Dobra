@@ -4,6 +4,7 @@
     Author     : Jorge-PC
 --%>
 
+<%@page import="java.text.NumberFormat"%>
 <%@page import="edu.polijic.garantizar.obraspublicas.garantizar.DTOs.FuncionarioDTO"%>
 <%@page import="java.text.DecimalFormat"%>
 <%@page import="sistema.Reportes"%>
@@ -24,8 +25,8 @@
         <link href="../Estilos/Menu.css" rel="stylesheet">
         <link href="../Estilos/Bread.css" rel="stylesheet">
         <link href="../Estilos/General.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">        
         <link href="../Estilos/Tabla.css" rel="stylesheet">
-        <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
     </head>
     <body>
         <%
@@ -45,7 +46,8 @@
             DateMidnight d2;
             String rol = session.getAttribute("tipo").toString();
             DateMidnight hoy = new DateMidnight(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            
+            NumberFormat formatter = new DecimalFormat("#.###");
+            String number = "";
             for (ObraDTO obra : dTO) {
                 tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
                 precioDuracionPorc = 0; //guarda el precio por cada porcentaje de tiempo
@@ -73,8 +75,9 @@
                     tiempoDesfXPorcDias = Float.valueOf(df.format(diasDesfasados / ((tiempoDuracionPorc == 0) ? 1f : tiempoDuracionPorc)).replace(",", "."));
                     desfases = Float.valueOf(df.format(desfases + (Float.valueOf(df.format(tiempoDesfXPorcDias * precioDuracionPorc).replace(",", ".")))).replace(",", "."));
                 }
-                obra.setDesfaces(desfases + "");
+                obra.setDesfaces(formatter.format(desfases));
                 obra.setTiempoDuracion(days + "");
+
             }
             Reportes reportes = new Reportes(dTO);
             reportes.start();
@@ -124,7 +127,7 @@
                             <th>Duración</th>
                             <th>Valor</th>
                             <th>Desfase</th>
-                                <%if ( session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN") ) {%>
+                                <%if (session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN")) {%>
                             <th>Acciones</th>
                                 <%}%>
                         </tr>
@@ -133,14 +136,15 @@
 
                         <%
                             if (dTO != null) {
-                                for (ObraDTO cdto : dTO) {%>
+                                for (ObraDTO cdto : dTO) {
+                        %>
                         <tr>
                             <td>
                                 <form class="campoForm" action="../obra" method="POST">
-                                    <input name="nuevoValor" value="<%= cdto.getNombre()%>"
-                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar"  + cdto.getNombre() + ".style.display = 'flex'\"" %>
-                                           required="true"
-                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "" %>>
+                                    <textarea rows = "2" cols = "0" name = "nuevoValor"
+                                              <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar" + cdto.getNombre() + ".style.display = 'flex'\""%>
+                                              required="true"
+                                              <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : ""%>><%= cdto.getNombre()%></textarea>
                                     <button id="guardar<%= cdto.getNombre()%>" name="guardarNombre" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
                                 </form>
                             </td>
@@ -153,20 +157,22 @@
                             <td>
                                 <form class="campoForm" action="../obra" method="POST">
                                     <input name="nuevoValor" value="<%= cdto.getValor()%>"
-                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar"  + cdto.getNombre() + ".style.display = 'flex'" %>
+                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar" + cdto.getNombre() + ".style.display = 'flex'"%>
                                            required="true"
-                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "" %>>
+                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : ""%>>
                                     <button id="guardar<%= cdto.getNombre()%>Valor" name="guardarValor" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
                                 </form>
                             </td>
                             <td><%= cdto.getDesfaces()%></td>
                             <%if (rol.equals("ADMIN") && cdto.getFinalizado() == null) {%>
-                            <td>
+                            <td class="acciones">
                                 <form action="../obra" method="POST">
                                     <button type="submit" name="finalizar" value="<%= cdto.getNombre()%>;<%= request.getParameter("busq")%>">Finalizar</button>
                                 </form>
                             </td>
-                            <%}%>
+                            <% } else if (rol.equals("ADMIN")) {%>
+                            <td class="acciones">Finalizada</td>
+                            <% } %>
                         </tr>
                         <% }
                         } else {
@@ -181,7 +187,6 @@
                     </tbody>
                 </table>
             </div>
-
             <script
                 src="https://code.jquery.com/jquery-3.3.1.min.js"
                 integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -189,7 +194,33 @@
             <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
             <script>
                 $(document).ready(function () {
-                    $('#table_id').DataTable();
+                    $('#table_id').DataTable({
+                        "order": [[3, "desc"]],
+                        language: {
+                            "decimal": "",
+                            "emptyTable": "No hay datos",
+                            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                            "infoFiltered": "(Filtro de _MAX_ total registros)",
+                            "infoPostFix": "",
+                            "thousands": ",",
+                            "lengthMenu": "Mostrar _MENU_ registros",
+                            "loadingRecords": "Cargando...",
+                            "processing": "Procesando...",
+                            "search": "Buscar:",
+                            "zeroRecords": "No se encontraron coincidencias",
+                            "paginate": {
+                                "first": "Primero",
+                                "last": "Ultimo",
+                                "next": "Próximo",
+                                "previous": "Anterior"
+                            },
+                            "aria": {
+                                "sortAscending": ": Activar orden de columna ascendente",
+                                "sortDescending": ": Activar orden de columna desendente"
+                            }
+                        }
+                    });
                 });
             </script>
     </body>

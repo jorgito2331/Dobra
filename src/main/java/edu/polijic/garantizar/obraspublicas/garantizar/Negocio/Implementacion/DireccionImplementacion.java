@@ -36,18 +36,8 @@ public class DireccionImplementacion implements DireccionNegocio {
     @Override
     public void crearDireccion(DireccionDTO direccion) {
         try {
-            statement = connection.prepareStatement("INSERT INTO `direccion` (`TIPO_VIA`, `NUM_VIA`, `SUF_VIA`, `CARD_VIA`, `NUM_PRI`, `SUF_PRI`, `CARD_PRI`, `NUM_SEG`, `SUF_SEG`, `COMPLEMENTO`, `DIR_COMPLETA`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
-            statement.setString(1, direccion.getTipoVia());
-            statement.setInt(2, direccion.getNumVia());
-            statement.setString(3, direccion.getSufVia());
-            statement.setString(4, direccion.getCardVia());
-            statement.setInt(5, direccion.getNumPri());
-            statement.setString(6, direccion.getSufPri());
-            statement.setString(7, direccion.getCardPri());
-            statement.setInt(8, direccion.getNumSeg());
-            statement.setString(9, direccion.getSufSeg());
-            statement.setString(10, direccion.getComplemento());
-            statement.setString(11, direccion.getCompleta());
+            statement = connection.prepareStatement("INSERT INTO `direccion` (`DIR_COMPLETA`) VALUES (?)");
+            statement.setString(1, direccion.getCompleta());
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(DireccionImplementacion.class.getName()).log(Level.SEVERE, null, ex);

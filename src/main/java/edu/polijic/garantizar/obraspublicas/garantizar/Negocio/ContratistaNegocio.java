@@ -13,7 +13,7 @@ import java.util.ArrayList;
  * @author Jorge-PC
  */
 public interface ContratistaNegocio {
-    public boolean crearContratista(ContratistaDTO contratista);
+    public String crearContratista(ContratistaDTO contratista);
     public ContratistaDTO obtenerContratista(ContratistaDTO contratista);
     public ArrayList<ContratistaDTO> obtenerContratistas(String criterio); 
     public void actualizarContratista(ContratistaDTO contratista);

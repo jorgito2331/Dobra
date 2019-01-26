@@ -44,15 +44,15 @@ public class contratista extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         if (request.getParameter("guarManejar") != null) {
-                request.setAttribute("busqueda", request.getParameter("busq"));
-            if(request.getParameter("nombre") != null){
+            request.setAttribute("busqueda", request.getParameter("busq"));
+            if (request.getParameter("nombre") != null) {
                 request.setAttribute("nombre", request.getParameter("nombre"));
             }
             response.sendRedirect("contratista/buscar.jsp");
-        } if(request.getParameter("cancelar") != null){
+        }
+        if (request.getParameter("cancelar") != null) {
             response.sendRedirect("contratista/manejar.jsp");
-        }else {
-            String[] direccion = request.getParameter("guar").split(" ");
+        } else {
             ContratistaDTO cdto = new ContratistaDTO();
             cdto.setNombre(request.getParameter("nombre").toUpperCase());
             cdto.setCorreo(request.getParameter("correo"));
@@ -60,29 +60,36 @@ public class contratista extends HttpServlet {
             cdto.setIdentificacion(request.getParameter("identificacion"));
             cdto.setTelefono(request.getParameter("telefono"));
             DireccionDTO dTO1 = new DireccionDTO();
-            dTO1.setTipoVia(direccion[0]);
-            dTO1.setNumVia(Integer.parseInt(direccion[1]));
-            dTO1.setSufVia(direccion[2]);
-            dTO1.setCardVia(direccion[3]);
-            dTO1.setNumPri(Integer.parseInt(direccion[4]));
-            dTO1.setSufPri(direccion[5]);
-            dTO1.setCardPri(direccion[6]);
-            dTO1.setNumSeg(Integer.parseInt(direccion[7]));
-            dTO1.setSufSeg(direccion[8]);
             dTO1.setCompleta(request.getParameter("completa"));
             DireccionNegocio direccionNegocio = new DireccionImplementacion();
             direccionNegocio.crearDireccion(dTO1);
             dTO1.setId(direccionNegocio.obtenerId());
             cdto.setDireccion(dTO1);
             ContratistaNegocio contratistaNegocio = new ContratistaImplementacion();
-            contratistaNegocio.crearContratista(cdto);
-            LogDTO logDTO = new LogDTO();
-            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
-            logDTO.setTipoCambio("1");
-            logDTO.setTipoObjeto("2");
-            LogNegocio logNegocio = new LogImplementacion();
-            logNegocio.crearLog(logDTO);
-            response.sendRedirect("contratista/manejar.jsp");
+            String respuesta = contratistaNegocio.crearContratista(cdto);
+            if (respuesta != null) {
+                response.setContentType("text/html;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) {
+                    /* TODO output your page here. You may use following sample code. */
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Ha courrido un error</title>");
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<script>alert('" + respuesta + "');window.history.back();</script>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
+            } else {
+                LogDTO logDTO = new LogDTO();
+                logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+                logDTO.setTipoCambio("1");
+                logDTO.setTipoObjeto("2");
+                LogNegocio logNegocio = new LogImplementacion();
+                logNegocio.crearLog(logDTO);
+                response.sendRedirect("contratista/manejar.jsp");
+            }
         }
     }
 

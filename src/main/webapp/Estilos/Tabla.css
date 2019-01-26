@@ -8,24 +8,31 @@ and open the template in the editor.
     Author     : Jorge-PC
 */
 .tabla{
-    width: 93vw;
-    height: 93vh;
+    width: 90vw;
+    height: 90vh;
+    padding: 1vh 1.5vw 0 1vw;
 }
 
 .tabla, .tabla div{    
     display: block;
 }
 
-#table_id_filter{
+#table_id_length{
+    display: none;
+}
+
+#table_id_info{
     display: none;
 }
 
 table{
     text-transform: uppercase;
+    table-layout: auto;
 }
 
 table input{
     height: 3.5vh;
+    border: none;
 }
 
 table form button{
@@ -42,3 +49,14 @@ table form button:hover{
     color: black;
     cursor: pointer;
 }
+
+textarea{
+    resize: none;
+    border: none;
+}
+
+.acciones{
+    align-content: center;
+    justify-content: center;
+}
+

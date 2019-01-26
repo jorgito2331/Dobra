@@ -40,7 +40,7 @@ public class ObraImplementacion implements ObraNegocio {
     }
 
     @Override
-    public boolean crearObra(ObraDTO obra) {
+    public String crearObra(ObraDTO obra) {
         try {
             statement = connection.prepareStatement("INSERT INTO `obra` (`ID`, `CONTRATISTA`, `TIPO`, `DIRECCION`, `FEC_INI`, `FEC_FIN`, `VALOR`, `ESTADO`, `DES_ARG`) VALUES (?, ?, ?, ?, ?, ?, ?, '0', ?)");
             statement.setString(1, obra.getNombre());
@@ -53,12 +53,18 @@ public class ObraImplementacion implements ObraNegocio {
             statement.setString(8, obra.getArgumentos());
             statement.execute();
         } catch (SQLException ex) {
-            Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+            if (ex.getMessage().contains("Duplicate entry")) {
+                return "El nombre de la obra ya está en uso";
+            } else if (ex.getMessage().contains("foreign key constraint fails")) {
+                return "Seleccione un contratista";
+            } else {
+                Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+                return "Ha ocurrido un error";
+            }
         }
-        
-        return true;
-        
+
+        return null;
+
     }
 
     @Override

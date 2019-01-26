@@ -36,7 +36,7 @@ public class ContratistaImplementacion implements ContratistaNegocio {
     }
 
     @Override
-    public boolean crearContratista(ContratistaDTO contratista) {
+    public String crearContratista(ContratistaDTO contratista) {
         try {
             statement = connection.serverPrepareStatement("INSERT INTO `contratista` (`NOMBRE`, `CORREO`, `TIPO_ID`, `IDENTIFICACION`, `TELEFONO`, `DIRECCION`) VALUES (?, ?, ?, ?, ?, ?)");
             statement.setString(1, contratista.getNombre());
@@ -47,10 +47,13 @@ public class ContratistaImplementacion implements ContratistaNegocio {
             statement.setInt(6, Integer.parseInt(contratista.getDireccion().getId()));
             statement.execute();            
         } catch (SQLException ex) {
-            Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
+             if (ex.getMessage().contains("Duplicate entry")) {
+                return "El nombre del contratista ya está en uso";
+            }else{
+                return "Ha ocurrido un error";
+            }
         }
-        return true;
+        return null;
     }
 
     @Override

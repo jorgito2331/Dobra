@@ -17,6 +17,7 @@ import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.LogNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ObraNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ParametroNegocio;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -48,7 +49,7 @@ public class obra extends HttpServlet {
         if (request.getParameter("guardarValor") != null) {
             ObraDTO obraDTO = new ObraDTO();
             obraDTO.setNombre(request.getParameter("guardarValor"));
-            obraDTO.setValor(request.getParameter("nuevoValor"));    
+            obraDTO.setValor(request.getParameter("nuevoValor"));
             ObraNegocio negocioObra = new ObraImplementacion();
             negocioObra.actualizarObra(obraDTO);
             LogDTO logDTO = new LogDTO();
@@ -61,7 +62,7 @@ public class obra extends HttpServlet {
         } else if (request.getParameter("guardarNombre") != null) {
             ObraDTO obraDTO = new ObraDTO();
             obraDTO.setNombre(request.getParameter("guardarNombre"));
-            obraDTO.setArgumentos(request.getParameter("nuevoValor"));    
+            obraDTO.setArgumentos(request.getParameter("nuevoValor"));
             ObraNegocio negocioObra = new ObraImplementacion();
             negocioObra.actualizarObra(obraDTO);
             LogDTO logDTO = new LogDTO();
@@ -86,11 +87,10 @@ public class obra extends HttpServlet {
             LogNegocio logNegocio = new LogImplementacion();
             logNegocio.crearLog(logDTO);
             response.sendRedirect("obra/buscar.jsp?busq=" + datos[1]);
-        } else if(request.getParameter("cancelar") != null){
+        } else if (request.getParameter("cancelar") != null) {
             response.sendRedirect("obra/manejar.jsp");
         } else {
             System.out.println(request.getParameter("cancelar"));
-            String[] direccion = request.getParameter("guar").split(" ");
             ObraDTO dTO = new ObraDTO();
             dTO.setNombre(request.getParameter("nombre").toUpperCase());
             dTO.setTipo(request.getParameter("tipo"));
@@ -98,16 +98,7 @@ public class obra extends HttpServlet {
             dTO.setFechaInicio(request.getParameter("inicio"));
             dTO.setFechaFin(request.getParameter("fin"));
             //Parte de direccion
-            DireccionDTO dTO1 = new DireccionDTO();
-            dTO1.setTipoVia(direccion[0]);
-            dTO1.setNumVia(Integer.parseInt(direccion[1]));
-            dTO1.setSufVia(direccion[2]);
-            dTO1.setCardVia(direccion[3]);
-            dTO1.setNumPri(Integer.parseInt(direccion[4]));
-            dTO1.setSufPri(direccion[5]);
-            dTO1.setCardPri(direccion[6]);
-            dTO1.setNumSeg(Integer.parseInt(direccion[7]));
-            dTO1.setSufSeg(direccion[8]);
+            DireccionDTO dTO1 = new DireccionDTO();;
             dTO1.setCompleta(request.getParameter("completa"));
             DireccionNegocio direccionNegocio = new DireccionImplementacion();
             direccionNegocio.crearDireccion(dTO1);
@@ -117,14 +108,31 @@ public class obra extends HttpServlet {
             dTO.setArgumentos(negocio.obtenerParametro("2").getNombre());
             dTO.setContratista(request.getParameter("contratista"));
             ObraNegocio negocioObra = new ObraImplementacion();
-            negocioObra.crearObra(dTO);
-            LogDTO logDTO = new LogDTO();
-            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
-            logDTO.setTipoCambio("1");
-            logDTO.setTipoObjeto("1");
-            LogNegocio logNegocio = new LogImplementacion();
-            logNegocio.crearLog(logDTO);
-            response.sendRedirect("obra/manejar.jsp");
+            String respuesta = negocioObra.crearObra(dTO);
+            if (respuesta != null) {
+                response.setContentType("text/html;charset=UTF-8");
+                try (PrintWriter out = response.getWriter()) {
+                    /* TODO output your page here. You may use following sample code. */
+                    out.println("<!DOCTYPE html>");
+                    out.println("<html>");
+                    out.println("<head>");
+                    out.println("<title>Ha courrido un error</title>");
+                    out.println("</head>");
+                    out.println("<body>");
+                    out.println("<script>alert('" + respuesta +"');window.history.back();</script>");
+                    out.println("</body>");
+                    out.println("</html>");
+                }
+            } else {
+                LogDTO logDTO = new LogDTO();
+                logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+                logDTO.setTipoCambio("1");
+                logDTO.setTipoObjeto("1");
+                LogNegocio logNegocio = new LogImplementacion();
+                logNegocio.crearLog(logDTO);
+                response.sendRedirect("obra/manejar.jsp");
+            }
+
         }
     }
 

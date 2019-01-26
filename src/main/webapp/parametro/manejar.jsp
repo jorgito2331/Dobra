@@ -25,8 +25,8 @@
         <link href="../Estilos/Menu.css" rel="stylesheet">
         <link href="../Estilos/Bread.css" rel="stylesheet">
         <link href="../Estilos/General.css" rel="stylesheet">
-        <link href="../Estilos/Tabla.css" rel="stylesheet">
         <link href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" rel="stylesheet">
+        <link href="../Estilos/Tabla.css" rel="stylesheet">
     </head>
     <body>
         <%
@@ -52,7 +52,7 @@
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
-             <% if ( session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN") ) {%>
+            <% if (session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN")) {%>
             <div class="menuItem seleccionado" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
@@ -94,7 +94,7 @@
                                            onkeyup="guardar<%= cdto.getId()%>.style.display = 'flex'"
                                            required="true"
                                            pattern="<%= cdto.getReglas()%>"
-                                           title="<%= (cdto.getMensaje() != null) ? cdto.getMensaje() : "" %>">
+                                           title="<%= (cdto.getMensaje() != null) ? cdto.getMensaje() : ""%>">
                                     <button id="guardar<%= cdto.getId()%>" name="id" value="<%= cdto.getId()%>" style="display : none">Guardar</button>
                                 </form>
                             </td>
@@ -119,9 +119,34 @@
             crossorigin="anonymous"></script>
             <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
             <script>
-                                $(document).ready(function () {
-                                    $('#table_id').DataTable();
-                                });
+                                               $(document).ready(function () {
+                                               $('#table_id').DataTable({
+                                               "order": [[3, "desc"]],
+                                                       language: {
+                                                       "decimal": "",
+                                                               "emptyTable": "No hay datos",
+                                                               "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                                               "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                                               "infoFiltered": "(Filtro de _MAX_ total registros)",
+                                                               "infoPostFix": "",
+                                                               "thousands": ",",
+                                                               "lengthMenu": "Mostrar _MENU_ registros",
+                                                               "loadingRecords": "Cargando...",
+                                                               "processing": "Procesando...",
+                                                               "search": "Buscar:",
+                                                               "zeroRecords": "No se encontraron coincidencias",
+                                                               "paginate": {
+                                                               "first": "Primero",
+                                                                       "last": "Ultimo",
+                                                                       "next": "Próximo",
+                                                                       "previous": "Anterior"
+                                                               },
+                                                               "aria": {
+                                                               "sortAscending": ": Activar orden de columna ascendente",
+                                                                       "sortDescending": ": Activar orden de columna desendente"
+                                                               }
+                                                       }
+                                               });
             </script>
     </body>
 </html>

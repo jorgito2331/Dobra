@@ -62,7 +62,7 @@
             <form class="formulario" action="buscar.jsp" method="POST">        
                 <div class="control">
                     <%if (session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN")) {%>
-                    <a id="cancelarBtn" href="crear.jsp">Crear</a>
+                    <a id="crear" href="crear.jsp">Crear</a>
                     <%}%>
                     <button type="submit" class="guardar" id="GuardarForm" name="guarManejar" value="guardar">Buscar Todos</button>
                 </div>

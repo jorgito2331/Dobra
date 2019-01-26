@@ -47,7 +47,7 @@
                 <div class="image" id="funcionarios"></div>
                 <label>Funcionarios</label>
             </div>
-            <% if ( session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN") ) {%>
+            <% if (session.getAttribute("tipo") != null && session.getAttribute("tipo").equals("ADMIN")) {%>
             <div class="menuItem" onclick="window.location.replace('../parametro/manejar.jsp')">
                 <div class="image" id="ajustes"></div>
                 <label>Ajustes</label>
@@ -95,7 +95,7 @@
                 </div>
                 <div class="campo">
                     <label>Dirección</label>
-                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa" id="dirr">
+                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa" id="dirr" autocomplete="off">
                 </div>
                 <div class="campo">
                     <label>Contratista</label>
@@ -216,6 +216,17 @@
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script>
         <script>
+                        var direccion = "";
+                        direccion = direccion + (($('#tipVia').val() === "0") ? "" : $('#tipVia').val() + " ");
+                        direccion = direccion + (($('#numVia').val() === "0") ? "" : $('#numVia').val() + " ");
+                        direccion = direccion + (($('#sufVia').val() === "0") ? "" : $('#sufVia').val() + " ");
+                        direccion = direccion + (($('#cardVia').val() === "0") ? "" : $('#cardVia').val() + " ");
+                        direccion = direccion + (($('#priNum').val() === "0") ? "" : $('#priNum').val() + " ");
+                        direccion = direccion + (($('#sufPriNum').val() === "0") ? "" : $('#sufPriNum').val() + " ");
+                        direccion = direccion + (($('#cardPriNum').val() === "0") ? "" : $('#cardPriNum').val() + " ");
+                        direccion = direccion + (($('#segNum').val() === "0") ? "" : $('#segNum').val() + " ");
+                        direccion = direccion + (($('#sufSegNum').val() === "0") ? "" : $('#sufSegNum').val() + " ");
+                        $('#dirr').val(direccion);
                         function guardar() {
                             $('#direccionModal').removeClass('mostrar');
                             var direccion = "";

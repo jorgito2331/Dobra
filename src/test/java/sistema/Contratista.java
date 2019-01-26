@@ -71,8 +71,8 @@ public class Contratista {
         ParametroNegocio negocio = new ParametroImplementacion();
         objeto.setDireccion(dTO1);
         ContratistaNegocio contratistaNegocio = new ContratistaImplementacion();
-        boolean respuesta = contratistaNegocio.crearContratista(objeto);
-        assertTrue(respuesta);
+        String respuesta = contratistaNegocio.crearContratista(objeto);
+        assertTrue(respuesta != null);
     }
 
 }
