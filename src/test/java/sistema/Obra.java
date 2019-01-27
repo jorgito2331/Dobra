@@ -133,7 +133,7 @@ public class Obra {
             obra.setDesfaces(desfases + "");
             obra.setTiempoDuracion(days + "");
         }
-        Reportes reportes = new Reportes(dTO);
+        Reportes reportes = new Reportes(dTO, "Admin");
         reportes.start();
         assertTrue(reportes.getRespuesta());
     }

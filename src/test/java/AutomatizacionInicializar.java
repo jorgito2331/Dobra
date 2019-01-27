@@ -49,33 +49,33 @@ public class AutomatizacionInicializar {
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(100, TimeUnit.SECONDS);
     }
 
     @AfterClass
     public static void tearDownClass() {
-        driver.quit();
     }
 
     @Before
     public void setUp() {
-        driver.get(LINK_PANTALLA_PRINCIPAL);
+        System.out.println("hola");
     }
 
     @After
     public void tearDown() {
+        System.out.println("listo");
     }
 
+    
+
     @Test
-    public void Test01IniciarSesion() {        
+    public void Test01CrearContratista() {     
         Login login = new Login(driver);        
         login.setTxtIdentificacion(funcionarioDTO.getId());
         login.setTxtPassword(funcionarioDTO.getClave());
         login.clickLogin();
-    }
-
-    @Test
-    public void Test02CrearContratista() {
+        login.assertPrueba();
+    
         Crear crear = new Crear(driver);
         crear.clickIrAContratistas();
         crear.clickBtnAdicionar();
@@ -87,9 +87,15 @@ public class AutomatizacionInicializar {
         crear.clickTxtDireccion();
         new automatizacion.direccion.Crear(driver, contratistaDTO.getDireccion());
         crear.clickBtnGuardar();
-        crear.assertTest();
+        crear.assertPrueba();
     }
 
+    @Test
+    public void Test03CrearObra() {
+        //automatizacion.obra.Crear crear = new automatizacion.obra.Crear(driver)
+        System.out.println("aqui estoy");
+    }
+    
     private static void setearDatos() throws SQLException, ClassNotFoundException {
         funcionarioDTO = new FuncionarioDTO();
         funcionarioDTO.setId("admin");

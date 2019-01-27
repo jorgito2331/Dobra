@@ -49,7 +49,7 @@ public class obra extends HttpServlet {
         if (request.getParameter("guardarValor") != null) {
             ObraDTO obraDTO = new ObraDTO();
             obraDTO.setNombre(request.getParameter("guardarValor"));
-            obraDTO.setValor(request.getParameter("nuevoValor"));
+            obraDTO.setValor(request.getParameter("nuevoValor").replace("$", ""));
             ObraNegocio negocioObra = new ObraImplementacion();
             String respuesta = negocioObra.actualizarObra(obraDTO);
             if (respuesta != null) {
@@ -99,7 +99,6 @@ public class obra extends HttpServlet {
         } else if (request.getParameter("cancelar") != null) {
             response.sendRedirect("obra/manejar.jsp");
         } else {
-            System.out.println(request.getParameter("cancelar"));
             ObraDTO dTO = new ObraDTO();
             dTO.setNombre(request.getParameter("nombre").toUpperCase());
             dTO.setTipo(request.getParameter("tipo"));
@@ -107,7 +106,7 @@ public class obra extends HttpServlet {
             dTO.setFechaInicio(request.getParameter("inicio"));
             dTO.setFechaFin(request.getParameter("fin"));
             //Parte de direccion
-            DireccionDTO dTO1 = new DireccionDTO();;
+            DireccionDTO dTO1 = new DireccionDTO();
             dTO1.setCompleta(request.getParameter("completa"));
             DireccionNegocio direccionNegocio = new DireccionImplementacion();
             direccionNegocio.crearDireccion(dTO1);

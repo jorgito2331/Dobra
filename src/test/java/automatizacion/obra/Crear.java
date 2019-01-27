@@ -17,7 +17,7 @@ public class Crear {
     WebDriver driver;
     By irObras = By.id("obras");
 
-    public Crear(WebDriver driver, ObraDTO obra) {
+    public Crear(WebDriver driver) {
         this.driver = driver;
     }
     

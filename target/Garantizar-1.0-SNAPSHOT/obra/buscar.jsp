@@ -69,17 +69,24 @@
                 }
                 String[] parametros = obra.getArgumentos().split(",");
                 if (diasDesfasados > 0) {
+                    //multiplica el valor de la obra por el porcentaje que se cobra por primer desfase
                     desfases = Float.valueOf(df.format(desfases + Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[0]) / 100f)).replace(",", "."))).replace(",", "."));
+                    //Se multiplica el tiempo de duracion por el parametro que dice cada cuanto se debe cobrar el porcentaje de desfase
                     tiempoDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getTiempoDuracion()) * (Float.parseFloat(parametros[1]) / 100f)).replace(",", "."));
+                    //Se multiplica el precio de la obra por el paramtro que dice cuanto se cobra por cada porcentaje de tiempo de duracion
                     precioDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[2]) / 100f)).replace(",", "."));
+                    //Se obtiene cuantas veces se va cobrar el porcentaje de desfase de la obra
                     tiempoDesfXPorcDias = Float.valueOf(df.format(diasDesfasados / ((tiempoDuracionPorc == 0) ? 1f : tiempoDuracionPorc)).replace(",", "."));
+                    //Se multiplica las veces de tiempo que se cobra el valor del desfase
                     desfases = Float.valueOf(df.format(desfases + (Float.valueOf(df.format(tiempoDesfXPorcDias * precioDuracionPorc).replace(",", ".")))).replace(",", "."));
+                    obra.setDesfaces("$" + formatter.format(desfases) + " en " + diasDesfasados + " días");
+                } else {
+                    obra.setDesfaces("No aplica");
                 }
-                obra.setDesfaces(formatter.format(desfases));
                 obra.setTiempoDuracion(days + "");
 
             }
-            Reportes reportes = new Reportes(dTO);
+            Reportes reportes = new Reportes(dTO, session.getAttribute("id").toString());
             reportes.start();
         %>
         <div class="menu">
@@ -154,10 +161,13 @@
                             <td><%= cdto.getTiempoDuracion()%></td>
                             <td>
                                 <form class="campoForm" action="../obra" method="POST">
-                                    <input name="nuevoValor" value="<%= cdto.getValor()%>"
-                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar" + cdto.getNombre().replace(" ", "_") + "Valor.style.display = 'flex'\""%>
-                                           required="true"
-                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : ""%>>
+                                    <input name="nuevoValor" 
+                                           pattern="^\\$[0-9]{1,15}"
+                                           title="Debe comenzar con el signo $ y máximo 15 números"
+                                           maxlength="15"
+                                           value="$<%= cdto.getValor()%>"
+                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar" + cdto.getNombre().replace(" ", "_") + "Valor.style.display = 'flex'; escrituraEnCampo(this)\""%>
+                                           required="true">
                                     <button id="guardar<%= cdto.getNombre().replace(" ", "_")%>Valor" name="guardarValor" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
                                 </form>
                             </td>
@@ -223,6 +233,11 @@
                         }
                     });
                 });
+
+                function escrituraEnCampo(campo) {
+                    var aux = campo.value.replace("$", "");
+                    campo.value = '$' + aux;
+                }
             </script>
     </body>
 </html>

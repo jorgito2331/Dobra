@@ -32,12 +32,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class Reportes extends Thread {
 
-    private static final String[] columns = {"NOMBRE_OBRA", "CONTRATISTA", "TIPO", "DIRECCION", "FECHA_INICIO", "FECHA_FIN", "VALOR", "ESTADO", "DESFASES"};
+    private static final String[] columns = {"NOMBRE OBRA", "CONTRATISTA", "TIPO", "DIRECCIÓN", "FECHA INICIO", "FECHA FIN", "VALOR", "ESTADO", "DESFASES"};
     private boolean respuesta= true;
     private ArrayList<ObraDTO> obras;
+    private String usuario;
 
-    public Reportes(ArrayList<ObraDTO> obras) {
+    public Reportes(ArrayList<ObraDTO> obras, String usuario) {
         this.obras = obras;
+        this.usuario = usuario;
     }
 
     @Override
@@ -48,8 +50,9 @@ public class Reportes extends Thread {
             File archivo = new File(parametroNegocio.obtenerParametro("4").getNombre() + "/"+ ft.format(new Date()) + ".xlsx");
             CreationHelper createHelper = workbook.getCreationHelper();
             Sheet sheet = workbook.createSheet("Obras");
-            Row headerRow = sheet.createRow(0);
             CellStyle backgroundStyle = workbook.createCellStyle();
+            backgroundStyle.setFillForegroundColor(IndexedColors.GREY_25_PERCENT.getIndex());
+            backgroundStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
             backgroundStyle.setBorderBottom(BorderStyle.THIN);
             backgroundStyle.setBottomBorderColor(IndexedColors.BLACK.getIndex());
             backgroundStyle.setBorderLeft(BorderStyle.THIN);
@@ -67,46 +70,83 @@ public class Reportes extends Thread {
             borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             borderStyle.setBorderTop(BorderStyle.THIN);
             borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
+            
+            
+            Cell cell = null;
+            Row usuarioGenera = sheet.createRow(0);
+            cell = usuarioGenera.createCell(0);
+            cell.setCellValue("Usuario");
+            cell.setCellStyle(backgroundStyle);
+            cell = usuarioGenera.createCell(1);
+            cell.setCellValue(usuario);   
+            cell.setCellStyle(borderStyle);
+            
+            Row fecha = sheet.createRow(1);
+            cell = fecha.createCell(0);
+            cell.setCellValue("Fecha");
+            cell.setCellStyle(backgroundStyle);
+            cell = fecha.createCell(1);
+            cell.setCellValue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));   
+            cell.setCellStyle(borderStyle);
+            
+            Row CantidadObras = sheet.createRow(2);
+            cell = CantidadObras.createCell(0);
+            cell.setCellValue("Cantidad Obras");
+            cell.setCellStyle(backgroundStyle);
+            cell = CantidadObras.createCell(1);
+            cell.setCellValue(obras.size());   
+            cell.setCellStyle(borderStyle);
+            
+            Row headerRow = sheet.createRow(4);
             for (int i = 0; i < columns.length; i++) {
-                Cell cell = headerRow.createCell(i);
+                cell = headerRow.createCell(i);
                 cell.setCellValue(columns[i]);
                 cell.setCellStyle(backgroundStyle);
             }   // Create Cell Style for formatting Date
             CellStyle dateCellStyle = workbook.createCellStyle();
             dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
             // Create Other rows and cells with employees data
-            int rowNum = 1;
+            int rowNum = 5;
             for (ObraDTO obra : obras) {
                 Row row = sheet.createRow(rowNum++);
 
-                row.createCell(0)
-                        .setCellValue(obra.getNombre());
+                cell = row.createCell(0);
+                cell.setCellValue(obra.getNombre());
+                cell.setCellStyle(borderStyle);
 
-                row.createCell(1)
-                        .setCellValue(obra.getContratista());
+                cell = row.createCell(1);
+                cell.setCellValue(obra.getContratista());
+                cell.setCellStyle(borderStyle);
 
-                row.createCell(2)
-                        .setCellValue(obra.getTipo());
+                cell = row.createCell(2);
+                cell.setCellValue(obra.getTipo());
+                cell.setCellStyle(borderStyle);
 
-                row.createCell(3)
-                        .setCellValue(obra.getDireccion().getCompleta());
+                cell = row.createCell(3);
+                cell.setCellValue(obra.getDireccion().getCompleta());
+                cell.setCellStyle(borderStyle);
 
                 Cell dateOfBirthCell = row.createCell(4);
                 dateOfBirthCell.setCellValue(obra.getFechaInicio());
                 dateOfBirthCell.setCellStyle(dateCellStyle);
+                dateOfBirthCell.setCellStyle(borderStyle);
 
                 Cell dateOfBirthCell1 = row.createCell(5);
                 dateOfBirthCell1.setCellValue(obra.getFechaFin());
                 dateOfBirthCell1.setCellStyle(dateCellStyle);
+                dateOfBirthCell1.setCellStyle(borderStyle);
 
-                row.createCell(6)
-                        .setCellValue(obra.getValor());
+                cell = row.createCell(6);
+                cell.setCellValue(obra.getValor());
+                cell.setCellStyle(borderStyle);
 
-                row.createCell(7)
-                        .setCellValue(obra.getEstado());
+                cell = row.createCell(7);
+                cell.setCellValue((obra.getEstado().equals("1") ? "Finalizada" : "En ejecución"));
+                cell.setCellStyle(borderStyle);
 
-                row.createCell(8)
-                        .setCellValue(obra.getDesfaces());
+                cell = row.createCell(8);
+                cell.setCellValue(obra.getDesfaces());
+                cell.setCellStyle(borderStyle);
             }   // Resize all columns to fit the content size
             for (int i = 0; i < columns.length; i++) {
                 sheet.autoSizeColumn(i);
