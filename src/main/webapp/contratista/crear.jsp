@@ -63,18 +63,18 @@
                 <a href="manejar.jsp">Contratista &#8250;</a>
                 <a href="crear.jsp">Crear Contratista &#8250;</a>
             </div>
-            <form class="formulario" action="../contratista" method="POST">
+            <form class="formulario" action="../contratista" method="POST" autocomplete="off">
                 <div class="campo">
                     <label>Nombre</label>
-                    <input name="nombre" id="nombre">
+                    <input name="nombre" id="nombre" required="true">
                 </div>
                 <div class="campo">
                     <label>Correo</label>
-                    <input type="email" name="correo" id="correo">
+                    <input type="email" name="correo" id="correo" required="true" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" title="El correo tiene un formato incorrecto">
                 </div>                
                 <div class="campo">
                     <label>Tipo de identificación</label>
-                    <select name="tipoId">
+                    <select name="tipoId" required="true">
                         <option value="0">Seleccione</option>
                         <% for (ParametroDTO parametro : tipoId) {
                         %>
@@ -84,18 +84,18 @@
                 </div>
                 <div class="campo">
                     <label>Identificación</label>
-                    <input name="identificacion" id="identificacion">
+                    <input name="identificacion" id="identificacion" required="true">
                 </div>
                 <div class="campo">
                     <label>Teléfono</label>
-                    <input name="telefono" id="telefono">
+                    <input name="telefono" id="telefono" required="true" pattern="^[0-9]{7,13}$">
                 </div>
                 <div class="campo">
                     <label>Dirección</label>
-                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa" id="dirr">
+                    <input onclick="$('#direccionModal').addClass('mostrar')" name="completa" id="dirr" required="true" readonly>
                 </div>
                 <div class="control">
-                    <button type="submit" class="cancelar" id="cancelarBtn" name="cancelar" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
+                    <a class="cancelar" id="cancelarBtn" href="manejar.jsp">Cancelar</a>
                     <button type="submit" class="guardar" id="GuardarForm" name="guar">Guardar</button>
                 </div>
             </form>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="campo">
                     <label>Número de via</label>
-                    <input type="number" maxlength="" pattern="" id="numVia" value="0">
+                    <input type="number" maxlength="" pattern="" id="numVia" value="">
                 </div>
                 <div class="campo">
                     <label>Sufijo de via</label>
@@ -146,7 +146,7 @@
                 </div>
                 <div class="campo">
                     <label>Primer número</label>
-                    <input type="number" maxlength="" pattern="" id="priNum" value="0">
+                    <input type="number" maxlength="" pattern="" id="priNum" value="">
                 </div>
                 <div class="campo">
                     <label>Sufijo primer número</label>
@@ -177,7 +177,7 @@
                 </div>
                 <div class="campo">
                     <label>Segundo número</label>
-                    <input type="number" maxlength="" pattern="" id="segNum" value="0">
+                    <input type="number" maxlength="" pattern="" id="segNum" value="">
                 </div>
                 <div class="campo">
                     <label>Sufijo segundo número</label>
@@ -215,7 +215,6 @@
                         direccion = direccion + (($('#sufSegNum').val() === "0") ? "" : $('#sufSegNum').val() + " ");
                         $('#dirr').val(direccion);
                         function guardar() {
-                            $('#direccionModal').removeClass('mostrar');
                             var direccion = "";
                             direccion = direccion + (($('#tipVia').val() === "0") ? "" : $('#tipVia').val() + " ");
                             direccion = direccion + (($('#numVia').val() === "0") ? "" : $('#numVia').val() + " ");
@@ -239,6 +238,11 @@
                             direccion = direccion + (($('#sufSegNum').val() == "0") ? "0@" : $('#sufSegNum').val()) + " ";
                             console.log(direccion);
                             $('#GuardarForm').val(direccion);
+                            if ( $('#tipVia').val() != "0" && $('#numVia').val() != ""){
+                                $('#direccionModal').removeClass('mostrar');
+                            }else{
+                                alert("Debe llenar los campos tipo y número de vía");
+                            }
                         }
         </script>
     </body>

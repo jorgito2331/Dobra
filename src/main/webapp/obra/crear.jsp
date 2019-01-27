@@ -66,10 +66,10 @@
                 <a href="manejar.jsp">Obra &#8250;</a>
                 <a href="crear.jsp">Crear Obra &#8250;</a>
             </div>
-            <form class="formulario" action="../obra" method="POST">
+            <form class="formulario" action="../obra" method="POST" autocomplete="off">
                 <div class="campo">
                     <label>Nombre</label>
-                    <input name="nombre" id="nombre">
+                    <input name="nombre" id="nombre" required="true">
                 </div>
                 <div class="campo">
                     <label>Tipo de obra</label>
@@ -83,19 +83,19 @@
                 </div>
                 <div class="campo">
                     <label>Valor</label>
-                    <input type="number" name="valor">
+                    <input type="number" name="valor" required="true">
                 </div>
                 <div class="campo">
                     <label>Fecha inicio</label>
-                    <input type="date" name="inicio">
+                    <input type="date" name="inicio" required="true">
                 </div>
                 <div class="campo">
                     <label>Fecha fin</label>
-                    <input type="date" name="fin">
+                    <input type="date" name="fin" required="true">
                 </div>
                 <div class="campo">
                     <label>Dirección</label>
-                    <input onclick="$('#direccionModal').addClass('mostrar')" onlyread="true" name="completa" id="dirr" autocomplete="off">
+                    <input onclick="$('#direccionModal').addClass('mostrar')" name="completa" id="dirr" required="true" readonly>
                 </div>
                 <div class="campo">
                     <label>Contratista</label>
@@ -108,7 +108,7 @@
                     </select>
                 </div>
                 <div class="control">
-                    <button type="submit" class="cancelar" id="cancelarBtn" name="cancelar" onclick="$('#cancelarBtn').val('cancelar')">Cancelar</button>
+                    <a class="cancelar" id="cancelarBtn" href="manejar.jsp">Cancelar</a>
                     <button type="submit" class="guardar" id="GuardarForm" name="guar">Guardar</button>
                 </div>
             </form>
@@ -117,7 +117,7 @@
             <div class="direccion">
                 <div class="campo">
                     <label>Tipo de via</label>
-                    <select name="TVia" id="tipVia">
+                    <select name="TVia" id="tipVia" required="true">
                         <option value="">Seleccione</option>
                         <option value="Calle">Calle</option>
                         <option value="Carrera">Carrera</option>
@@ -128,7 +128,7 @@
                 </div>
                 <div class="campo">
                     <label>Número de via</label>
-                    <input type="number" maxlength="" pattern="" id="numVia" value="">
+                    <input type="number" maxlength="3" id="numVia" value="" required="true">
                 </div>
                 <div class="campo">
                     <label>Sufijo de via</label>
@@ -159,7 +159,7 @@
                 </div>
                 <div class="campo">
                     <label>Primer número</label>
-                    <input type="number" maxlength="" pattern="" id="priNum" value="">
+                    <input type="number" maxlength="3" id="priNum" value="">
                 </div>
                 <div class="campo">
                     <label>Sufijo primer número</label>
@@ -190,7 +190,7 @@
                 </div>
                 <div class="campo">
                     <label>Segundo número</label>
-                    <input type="number" maxlength="" pattern="" id="segNum" value="">
+                    <input type="number" maxlength="3" id="segNum" value="">
                 </div>
                 <div class="campo">
                     <label>Sufijo segundo número</label>
@@ -228,7 +228,6 @@
                         direccion = direccion + (($('#sufSegNum').val() === "0") ? "" : $('#sufSegNum').val() + " ");
                         $('#dirr').val(direccion);
                         function guardar() {
-                            $('#direccionModal').removeClass('mostrar');
                             var direccion = "";
                             direccion = direccion + (($('#tipVia').val() == "") ? "0" : $('#tipVia').val()) + " ";
                             direccion = direccion + (($('#numVia').val() == "") ? "0" : $('#numVia').val()) + " ";
@@ -251,6 +250,11 @@
                             direccion = direccion + $('#segNum').val() + " ";
                             direccion = direccion + $('#sufSegNum').val() + " ";
                             $('#dirr').val(direccion);
+                            if ( $('#tipVia').val() != "0" && $('#numVia').val() != ""){
+                                $('#direccionModal').removeClass('mostrar');
+                            }else{
+                                alert("Debe llenar los campos tipo y número de vía");
+                            }
                         }
         </script>
     </body>

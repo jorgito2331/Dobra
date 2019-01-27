@@ -33,6 +33,7 @@ table{
 table input{
     height: 3.5vh;
     border: none;
+    background: transparent;
 }
 
 table form button{
@@ -51,12 +52,18 @@ table form button:hover{
 }
 
 textarea{
+    text-transform: uppercase;
     resize: none;
     border: none;
+    background: transparent;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .acciones{
-    align-content: center;
+    align-items: center;
     justify-content: center;
+    text-align: center;
 }
 

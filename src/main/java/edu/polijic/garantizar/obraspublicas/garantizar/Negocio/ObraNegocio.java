@@ -16,7 +16,7 @@ public interface ObraNegocio {
     public String crearObra(ObraDTO obra);
     public ObraDTO obtenerObra(ObraDTO obra);
     public ArrayList<ObraDTO> obtenerObras(String parametro); 
-    public void actualizarObra(ObraDTO obra);
+    public String actualizarObra(ObraDTO obra);
     public void eliminarObra(ObraDTO obra);
     public void eliminarObras(ObraDTO obra);
 }

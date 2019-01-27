@@ -122,8 +122,7 @@
                             <th>Contratista</th>
                             <th>Tipo</th>
                             <th>Dirección</th>
-                            <th>Inicio</th>
-                            <th>Fin</th>
+                            <th>Fechas</th>
                             <th>Duración</th>
                             <th>Valor</th>
                             <th>Desfase</th>
@@ -141,26 +140,25 @@
                         <tr>
                             <td>
                                 <form class="campoForm" action="../obra" method="POST">
-                                    <textarea rows = "2" cols = "0" name = "nuevoValor"
-                                              <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar" + cdto.getNombre() + ".style.display = 'flex'\""%>
+                                    <textarea rows = "<%= (cdto.getNombre().length() > 20) ? 2 : 1%>" cols = "0" name = "nuevoValor"
+                                              <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar" + cdto.getNombre().replace(" ", "_") + ".style.display = 'flex'\""%>
                                               required="true"
                                               <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : ""%>><%= cdto.getNombre()%></textarea>
-                                    <button id="guardar<%= cdto.getNombre()%>" name="guardarNombre" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
+                                    <button id="guardar<%= cdto.getNombre().replace(" ", "_")%>" name="guardarNombre" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
                                 </form>
                             </td>
                             <td><%= cdto.getContratista()%></td>
                             <td><%= cdto.getTipo()%></td>
                             <td><%= cdto.getDireccion().getCompleta()%></td>
-                            <td><%= cdto.getFechaInicio()%></td>
-                            <td><%= cdto.getFechaFin()%></td>
+                            <td><%= cdto.getFechaInicio() + " - " + cdto.getFechaFin()%></td>
                             <td><%= cdto.getTiempoDuracion()%></td>
                             <td>
                                 <form class="campoForm" action="../obra" method="POST">
                                     <input name="nuevoValor" value="<%= cdto.getValor()%>"
-                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar" + cdto.getNombre() + ".style.display = 'flex'"%>
+                                           <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : "onkeyup=\"guardar" + cdto.getNombre().replace(" ", "_") + "Valor.style.display = 'flex'\""%>
                                            required="true"
                                            <%= (!rol.equals("ADMIN") || cdto.getFinalizado() != null) ? "readonly" : ""%>>
-                                    <button id="guardar<%= cdto.getNombre()%>Valor" name="guardarValor" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
+                                    <button id="guardar<%= cdto.getNombre().replace(" ", "_")%>Valor" name="guardarValor" value="<%= cdto.getNombre()%>" style="display : none">Guardar</button>
                                 </form>
                             </td>
                             <td><%= cdto.getDesfaces()%></td>
@@ -193,6 +191,9 @@
             crossorigin="anonymous"></script>
             <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
             <script>
+                if (performance.navigation.type == 2) {
+                    location.reload(true);
+                }
                 $(document).ready(function () {
                     $('#table_id').DataTable({
                         "order": [[3, "desc"]],

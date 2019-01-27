@@ -51,27 +51,36 @@ public class obra extends HttpServlet {
             obraDTO.setNombre(request.getParameter("guardarValor"));
             obraDTO.setValor(request.getParameter("nuevoValor"));
             ObraNegocio negocioObra = new ObraImplementacion();
-            negocioObra.actualizarObra(obraDTO);
-            LogDTO logDTO = new LogDTO();
-            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
-            logDTO.setTipoCambio("2");
-            logDTO.setTipoObjeto("1");
-            LogNegocio logNegocio = new LogImplementacion();
-            logNegocio.crearLog(logDTO);
-            response.sendRedirect("obra/manejar.jsp");
+            String respuesta = negocioObra.actualizarObra(obraDTO);
+            if (respuesta != null) {
+
+                devolver(respuesta, response);
+            } else {
+                LogDTO logDTO = new LogDTO();
+                logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+                logDTO.setTipoCambio("2");
+                logDTO.setTipoObjeto("1");
+                LogNegocio logNegocio = new LogImplementacion();
+                logNegocio.crearLog(logDTO);
+                devolver(respuesta, response);
+            }
         } else if (request.getParameter("guardarNombre") != null) {
             ObraDTO obraDTO = new ObraDTO();
             obraDTO.setNombre(request.getParameter("guardarNombre"));
             obraDTO.setArgumentos(request.getParameter("nuevoValor"));
             ObraNegocio negocioObra = new ObraImplementacion();
-            negocioObra.actualizarObra(obraDTO);
-            LogDTO logDTO = new LogDTO();
-            logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
-            logDTO.setTipoCambio("2");
-            logDTO.setTipoObjeto("1");
-            LogNegocio logNegocio = new LogImplementacion();
-            logNegocio.crearLog(logDTO);
-            response.sendRedirect("obra/manejar.jsp");
+            String respuesta = negocioObra.actualizarObra(obraDTO);
+            if (respuesta != null) {
+                devolver(respuesta, response);
+            } else {
+                LogDTO logDTO = new LogDTO();
+                logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
+                logDTO.setTipoCambio("2");
+                logDTO.setTipoObjeto("1");
+                LogNegocio logNegocio = new LogImplementacion();
+                logNegocio.crearLog(logDTO);
+                devolver(respuesta, response);
+            }
         } else if (request.getParameter("guarManejar") != null) {
             response.sendRedirect("obra/buscar.jsp?busq=" + request.getParameter("busq"));
         } else if (request.getParameter("finalizar") != null) {
@@ -110,19 +119,7 @@ public class obra extends HttpServlet {
             ObraNegocio negocioObra = new ObraImplementacion();
             String respuesta = negocioObra.crearObra(dTO);
             if (respuesta != null) {
-                response.setContentType("text/html;charset=UTF-8");
-                try (PrintWriter out = response.getWriter()) {
-                    /* TODO output your page here. You may use following sample code. */
-                    out.println("<!DOCTYPE html>");
-                    out.println("<html>");
-                    out.println("<head>");
-                    out.println("<title>Ha courrido un error</title>");
-                    out.println("</head>");
-                    out.println("<body>");
-                    out.println("<script>alert('" + respuesta +"');window.history.back();</script>");
-                    out.println("</body>");
-                    out.println("</html>");
-                }
+                devolver(respuesta, response);
             } else {
                 LogDTO logDTO = new LogDTO();
                 logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
@@ -133,6 +130,26 @@ public class obra extends HttpServlet {
                 response.sendRedirect("obra/manejar.jsp");
             }
 
+        }
+    }
+
+    public void devolver(String respuesta, HttpServletResponse response) throws IOException {
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Ha courrido un error</title>");
+            out.println("</head>");
+            out.println("<body>");
+            if (respuesta == null) {
+                out.println("<script>window.history.back();</script>");
+            } else {
+                out.println("<script>alert('" + respuesta + "');window.history.back();</script>");
+            }
+            out.println("</body>");
+            out.println("</html>");
         }
     }
 

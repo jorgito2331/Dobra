@@ -1,6 +1,7 @@
-AutomatizacionInicializar.class
 sistema\Obra.class
-automatizacion\obra\Crear.class
 automatizacion\contratista\Crear.class
 sistema\Contratista.class
 automatizacion\sistema\Login.class
+AutomatizacionInicializar.class
+automatizacion\direccion\Crear.class
+automatizacion\obra\Crear.class

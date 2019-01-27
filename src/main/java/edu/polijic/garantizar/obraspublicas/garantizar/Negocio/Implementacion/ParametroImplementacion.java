@@ -42,7 +42,7 @@ public class ParametroImplementacion implements ParametroNegocio {
     @Override
     public ParametroDTO obtenerParametro(String parametro) {
         if (parametro.equals("2")) {
-            String sql = "SELECT par.ARGUMENTO FROM parametro par WHERE par.ID IN (1, 2 , 3) GROUP BY par.ARGUMENTO";
+            String sql = "SELECT par.ARGUMENTO FROM parametro par WHERE par.ID IN (1, 2 , 3) ORDER BY par.ID ASC";
             String datos = "";
             ParametroDTO par = new ParametroDTO();
             try {

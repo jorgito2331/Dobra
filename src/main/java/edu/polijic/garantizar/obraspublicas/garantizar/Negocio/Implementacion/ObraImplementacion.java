@@ -111,7 +111,7 @@ public class ObraImplementacion implements ObraNegocio {
     }
 
     @Override
-    public void actualizarObra(ObraDTO obra) {
+    public String actualizarObra(ObraDTO obra) {
         try {
             String sql = "";
             if (obra.getArgumentos() != null) {
@@ -126,8 +126,13 @@ public class ObraImplementacion implements ObraNegocio {
             statement.setString(2, obra.getNombre());
             statement.executeUpdate();
         } catch (SQLException ex) {
-            Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+            if (ex.getMessage().contains("Duplicate entry")) {
+                return "El nombre de la obra ya está en uso";
+            } else {
+                Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
+        return null;
     }
 
     @Override

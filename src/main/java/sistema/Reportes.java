@@ -128,7 +128,6 @@ public class Reportes extends Thread {
             } catch (FileNotFoundException ex) {
             } catch (IOException ex) {
             }
-            System.out.println(archivo.getPath());
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
