@@ -13,11 +13,11 @@ import org.openqa.selenium.WebDriver;
  *
  * @author Usuario
  */
-public class Crear {
+public class CrearObra {
     WebDriver driver;
     By irObras = By.id("obras");
 
-    public Crear(WebDriver driver) {
+    public CrearObra(WebDriver driver) {
         this.driver = driver;
     }
     

@@ -1,9 +1,11 @@
+package automatizacion.contratista;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package automatizacion.contratista;
+
 
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -14,7 +16,7 @@ import org.openqa.selenium.support.ui.Select;
  *
  * @author Usuario
  */
-public class Crear {
+public class CrearContratista {
     WebDriver driver;
     
     //Generales
@@ -34,7 +36,7 @@ public class Crear {
     //Guardar
     By btnGuardar = By.name("guar");
     
-    public Crear(WebDriver driver) {
+    public CrearContratista(WebDriver driver) {
         this.driver = driver;
     }
 
@@ -47,19 +49,19 @@ public class Crear {
     }
 
     public void setTxtNombre(String nombre) {
-        driver.findElement(txtNombre).sendKeys(contratistaDTO.getNombre());
+        driver.findElement(txtNombre).sendKeys(nombre);
     }
 
     public void setTxtCorreo(String correo) {
-        driver.findElement(txtCorreo).sendKeys(contratistaDTO.getCorreo());
+        driver.findElement(txtCorreo).sendKeys(correo);
     }
 
     public void setTxtIdentificacion(String id) {
-        driver.findElement(txtIdentificacion).sendKeys(contratistaDTO.getIdentificacion());
+        driver.findElement(txtIdentificacion).sendKeys(id);
     }
 
     public void setTxtTelefono(String Telefono) {
-        driver.findElement(txtTelefono).sendKeys(contratistaDTO.getTelefono());
+        driver.findElement(txtTelefono).sendKeys(Telefono);
     }
 
     public void clickTxtDireccion() {
@@ -67,15 +69,16 @@ public class Crear {
     }
 
     public void setSlcTipoId(String tipoId) {
-        slcTipoId.selectByValue(contratistaDTO.getTipoID());
+        slcTipoId.selectByValue(tipoId);
     }
     
     public void clickBtnGuardar() {
         driver.findElement(btnGuardar).click();
     }
     
-    public void assertTest(){
+    public void assertPrueba(){
         Assert.assertTrue(driver.findElement(btnAdicionar).isDisplayed());
     }
     
 }
+

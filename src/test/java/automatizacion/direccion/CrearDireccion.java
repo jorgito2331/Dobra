@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.Select;
  *
  * @author Usuario
  */
-public class Crear {
+public class CrearDireccion {
     
     WebDriver driver;
     DireccionDTO direccionDTO;
@@ -23,7 +23,7 @@ public class Crear {
     By txtNumvia = By.id("numVia");
     By btnGuardar = By.id("guardar");
     
-    public Crear(WebDriver driver, DireccionDTO direccionDTO) {
+    public CrearDireccion(WebDriver driver, DireccionDTO direccionDTO) {
         this.driver = driver;
         this.direccionDTO = direccionDTO;
         

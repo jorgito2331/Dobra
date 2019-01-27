@@ -1,5 +1,5 @@
 
-import automatizacion.contratista.Crear;
+import automatizacion.contratista.CrearContratista;
 import automatizacion.sistema.Login;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ContratistaDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.DireccionDTO;
@@ -76,7 +76,7 @@ public class AutomatizacionInicializar {
         login.clickLogin();
         login.assertPrueba();
     
-        Crear crear = new Crear(driver);
+        CrearContratista crear = new CrearContratista(driver);
         crear.clickIrAContratistas();
         crear.clickBtnAdicionar();
         crear.setTxtNombre(contratistaDTO.getNombre());
@@ -85,7 +85,7 @@ public class AutomatizacionInicializar {
         crear.setTxtIdentificacion(contratistaDTO.getIdentificacion());
         crear.setTxtTelefono(contratistaDTO.getTelefono());
         crear.clickTxtDireccion();
-        new automatizacion.direccion.Crear(driver, contratistaDTO.getDireccion());
+        new automatizacion.direccion.CrearDireccion(driver, contratistaDTO.getDireccion());
         crear.clickBtnGuardar();
         crear.assertPrueba();
     }
