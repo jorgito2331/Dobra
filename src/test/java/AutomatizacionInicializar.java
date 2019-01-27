@@ -68,12 +68,26 @@ public class AutomatizacionInicializar {
 
     @Test
     public void Test01IniciarSesion() {        
-        new Login(driver, funcionarioDTO);
+        Login login = new Login(driver);        
+        login.setTxtIdentificacion(funcionarioDTO.getId());
+        login.setTxtPassword(funcionarioDTO.getClave());
+        login.clickLogin();
     }
 
     @Test
     public void Test02CrearContratista() {
-        new Crear(driver, contratistaDTO);
+        Crear crear = new Crear(driver);
+        crear.clickIrAContratistas();
+        crear.clickBtnAdicionar();
+        crear.setTxtNombre(contratistaDTO.getNombre());
+        crear.setTxtCorreo(contratistaDTO.getCorreo());
+        crear.setSlcTipoId(contratistaDTO.getTipoID());
+        crear.setTxtIdentificacion(contratistaDTO.getIdentificacion());
+        crear.setTxtTelefono(contratistaDTO.getTelefono());
+        crear.clickTxtDireccion();
+        new automatizacion.direccion.Crear(driver, contratistaDTO.getDireccion());
+        crear.clickBtnGuardar();
+        crear.assertTest();
     }
 
     private static void setearDatos() throws SQLException, ClassNotFoundException {
