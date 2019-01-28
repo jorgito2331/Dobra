@@ -40,9 +40,11 @@ public class login extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException, ClassNotFoundException {
         String error = "";
-        if (request.getParameter("logout") != null) {
-            HttpSession session = request.getSession();
-            session.invalidate();
+        if (request.getParameter("logout") != null || request.getParameter("iniciarSesion") == null) {
+            if (request.getParameter("logout") != null) {
+                HttpSession session = request.getSession();
+                session.invalidate();
+            }
             response.sendRedirect("/Garantizar/login.jsp");
         } else {
             FuncionarioNegocio funcionarioNegocio = new FuncionarioImplementacion();
@@ -65,19 +67,19 @@ public class login extends HttpServlet {
                 }
             }
         }
-            response.setContentType("text/html;charset=UTF-8");
-            try (PrintWriter out = response.getWriter()) {
-                /* TODO output your page here. You may use following sample code. */
-                out.println("<!DOCTYPE html>");
-                out.println("<html>");
-                out.println("<head>");
-                out.println("<title>Ha courrido un error</title>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<script>alert('" + error + "');window.location.replace('/Garantizar/login.jsp')</script>");
-                out.println("</body>");
-                out.println("</html>");
-            
+        response.setContentType("text/html;charset=UTF-8");
+        try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
+            out.println("<!DOCTYPE html>");
+            out.println("<html>");
+            out.println("<head>");
+            out.println("<title>Ha courrido un error</title>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<script>alert('" + error + "');window.location.replace('/Garantizar/login.jsp')</script>");
+            out.println("</body>");
+            out.println("</html>");
+
         }
     }
 

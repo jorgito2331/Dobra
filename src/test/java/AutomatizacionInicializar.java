@@ -1,5 +1,6 @@
 
 import automatizacion.contratista.CrearContratista;
+import automatizacion.obra.CrearObra;
 import automatizacion.sistema.Login;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ContratistaDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.DireccionDTO;
@@ -16,7 +17,9 @@ import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
+import org.junit.FixMethodOrder;
 import org.junit.Test;
+import org.junit.runners.MethodSorters;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -29,6 +32,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
  *
  * @author Usuario
  */
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AutomatizacionInicializar {
 
     private final static String LINK_GENERAL = "http://localhost:8080/Garantizar/login.jsp";
@@ -54,48 +58,71 @@ public class AutomatizacionInicializar {
 
     @AfterClass
     public static void tearDownClass() {
+        driver.close();
     }
 
     @Before
     public void setUp() {
-        System.out.println("hola");
+        driver.get(LINK_GENERAL);
     }
 
     @After
     public void tearDown() {
-        System.out.println("listo");
-    }
-
-    
-
-    @Test
-    public void Test01CrearContratista() {     
-        Login login = new Login(driver);        
-        login.setTxtIdentificacion(funcionarioDTO.getId());
-        login.setTxtPassword(funcionarioDTO.getClave());
-        login.clickLogin();
-        login.assertPrueba();
-    
-        CrearContratista crear = new CrearContratista(driver);
-        crear.clickIrAContratistas();
-        crear.clickBtnAdicionar();
-        crear.setTxtNombre(contratistaDTO.getNombre());
-        crear.setTxtCorreo(contratistaDTO.getCorreo());
-        crear.setSlcTipoId(contratistaDTO.getTipoID());
-        crear.setTxtIdentificacion(contratistaDTO.getIdentificacion());
-        crear.setTxtTelefono(contratistaDTO.getTelefono());
-        crear.clickTxtDireccion();
-        new automatizacion.direccion.CrearDireccion(driver, contratistaDTO.getDireccion());
-        crear.clickBtnGuardar();
-        crear.assertPrueba();
     }
 
     @Test
-    public void Test03CrearObra() {
-        //automatizacion.obra.Crear crear = new automatizacion.obra.Crear(driver)
-        System.out.println("aqui estoy");
+    public void test01Login() {
+        try {
+            Login login = new Login(driver);
+            login.setTxtIdentificacion(funcionarioDTO.getId());
+            login.setTxtPassword(funcionarioDTO.getClave());
+            login.clickLogin();
+            login.assertPrueba();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
-    
+
+    @Test
+    public void test02CrearContratista() {
+        try {
+            CrearContratista crear = new CrearContratista(driver);
+            crear.clickIrAContratistas();
+            crear.clickBtnAdicionar();
+            crear.setTxtNombre(contratistaDTO.getNombre());
+            crear.setTxtCorreo(contratistaDTO.getCorreo());
+            crear.setSlcTipoId(contratistaDTO.getTipoID());
+            crear.setTxtIdentificacion(contratistaDTO.getIdentificacion());
+            crear.setTxtTelefono(contratistaDTO.getTelefono());
+            crear.clickTxtDireccion();
+            new automatizacion.direccion.CrearDireccion(driver, contratistaDTO.getDireccion());
+            crear.clickBtnGuardar();
+            crear.assertPrueba();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Test
+    public void test03CrearObra() {
+        try {
+            CrearObra crearObra = new CrearObra(driver);
+            crearObra.clickIrObras();
+            crearObra.clickAdicionar();
+            crearObra.setTxtNombre(obraDTO.getNombre());
+            crearObra.setSlcTipoObra(obraDTO.getTipo());
+            crearObra.setTxtValor(obraDTO.getValor());
+            crearObra.setTxtFechaInicio(obraDTO.getFechaInicio());
+            crearObra.setTxtFechaFin(obraDTO.getFechaFin());
+            new automatizacion.direccion.CrearDireccion(driver, contratistaDTO.getDireccion());
+            crearObra.clickTxtDireccion();
+            crearObra.setSlcContratista(obraDTO.getContratista());
+            crearObra.clickGuardar();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     private static void setearDatos() throws SQLException, ClassNotFoundException {
         funcionarioDTO = new FuncionarioDTO();
         funcionarioDTO.setId("admin");

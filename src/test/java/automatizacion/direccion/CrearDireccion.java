@@ -37,7 +37,7 @@ public class CrearDireccion {
     }
     
     public void setTxtNumVia() {
-        driver.findElement(txtTipoVia).sendKeys(direccionDTO.getNumPri() + "");        
+        driver.findElement(txtNumvia).sendKeys(direccionDTO.getNumPri() + "");        
     }
     
     public void clickGuardar(){

@@ -8,20 +8,70 @@ package automatizacion.obra;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ObraDTO;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  *
  * @author Usuario
  */
 public class CrearObra {
+
     WebDriver driver;
     By irObras = By.id("obras");
+    By btnAdicionar = By.id("cancelarBtn");
+
+    By txtNombre = By.name("nombre");
+    By txtValor = By.name("valor");
+    By txtFechaInicio = By.name("inicio");
+    By txtFechaFin = By.name("fin");
+    By txtDireccion = By.name("completa");
+
+    By btnGuardar = By.name("guar");
 
     public CrearObra(WebDriver driver) {
         this.driver = driver;
     }
-    
-    public void clickLogin() {
+
+    public void clickIrObras() {
         driver.findElement(irObras).click();
+    }
+
+    public void clickAdicionar() {
+        driver.findElement(btnAdicionar).click();
+    }
+
+    public void setTxtNombre(String nombre) {
+        driver.findElement(txtNombre).sendKeys(nombre);
+
+    }
+
+    public void setTxtValor(String valor) {
+        driver.findElement(txtValor).sendKeys(valor);
+
+    }
+
+    public void setTxtFechaInicio(String fechaInicio) {
+        driver.findElement(txtFechaInicio).sendKeys(fechaInicio);
+
+    }
+
+    public void setTxtFechaFin(String fechaFin) {
+        driver.findElement(txtFechaFin).sendKeys(fechaFin);
+    }
+
+    public void setSlcTipoObra(String tipoObra) {
+        new Select(driver.findElement(By.name("tipo"))).selectByValue(tipoObra);
+    }
+
+    public void setSlcContratista(String contratista) {
+        new Select(driver.findElement(By.name("contratista"))).selectByValue(contratista);
+    }
+
+    public void clickGuardar() {
+        driver.findElement(btnGuardar).click();
+    }    
+
+    public void clickTxtDireccion() {
+        driver.findElement(txtDireccion).click();
     }
 }

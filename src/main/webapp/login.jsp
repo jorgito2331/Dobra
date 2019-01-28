@@ -12,7 +12,12 @@
         <title>Dobra</title>
         <link href="Estilos/login.css" rel="stylesheet">
     </head>
-    <body>
+    <body> 
+        <%
+            if (session.getAttribute("tipo") != null) {
+                response.sendRedirect("obra/manejar.jsp");
+            }
+        %>
         <div class="banner">
             <h1>Dobra</h1>
         </div>
@@ -24,7 +29,7 @@
                 <div class="in">
                     <input type="password" name="clave" min="8" maxlength="15" placeholder="Clave" required="true"></div>
                 <div class="control">
-                    <input type="submit" id="iniciar" class="enviar" value="Iniciar sesión">
+                    <input type="submit" id="iniciar" class="enviar" name="iniciarSesion" value="Iniciar sesión">
 
                 </div>
             </form>

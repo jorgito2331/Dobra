@@ -30,9 +30,6 @@ public class CrearContratista {
     By txtTelefono = By.name("telefono");
     By txtDireccion = By.name("completa");
     
-    //Selects
-    Select slcTipoId = new Select(driver.findElement(By.name("tipoId")));
-    
     //Guardar
     By btnGuardar = By.name("guar");
     
@@ -41,43 +38,43 @@ public class CrearContratista {
     }
 
     public void clickIrAContratistas() {
-        driver.findElement(irAContratistas).click();
+        driver.findElement(this.irAContratistas).click();
     }
 
     public void clickBtnAdicionar() {
-        driver.findElement(btnAdicionar).click();
+        driver.findElement(this.btnAdicionar).click();
     }
 
     public void setTxtNombre(String nombre) {
-        driver.findElement(txtNombre).sendKeys(nombre);
+        driver.findElement(this.txtNombre).sendKeys(nombre);
     }
 
     public void setTxtCorreo(String correo) {
-        driver.findElement(txtCorreo).sendKeys(correo);
+        driver.findElement(this.txtCorreo).sendKeys(correo);
     }
 
     public void setTxtIdentificacion(String id) {
-        driver.findElement(txtIdentificacion).sendKeys(id);
+        driver.findElement(this.txtIdentificacion).sendKeys(id);
     }
 
     public void setTxtTelefono(String Telefono) {
-        driver.findElement(txtTelefono).sendKeys(Telefono);
+        driver.findElement(this.txtTelefono).sendKeys(Telefono);
     }
 
     public void clickTxtDireccion() {
-        driver.findElement(txtDireccion).click();
+        driver.findElement(this.txtDireccion).click();
     }
 
     public void setSlcTipoId(String tipoId) {
-        slcTipoId.selectByValue(tipoId);
+        new Select(driver.findElement(By.name("tipoId"))).selectByValue(tipoId);
     }
     
     public void clickBtnGuardar() {
-        driver.findElement(btnGuardar).click();
+        driver.findElement(this.btnGuardar).click();
     }
     
     public void assertPrueba(){
-        Assert.assertTrue(driver.findElement(btnAdicionar).isDisplayed());
+        Assert.assertTrue(driver.findElement(this.btnAdicionar).isDisplayed());
     }
     
 }
