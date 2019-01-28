@@ -1,5 +1,6 @@
 
 import automatizacion.contratista.CrearContratista;
+import automatizacion.obra.BuscarObra;
 import automatizacion.obra.CrearObra;
 import automatizacion.sistema.Login;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ContratistaDTO;
@@ -118,9 +119,22 @@ public class AutomatizacionInicializar {
             crearObra.clickTxtDireccion();
             crearObra.setSlcContratista(obraDTO.getContratista());
             crearObra.clickGuardar();
+            crearObra.assertPrueba();
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+    
+    @Test
+    public void test04BuscarObra() {
+        //try{
+            BuscarObra buscarObra = new BuscarObra(driver);
+            buscarObra.clickIrObras();
+            buscarObra.clickBuscar();
+            buscarObra.assertPrueba();
+        //}catch(Exception e){
+          //  e.printStackTrace();
+        //}
     }
 
     private static void setearDatos() throws SQLException, ClassNotFoundException {

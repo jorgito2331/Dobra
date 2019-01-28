@@ -6,6 +6,7 @@
 package automatizacion.obra;
 
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ObraDTO;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.Select;
@@ -73,5 +74,9 @@ public class CrearObra {
 
     public void clickTxtDireccion() {
         driver.findElement(txtDireccion).click();
+    }
+    
+    public void assertPrueba(){
+        Assert.assertTrue(driver.findElement(this.btnAdicionar).isDisplayed());
     }
 }
