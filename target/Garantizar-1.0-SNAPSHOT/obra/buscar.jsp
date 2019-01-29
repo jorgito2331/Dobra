@@ -119,7 +119,7 @@
         <div class="contenedor">
             <div class="bread">
                 <a href="manejar.jsp">Obra &#8250;</a>
-                <a href="buscar.jsp">Buscar Obra &#8250;</a>
+                <a href="" onclick="location.reload()">Buscar Obra &#8250;</a>
             </div>
             <div class="tabla">
                 <table id="table_id" class="display">
