@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.FixMethodOrder;
@@ -74,11 +75,8 @@ public class AutomatizacionInicializar {
     @Test
     public void test01Login() {
         try {
-            Login login = new Login(driver);
-            login.setTxtIdentificacion(funcionarioDTO.getId());
-            login.setTxtPassword(funcionarioDTO.getClave());
-            login.clickLogin();
-            login.assertPrueba();
+            Login login = new Login(driver, funcionarioDTO);
+            Assert.assertTrue(login.assertPrueba());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -87,18 +85,8 @@ public class AutomatizacionInicializar {
     @Test
     public void test02CrearContratista() {
         try {
-            CrearContratista crear = new CrearContratista(driver);
-            crear.clickIrAContratistas();
-            crear.clickBtnAdicionar();
-            crear.setTxtNombre(contratistaDTO.getNombre());
-            crear.setTxtCorreo(contratistaDTO.getCorreo());
-            crear.setSlcTipoId(contratistaDTO.getTipoID());
-            crear.setTxtIdentificacion(contratistaDTO.getIdentificacion());
-            crear.setTxtTelefono(contratistaDTO.getTelefono());
-            crear.clickTxtDireccion();
-            new automatizacion.direccion.CrearDireccion(driver, contratistaDTO.getDireccion());
-            crear.clickBtnGuardar();
-            crear.assertPrueba();
+            CrearContratista crear = new CrearContratista(driver, contratistaDTO);
+            Assert.assertTrue(crear.assertPrueba());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -107,19 +95,8 @@ public class AutomatizacionInicializar {
     @Test
     public void test03CrearObra() {
         try {
-            CrearObra crearObra = new CrearObra(driver);
-            crearObra.clickIrObras();
-            crearObra.clickAdicionar();
-            crearObra.setTxtNombre(obraDTO.getNombre());
-            crearObra.setSlcTipoObra(obraDTO.getTipo());
-            crearObra.setTxtValor(obraDTO.getValor());
-            crearObra.setTxtFechaInicio(obraDTO.getFechaInicio());
-            crearObra.setTxtFechaFin(obraDTO.getFechaFin());
-            new automatizacion.direccion.CrearDireccion(driver, contratistaDTO.getDireccion());
-            crearObra.clickTxtDireccion();
-            crearObra.setSlcContratista(obraDTO.getContratista());
-            crearObra.clickGuardar();
-            crearObra.assertPrueba();
+            CrearObra crearObra = new CrearObra(driver, obraDTO);            
+            Assert.assertTrue(crearObra.assertPrueba());
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -127,24 +104,27 @@ public class AutomatizacionInicializar {
     
     @Test
     public void test04BuscarObra() {
-        //try{
+        try{
             BuscarObra buscarObra = new BuscarObra(driver);
-            buscarObra.clickIrObras();
-            buscarObra.clickBuscar();
-            buscarObra.assertPrueba();
-        //}catch(Exception e){
-          //  e.printStackTrace();
-        //}
+            Assert.assertTrue(buscarObra.assertPrueba());
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
     private static void setearDatos() throws SQLException, ClassNotFoundException {
+        
+        //Parte Funcionario
         funcionarioDTO = new FuncionarioDTO();
         funcionarioDTO.setId("admin");
         funcionarioDTO.setClave("jorge123");
+        
         //Parte de direccion
         DireccionDTO direccionDTO = new DireccionDTO();
         direccionDTO.setTipoVia("Calle");
         direccionDTO.setNumVia(1);
+        
+        //Parte contrastista
         contratistaDTO = new ContratistaDTO();
         contratistaDTO.setNombre("Jorge" + new Date().toString());
         contratistaDTO.setCorreo("jorge_gaviria23181@elpoli.edu.co");
@@ -152,6 +132,8 @@ public class AutomatizacionInicializar {
         contratistaDTO.setIdentificacion("1000409003");
         contratistaDTO.setTelefono("3136557557");
         contratistaDTO.setDireccion(direccionDTO);
+        
+        //Parte obra
         obraDTO = new ObraDTO();
         obraDTO.setNombre("prueba" + new Date().toString());
         obraDTO.setTipo("1");

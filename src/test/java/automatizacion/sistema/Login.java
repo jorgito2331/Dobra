@@ -5,6 +5,7 @@
  */
 package automatizacion.sistema;
 
+import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.FuncionarioDTO;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -21,8 +22,11 @@ public class Login {
     By btnAssert = By.id("obras");
     WebDriver driver;
 
-    public Login(WebDriver driver) {
+    public Login(WebDriver driver, FuncionarioDTO funcionarioDTO) {
         this.driver = driver;
+        setTxtIdentificacion(funcionarioDTO.getId());
+        setTxtPassword(funcionarioDTO.getClave());
+        clickLogin();
     }
 
     public void setTxtIdentificacion(String txtIdentificacion) {
@@ -40,8 +44,8 @@ public class Login {
     public void clickLogin() {
         driver.findElement(btnIniciar).click();
     }
-    
-    public void assertPrueba(){
-        Assert.assertTrue(driver.findElement(btnAssert).isDisplayed());
+
+    public boolean assertPrueba() {
+        return driver.findElement(btnAssert).isDisplayed();
     }
 }

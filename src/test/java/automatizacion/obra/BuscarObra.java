@@ -14,15 +14,20 @@ import org.openqa.selenium.WebDriver;
  * @author Usuario
  */
 public class BuscarObra {
+
     WebDriver driver;
     By irObras = By.id("obras");
     By btnBuscar = By.id("GuardarForm");
     By tblResultado = By.id("table_id");
-    
+
     public BuscarObra(WebDriver driver) {
         this.driver = driver;
+
+        clickIrObras();
+        clickBuscar();
+        assertPrueba();
     }
-    
+
     public void clickIrObras() {
         driver.findElement(irObras).click();
     }
@@ -30,9 +35,9 @@ public class BuscarObra {
     public void clickBuscar() {
         driver.findElement(btnBuscar).click();
     }
-    
-    public void assertPrueba(){
-        Assert.assertTrue(driver.findElement(this.tblResultado).isDisplayed());
+
+    public boolean assertPrueba() {
+        return driver.findElement(this.tblResultado).isDisplayed();
     }
-    
+
 }

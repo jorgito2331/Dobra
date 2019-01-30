@@ -5,8 +5,7 @@ package automatizacion.contratista;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
+import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ContratistaDTO;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -17,24 +16,35 @@ import org.openqa.selenium.support.ui.Select;
  * @author Usuario
  */
 public class CrearContratista {
+
     WebDriver driver;
-    
+
     //Generales
     By irAContratistas = By.id("contratistas");
     By btnAdicionar = By.id("crear");
-    
+
     //Campos
     By txtNombre = By.name("nombre");
     By txtCorreo = By.name("correo");
     By txtIdentificacion = By.name("identificacion");
     By txtTelefono = By.name("telefono");
     By txtDireccion = By.name("completa");
-    
+
     //Guardar
     By btnGuardar = By.name("guar");
-    
-    public CrearContratista(WebDriver driver) {
+
+    public CrearContratista(WebDriver driver, ContratistaDTO contratistaDTO) {
         this.driver = driver;
+        clickIrAContratistas();
+        clickBtnAdicionar();
+        setTxtNombre(contratistaDTO.getNombre());
+        setTxtCorreo(contratistaDTO.getCorreo());
+        setSlcTipoId(contratistaDTO.getTipoID());
+        setTxtIdentificacion(contratistaDTO.getIdentificacion());
+        setTxtTelefono(contratistaDTO.getTelefono());
+        clickTxtDireccion();
+        new automatizacion.direccion.CrearDireccion(driver, contratistaDTO.getDireccion());
+        clickBtnGuardar();
     }
 
     public void clickIrAContratistas() {
@@ -68,14 +78,13 @@ public class CrearContratista {
     public void setSlcTipoId(String tipoId) {
         new Select(driver.findElement(By.name("tipoId"))).selectByValue(tipoId);
     }
-    
+
     public void clickBtnGuardar() {
         driver.findElement(this.btnGuardar).click();
     }
-    
-    public void assertPrueba(){
-        Assert.assertTrue(driver.findElement(this.btnAdicionar).isDisplayed());
-    }
-    
-}
 
+    public boolean assertPrueba() {
+        return driver.findElement(this.btnAdicionar).isDisplayed();
+    }
+
+}

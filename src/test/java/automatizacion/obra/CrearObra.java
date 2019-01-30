@@ -29,8 +29,19 @@ public class CrearObra {
 
     By btnGuardar = By.name("guar");
 
-    public CrearObra(WebDriver driver) {
+    public CrearObra(WebDriver driver, ObraDTO obraDTO) {
         this.driver = driver;
+        clickIrObras();
+        clickAdicionar();
+        setTxtNombre(obraDTO.getNombre());
+        setSlcTipoObra(obraDTO.getTipo());
+        setTxtValor(obraDTO.getValor());
+        setTxtFechaInicio(obraDTO.getFechaInicio());
+        setTxtFechaFin(obraDTO.getFechaFin());
+        new automatizacion.direccion.CrearDireccion(driver, obraDTO.getDireccion());
+        clickTxtDireccion();
+        setSlcContratista(obraDTO.getContratista());
+        clickGuardar();
     }
 
     public void clickIrObras() {
@@ -70,13 +81,13 @@ public class CrearObra {
 
     public void clickGuardar() {
         driver.findElement(btnGuardar).click();
-    }    
+    }
 
     public void clickTxtDireccion() {
         driver.findElement(txtDireccion).click();
     }
-    
-    public void assertPrueba(){
-        Assert.assertTrue(driver.findElement(this.btnAdicionar).isDisplayed());
+
+    public boolean assertPrueba() {
+        return driver.findElement(this.btnAdicionar).isDisplayed();
     }
 }
