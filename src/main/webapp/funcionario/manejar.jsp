@@ -16,7 +16,7 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Crear Funcionario</title>
+        <title>Funcionarios</title>
         <link href="../Estilos/Menu.css" rel="stylesheet">
         <link href="../Estilos/Bread.css" rel="stylesheet">
         <link href="../Estilos/General.css" rel="stylesheet">
