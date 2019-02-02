@@ -68,7 +68,7 @@ public class Obra {
 
     @Test
     public void crearObra() throws SQLException, ClassNotFoundException {
-        objeto.setNombre("prueba" + new Date().toString());
+        objeto.setNombre("JIC" + new SimpleDateFormat("yyyyMMdd").format(new Date()));
         objeto.setTipo("1");
         objeto.setValor("100000");
         objeto.setFechaInicio(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
@@ -83,10 +83,11 @@ public class Obra {
         ParametroNegocio negocio = new ParametroImplementacion();
         objeto.setDireccion(dTO1);
         objeto.setArgumentos(negocio.obtenerParametro("2").getNombre());
-        objeto.setContratista("JIC");
+        objeto.setContratista("JIC" + new SimpleDateFormat("yyyyMMdd").format(new Date()));
         ObraNegocio negocioObra = new ObraImplementacion();
         String respuesta = negocioObra.crearObra(objeto);
-        assertTrue(respuesta != null);
+        System.out.println(respuesta);
+        assertTrue(respuesta == null);
     }
 
     @Test
@@ -135,6 +136,8 @@ public class Obra {
         }
         Reportes reportes = new Reportes(dTO, "Admin");
         reportes.start();
+        
+        System.out.println(reportes.getRespuesta());
         assertTrue(reportes.getRespuesta());
     }
 

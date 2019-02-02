@@ -16,6 +16,7 @@ import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.Ob
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ParametroImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ParametroNegocio;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -56,7 +57,7 @@ public class Contratista {
 
     @Test
     public void crearContratista() throws SQLException, ClassNotFoundException {
-        objeto.setNombre("Jorge" + new Date().toString());
+        objeto.setNombre("JIC" + new SimpleDateFormat("yyyyMMdd").format(new Date()));
         objeto.setCorreo("jorge_gaviria23181@elpoli.edu.co");
         objeto.setTipoID("1");
         objeto.setIdentificacion("1000409003");
@@ -72,7 +73,7 @@ public class Contratista {
         objeto.setDireccion(dTO1);
         ContratistaNegocio contratistaNegocio = new ContratistaImplementacion();
         String respuesta = contratistaNegocio.crearContratista(objeto);
-        assertTrue(respuesta != null);
+        assertTrue(respuesta == null);
     }
 
 }
