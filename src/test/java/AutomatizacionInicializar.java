@@ -37,8 +37,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 public class AutomatizacionInicializar {
 
-    private final static String LINK_GENERAL = "http://localhost:8080/Garantizar/login.jsp";
-    private final static String LINK_PANTALLA_PRINCIPAL = "http://localhost:8080/Garantizar/obra/manejar.jsp";
+    private final static String LINK_GENERAL = "http://localhost:8888/Garantizar/login.jsp";
+    private final static String LINK_PANTALLA_PRINCIPAL = "http://localhost:8888/Garantizar/obra/manejar.jsp";
     private static WebDriver driver;
     private static ObraDTO obraDTO;
     private static ContratistaDTO contratistaDTO;

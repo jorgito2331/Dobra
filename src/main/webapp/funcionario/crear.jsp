@@ -89,7 +89,7 @@
                     <input name="segApe" id="segApe">
                 </div>
                 <div class="control">
-                    <button type="submit" class="cancelar" id="cancelarBtn" name="cancelar" value="cancelar">Cancelar</button>
+                    <a class="cancelar" id="cancelarBtn" href="manejar.jsp">Cancelar</a>
                     <button type="submit" class="guardar" id="GuardarForm" name="guar">Guardar</button>
                 </div>
             </form>
