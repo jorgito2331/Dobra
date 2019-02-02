@@ -47,4 +47,12 @@
                 <netbeans.deploy.clientUrlPart>/login.jsp</netbeans.deploy.clientUrlPart>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-dobra.war</actionName>
+            <displayName>dobra.war</displayName>
+            <goals>
+                <goal>compile</goal>
+                <goal>war:war</goal>
+            </goals>
+        </action>
     </actions>
