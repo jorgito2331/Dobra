@@ -80,11 +80,13 @@
                     //Se multiplica las veces de tiempo que se cobra el valor del desfase
                     desfases = Float.valueOf(df.format(desfases + (Float.valueOf(df.format(tiempoDesfXPorcDias * precioDuracionPorc).replace(",", ".")))).replace(",", "."));
                     obra.setDesfaces("$" + formatter.format(desfases) + " en " + diasDesfasados + " días");
+                    obra.setDiasDesfase(diasDesfasados + "");
+                    obra.setDesfaseDinero(formatter.format(desfases));
                 } else {
                     obra.setDesfaces("No aplica");
                 }
                 obra.setTiempoDuracion(days + "");
-
+                obra.setDiferenciaDias(diasDesfasados);
             }
             Reportes reportes = new Reportes(dTO, session.getAttribute("id").toString());
             reportes.start();
@@ -179,7 +181,7 @@
                                 </form>
                             </td>
                             <% } else if (rol.equals("ADMIN")) {%>
-                            <td class="acciones">Finalizada</td>
+                            <td class="acciones">Finalizada la fecha <%= cdto.getFinalizado() %></td>
                             <% } %>
                         </tr>
                         <% }
@@ -206,7 +208,7 @@
                 }
                 $(document).ready(function () {
                     $('#table_id').DataTable({
-                        "order": [[3, "desc"]],
+                        "order": [[0, "desc"]],
                         language: {
                             "decimal": "",
                             "emptyTable": "No hay datos",

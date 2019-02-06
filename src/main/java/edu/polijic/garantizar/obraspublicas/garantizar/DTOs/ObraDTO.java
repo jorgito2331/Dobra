@@ -23,6 +23,9 @@ public class ObraDTO {
     String estado;
     String desfaces;
     String argumentos;
+    String diasDesfase;
+    String desfaseDinero;
+    int diferenciaDias;
 
     public String getNombre() {
         return nombre;
@@ -119,7 +122,29 @@ public class ObraDTO {
     public void setFinalizado(String finalizado) {
         this.finalizado = finalizado;
     }
-    
-    
+
+    public String getDiasDesfase() {
+        return diasDesfase;
+    }
+
+    public void setDiasDesfase(String diasDesfase) {
+        this.diasDesfase = diasDesfase;
+    }
+
+    public String getDesfaseDinero() {
+        return desfaseDinero;
+    }
+
+    public void setDesfaseDinero(String desfaseDinero) {
+        this.desfaseDinero = desfaseDinero;
+    }
+
+    public int getDiferenciaDias() {
+        return diferenciaDias;
+    }
+
+    public void setDiferenciaDias(int diferenciaDias) {
+        this.diferenciaDias = diferenciaDias;
+    }
     
 }

@@ -58,11 +58,12 @@ public class ParametroImplementacion implements ParametroNegocio {
             }
             return par;
         }else{
-            String sql = "SELECT par.ARGUMENTO FROM parametro par WHERE par.ID IN (4)";
+            String sql = "SELECT par.ARGUMENTO FROM parametro par WHERE par.ID IN (?)";
             String datos = "";
             ParametroDTO par = new ParametroDTO();
             try {
                 statement = connection.prepareStatement(sql);
+                statement.setString(1, parametro);
                 resultSet = statement.executeQuery();
                 resultSet.first();
                 par.setNombre(resultSet.getString(1));

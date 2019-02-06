@@ -32,22 +32,26 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  */
 public class Reportes extends Thread {
 
-    private static final String[] columns = {"NOMBRE OBRA", "CONTRATISTA", "TIPO", "DIRECCIÓN", "FECHA INICIO", "FECHA FIN", "VALOR", "ESTADO", "DESFASES"};
-    private boolean respuesta= true;
+    private static final String[] columns = {"NOMBRE OBRA", "CONTRATISTA", "TIPO", "DIRECCIÓN", "FECHA INICIO", "FECHA FIN", "VALOR", "ESTADO", "FECHA FINALIZACION", "DESFASES DINERO", "DESFASES DIAS"};
+    private boolean respuesta = true;
     private ArrayList<ObraDTO> obras;
     private String usuario;
+    private int aux;
 
     public Reportes(ArrayList<ObraDTO> obras, String usuario) {
         this.obras = obras;
         this.usuario = usuario;
+        aux = 0;
     }
 
     @Override
     public void run() {
-        try (Workbook workbook = new XSSFWorkbook()) {            
+        try (Workbook workbook = new XSSFWorkbook()) {
             ParametroNegocio parametroNegocio = new ParametroImplementacion();
             SimpleDateFormat ft = new SimpleDateFormat("dd_MM_yyyy_hh_mm_ss");
-            File archivo = new File(parametroNegocio.obtenerParametro("4").getNombre() + "/"+ ft.format(new Date()) + ".xlsx");
+            File archivo = new File(parametroNegocio.obtenerParametro("4").getNombre() + "/" + ft.format(new Date()) + ".xlsx");
+            aux = Integer.parseInt(parametroNegocio.obtenerParametro("5").getNombre());
+            aux = aux * -1;
             CreationHelper createHelper = workbook.getCreationHelper();
             Sheet sheet = workbook.createSheet("Obras");
             CellStyle backgroundStyle = workbook.createCellStyle();
@@ -70,33 +74,32 @@ public class Reportes extends Thread {
             borderStyle.setRightBorderColor(IndexedColors.BLACK.getIndex());
             borderStyle.setBorderTop(BorderStyle.THIN);
             borderStyle.setTopBorderColor(IndexedColors.BLACK.getIndex());
-            
-            
+
             Cell cell = null;
             Row usuarioGenera = sheet.createRow(0);
             cell = usuarioGenera.createCell(0);
             cell.setCellValue("Usuario");
             cell.setCellStyle(backgroundStyle);
             cell = usuarioGenera.createCell(1);
-            cell.setCellValue(usuario);   
+            cell.setCellValue(usuario);
             cell.setCellStyle(borderStyle);
-            
+
             Row fecha = sheet.createRow(1);
             cell = fecha.createCell(0);
             cell.setCellValue("Fecha");
             cell.setCellStyle(backgroundStyle);
             cell = fecha.createCell(1);
-            cell.setCellValue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));   
+            cell.setCellValue(new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
             cell.setCellStyle(borderStyle);
-            
+
             Row CantidadObras = sheet.createRow(2);
             cell = CantidadObras.createCell(0);
             cell.setCellValue("Cantidad Obras");
             cell.setCellStyle(backgroundStyle);
             cell = CantidadObras.createCell(1);
-            cell.setCellValue(obras.size());   
+            cell.setCellValue(obras.size());
             cell.setCellStyle(borderStyle);
-            
+
             Row headerRow = sheet.createRow(4);
             for (int i = 0; i < columns.length; i++) {
                 cell = headerRow.createCell(i);
@@ -139,13 +142,21 @@ public class Reportes extends Thread {
                 cell = row.createCell(6);
                 cell.setCellValue(obra.getValor());
                 cell.setCellStyle(borderStyle);
-
+                
                 cell = row.createCell(7);
-                cell.setCellValue((obra.getEstado().equals("1") ? "Finalizada" : "En ejecución"));
+                cell.setCellValue((obra.getEstado().equals("1") ? "Finalizada " + ((obra.getDiasDesfase() != null && Integer.parseInt(obra.getDiasDesfase()) > 0 ) ? " con desfases" : "") : "En ejecución "  + ((obra.getDiasDesfase() != null && Integer.parseInt(obra.getDiasDesfase()) > 0 ) ? " con desfases" : ((obra.getDiferenciaDias() >= aux && obra.getDiferenciaDias() <= 0) ? " proxima a desfase" : "")) ));
                 cell.setCellStyle(borderStyle);
 
                 cell = row.createCell(8);
-                cell.setCellValue(obra.getDesfaces());
+                cell.setCellValue(obra.getFinalizado());
+                cell.setCellStyle(borderStyle);
+                
+                cell = row.createCell(9);
+                cell.setCellValue(obra.getDesfaseDinero());
+                cell.setCellStyle(borderStyle);
+                
+                cell = row.createCell(10);
+                cell.setCellValue(obra.getDiasDesfase());
                 cell.setCellStyle(borderStyle);
             }   // Resize all columns to fit the content size
             for (int i = 0; i < columns.length; i++) {
@@ -174,8 +185,8 @@ public class Reportes extends Thread {
         respuesta = true;
     }
 
-    public boolean getRespuesta(){
+    public boolean getRespuesta() {
         return respuesta;
     }
-    
+
 }
