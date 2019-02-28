@@ -16,7 +16,4 @@ public interface ContratistaNegocio {
     public String crearContratista(ContratistaDTO contratista);
     public ContratistaDTO obtenerContratista(ContratistaDTO contratista);
     public ArrayList<ContratistaDTO> obtenerContratistas(String criterio); 
-    public void actualizarContratista(ContratistaDTO contratista);
-    public void eliminarContratista(ContratistaDTO contratista);
-    public void eliminarContratistas(ContratistaDTO contratista);
 }

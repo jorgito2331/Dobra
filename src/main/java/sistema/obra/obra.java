@@ -110,7 +110,7 @@ public class obra extends HttpServlet {
             dTO1.setCompleta(request.getParameter("completa"));
             DireccionNegocio direccionNegocio = new DireccionImplementacion();
             direccionNegocio.crearDireccion(dTO1);
-            dTO1.setId(direccionNegocio.obtenerId());
+            dTO1.setId(new DireccionImplementacion().obtenerId());
             ParametroNegocio negocio = new ParametroImplementacion();
             dTO.setDireccion(dTO1);
             dTO.setArgumentos(negocio.obtenerParametro("2").getNombre());
@@ -120,6 +120,7 @@ public class obra extends HttpServlet {
             if (respuesta != null) {
                 devolver(respuesta, response);
             } else {
+                devolver(respuesta, response);
                 LogDTO logDTO = new LogDTO();
                 logDTO.setFuncionario(request.getSession().getAttribute("id").toString());
                 logDTO.setTipoCambio("1");
@@ -137,17 +138,126 @@ public class obra extends HttpServlet {
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
+
             out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Ha courrido un error</title>");
-            out.println("</head>");
-            out.println("<body>");
-            if (respuesta == null) {
-                out.println("<script>window.history.back();</script>");
+            out.println("    <head>");
+            if (respuesta != null) {
+                out.println("        <title>Ha courrido un error</title>");
             } else {
-                out.println("<script>alert('" + respuesta + "');window.history.back();</script>");
+                out.println("        <title>Guardado con exito</title>");
             }
-            out.println("</body>");
+            out.println("        <meta charset=\"UTF-8\">");
+            out.println("        <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">");
+            out.println("        <style>");
+            out.println("            @import url('https://fonts.googleapis.com/css?family=Roboto');");
+            out.println("");
+            out.println("            *{");
+            out.println("                font-family: 'Roboto', sans-serif;");
+            out.println("                font-size: medium;");
+            out.println("            }");
+            out.println("");
+            out.println("            body{");
+            out.println("                padding: 0;");
+            out.println("                margin: 0;");
+            out.println("                overflow: hidden;");
+            if (respuesta == null) {
+                out.println("                background: #bfdee0;");
+            } else {
+                out.println("                background: #606cd3;");
+            }
+            out.println("                width: 100vw;");
+            out.println("                height: 100vh;");
+            out.println("                display: flex;    ");
+            out.println("                align-items: center;");
+            out.println("                justify-content: center;");
+            out.println("            }");
+            out.println("");
+            out.println("            #cover{");
+            out.println("                width: 50%;");
+            out.println("                height: 100%;");
+            out.println("                display: flex;    ");
+            out.println("                align-items: center;");
+            out.println("                justify-content: center;");
+            out.println("            }");
+            out.println("");
+            out.println("            #content{");
+            out.println("                display: flex; ");
+            out.println("                width: 50%;");
+            out.println("                height: 100%;    ");
+            out.println("                display: flex;    ");
+            out.println("                flex-direction: column;");
+            out.println("                justify-content: center;");
+            out.println("                align-items: center;");
+            out.println("                text-align: center;");
+            out.println("            }");
+            out.println("");
+            out.println("            img{");
+            out.println("                width: 90%;");
+            out.println("                height: 90%;");
+            out.println("            }");
+            out.println("");
+            out.println("            h1{");
+            if (respuesta == null) {
+                out.println("                color: black;");
+            } else {
+                out.println("                color: white;");
+            }
+            out.println("                font-size: xx-large;");
+            out.println("            }");
+            out.println("");
+            out.println("            p{");
+            out.println("                width: 100%;");
+            out.println("                height: auto;  ");
+            if (respuesta == null) {
+                out.println("                color: black;");
+            } else {
+                out.println("                color: white;");
+            }
+            out.println("                margin: 5vh 10vw;");
+            out.println("            }");
+            out.println("");
+            out.println("            a{");
+            out.println("                height: 7vh;");
+            out.println("                width: 15vw;");
+            out.println("                margin: 0 1vw;");
+            out.println("                color: white;");
+            out.println("                display: flex;");
+            out.println("                justify-content: center;");
+            out.println("                align-items: center; ");
+            out.println("                background: #4BB86B;");
+            out.println("                text-decoration: none;");
+            out.println("                transition: 0.3s;");
+            out.println("                border-radius: 3px;");
+            out.println("            }");
+            out.println("");
+            out.println("            a:hover{");
+            out.println("                background: white;");
+            out.println("                color: black;");
+            out.println("                cursor: pointer;");
+            out.println("            }");
+            out.println("        </style>");
+            out.println("");
+            out.println("    </head>");
+            out.println("    <body>");
+            out.println("        <div id=\"cover\">");
+
+            if (respuesta != null) {
+                out.println("            <img src=\"./Imagenes/construccion.gif\" alt=\"\"/>");
+            } else {
+                out.println("            <img src=\"./Imagenes/casa.gif\" alt=\"\"/>");
+            }
+            out.println("        </div>");
+            out.println("        <div id=\"content\">                ");
+            if (respuesta != null) {
+                out.println("            <h1>Ha ocurrido un error</h1>");
+                out.println("            <p>" + respuesta + "</p>");
+                out.println("            <a onclick='window.history.back();'>Volver</a>");
+            } else {
+                out.println("            <h1>Se ha guardado correctamente</h1>");
+                out.println("            <a href=\"http://localhost:8888/Garantizar/obra/manejar.jsp\">Ir al inicio</a>");
+            }
+            out.println("        </div>");
+            out.println("    </body>");
             out.println("</html>");
         }
     }

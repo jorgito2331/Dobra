@@ -52,6 +52,8 @@ public class ContratistaImplementacion implements ContratistaNegocio {
             }else{
                 return "Ha ocurrido un error";
             }
+        }finally{
+            conexion.cerrar();
         }
         return null;
     }
@@ -85,23 +87,9 @@ public class ContratistaImplementacion implements ContratistaNegocio {
             } while (resultSet.next());
         } catch (SQLException ex) {
             Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexion.cerrar();
         }
         return contratistas;
     }
-
-    @Override
-    public void actualizarContratista(ContratistaDTO contratista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void eliminarContratista(ContratistaDTO contratista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void eliminarContratistas(ContratistaDTO contratista) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
 }

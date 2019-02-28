@@ -26,14 +26,14 @@ import java.util.logging.Logger;
  */
 public class FuncionarioImplementacion implements FuncionarioNegocio {
 
-    ConexionPersistencia persistencia;
+    ConexionPersistencia conexion;
     Connection connection;
     PreparedStatement statement;
     ResultSet rs;
 
     public FuncionarioImplementacion() throws SQLException, ClassNotFoundException {
-        persistencia = new ConexionPersistencia();
-        connection = persistencia.obtener();
+        conexion = new ConexionPersistencia();
+        connection = conexion.obtener();
         statement = null;
     }
 
@@ -64,6 +64,8 @@ public class FuncionarioImplementacion implements FuncionarioNegocio {
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexion.cerrar();
         }
     }
 
@@ -103,6 +105,8 @@ public class FuncionarioImplementacion implements FuncionarioNegocio {
             }
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexion.cerrar();
         }
         return null;
     }
@@ -121,6 +125,8 @@ public class FuncionarioImplementacion implements FuncionarioNegocio {
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(FuncionarioImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexion.cerrar();
         }
     }
 
@@ -162,6 +168,8 @@ public class FuncionarioImplementacion implements FuncionarioNegocio {
             } while (rs.next());
         } catch (SQLException ex) {
             Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexion.cerrar();
         }
         return funcionarioDTOs;
     }

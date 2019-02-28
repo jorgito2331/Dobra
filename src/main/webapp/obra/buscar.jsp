@@ -33,61 +33,10 @@
             if (session.getAttribute("tipo") == null) {
                 response.sendRedirect("/Garantizar/login.jsp");
             }
+            String rol = session.getAttribute("tipo").toString();
             ObraNegocio obraNegocio = new ObraImplementacion();
             ArrayList<ObraDTO> dTO = obraNegocio.obtenerObras(request.getParameter("busq"));
-            float tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
-            float precioDuracionPorc = 0; //guarda el precio por cada porcentaje de tiempo
-            float tiempoDesfXPorcDias = 0; //guarda la division entre la cantidad de dias desfasados y tiempoDuracionPorc
-            int diasDesfasados = 0;
-            double desfases = 0;
-            int days = 0;
-            DecimalFormat df = new DecimalFormat("#.##");
-            DateMidnight d1;
-            DateMidnight d2;
-            String rol = session.getAttribute("tipo").toString();
-            DateMidnight hoy = new DateMidnight(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-            NumberFormat formatter = new DecimalFormat("#.###");
-            String number = "";
-            for (ObraDTO obra : dTO) {
-                tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
-                precioDuracionPorc = 0; //guarda el precio por cada porcentaje de tiempo
-                tiempoDesfXPorcDias = 0; //guarda la division entre la cantidad de dias desfasados y tiempoDuracionPorc
-                diasDesfasados = 0;
-                desfases = 0;
-                days = 0;
-                d1 = new DateMidnight(obra.getFechaInicio());
-                d2 = new DateMidnight(obra.getFechaFin());
-                days = Days.daysBetween(d1, d2).getDays();
-                obra.setTiempoDuracion(days + "");
-                if (obra.getFinalizado() != null) {
-                    d1 = new DateMidnight(obra.getFechaFin());
-                    d2 = new DateMidnight(obra.getFinalizado());
-                    diasDesfasados = Days.daysBetween(d1, d2).getDays();
-                } else {
-                    d2 = new DateMidnight(obra.getFechaFin());
-                    diasDesfasados = Days.daysBetween(d2, hoy).getDays();
-                }
-                String[] parametros = obra.getArgumentos().split(",");
-                if (diasDesfasados > 0) {
-                    //multiplica el valor de la obra por el porcentaje que se cobra por primer desfase
-                    desfases = Float.valueOf(df.format(desfases + Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[0]) / 100f)).replace(",", "."))).replace(",", "."));
-                    //Se multiplica el tiempo de duracion por el parametro que dice cada cuanto se debe cobrar el porcentaje de desfase
-                    tiempoDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getTiempoDuracion()) * (Float.parseFloat(parametros[1]) / 100f)).replace(",", "."));
-                    //Se multiplica el precio de la obra por el paramtro que dice cuanto se cobra por cada porcentaje de tiempo de duracion
-                    precioDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[2]) / 100f)).replace(",", "."));
-                    //Se obtiene cuantas veces se va cobrar el porcentaje de desfase de la obra
-                    tiempoDesfXPorcDias = Float.valueOf(df.format(diasDesfasados / ((tiempoDuracionPorc == 0) ? 1f : tiempoDuracionPorc)).replace(",", "."));
-                    //Se multiplica las veces de tiempo que se cobra el valor del desfase
-                    desfases = Float.valueOf(df.format(desfases + (Float.valueOf(df.format(tiempoDesfXPorcDias * precioDuracionPorc).replace(",", ".")))).replace(",", "."));
-                    obra.setDesfaces("$" + formatter.format(desfases) + " en " + diasDesfasados + " días");
-                    obra.setDiasDesfase(diasDesfasados + "");
-                    obra.setDesfaseDinero(formatter.format(desfases));
-                } else {
-                    obra.setDesfaces("No aplica");
-                }
-                obra.setTiempoDuracion(days + "");
-                obra.setDiferenciaDias(diasDesfasados);
-            }
+
             Reportes reportes = new Reportes(dTO, session.getAttribute("id").toString());
             reportes.start();
         %>
@@ -181,7 +130,7 @@
                                 </form>
                             </td>
                             <% } else if (rol.equals("ADMIN")) {%>
-                            <td class="acciones">Finalizada la fecha <%= cdto.getFinalizado() %></td>
+                            <td class="acciones">Finalizada la fecha <%= cdto.getFinalizado()%></td>
                             <% } %>
                         </tr>
                         <% }
@@ -203,43 +152,46 @@
             crossorigin="anonymous"></script>
             <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
             <script>
-                if (performance.navigation.type == 2) {
-                    location.reload(true);
-                }
-                $(document).ready(function () {
-                    $('#table_id').DataTable({
-                        "order": [[0, "desc"]],
-                        language: {
-                            "decimal": "",
-                            "emptyTable": "No hay datos",
-                            "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
-                            "infoEmpty": "Mostrando 0 a 0 de 0 registros",
-                            "infoFiltered": "(Filtro de _MAX_ total registros)",
-                            "infoPostFix": "",
-                            "thousands": ",",
-                            "lengthMenu": "Mostrar _MENU_ registros",
-                            "loadingRecords": "Cargando...",
-                            "processing": "Procesando...",
-                            "search": "Buscar:",
-                            "zeroRecords": "No se encontraron coincidencias",
-                            "paginate": {
-                                "first": "Primero",
-                                "last": "Ultimo",
-                                "next": "Próximo",
-                                "previous": "Anterior"
-                            },
-                            "aria": {
-                                "sortAscending": ": Activar orden de columna ascendente",
-                                "sortDescending": ": Activar orden de columna desendente"
+                    if (performance.navigation.type == 2) {
+                        location.reload(true);
+                    }
+                    $('.tabla').hide();
+                    $(document).ready(function () {
+                        $('#table_id').DataTable({
+                            "order": [[0, "desc"]],
+                            language: {
+                                "decimal": "",
+                                "emptyTable": "No hay datos",
+                                "info": "Mostrando _START_ a _END_ de _TOTAL_ registros",
+                                "infoEmpty": "Mostrando 0 a 0 de 0 registros",
+                                "infoFiltered": "(Filtro de _MAX_ total registros)",
+                                "infoPostFix": "",
+                                "thousands": ",",
+                                "lengthMenu": "Mostrar _MENU_ registros",
+                                "loadingRecords": "Cargando...",
+                                "processing": "Procesando...",
+                                "search": "Buscar:",
+                                "zeroRecords": "No se encontraron coincidencias",
+                                "paginate": {
+                                    "first": "Primero",
+                                    "last": "Ultimo",
+                                    "next": "Próximo",
+                                    "previous": "Anterior"
+                                },
+                                "aria": {
+                                    "sortAscending": ": Activar orden de columna ascendente",
+                                    "sortDescending": ": Activar orden de columna desendente"
+                                }
                             }
-                        }
+                        });
                     });
-                });
-
-                function escrituraEnCampo(campo) {
-                    var aux = campo.value.replace("$", "");
-                    campo.value = '$' + aux;
-                }
+                    $('#table_id').ready(() => {
+                        $('.tabla').show();
+                    });
+                    function escrituraEnCampo(campo) {
+                        var aux = campo.value.replace("$", "");
+                        campo.value = '$' + aux;
+                    }
             </script>
     </body>
 </html>

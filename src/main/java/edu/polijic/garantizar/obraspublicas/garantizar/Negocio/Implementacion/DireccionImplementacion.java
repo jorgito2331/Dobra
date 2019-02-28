@@ -41,17 +41,9 @@ public class DireccionImplementacion implements DireccionNegocio {
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(DireccionImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexion.cerrar();
         }
-    }
-
-    @Override
-    public DireccionDTO obtenerDireccion(DireccionDTO direccion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void actualizarDireccion(DireccionDTO direccion) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -64,6 +56,8 @@ public class DireccionImplementacion implements DireccionNegocio {
             codigo = resultSet.getString(1);
         } catch (SQLException ex) {
             Logger.getLogger(DireccionImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+            conexion.cerrar();
         }
         return codigo;
     }

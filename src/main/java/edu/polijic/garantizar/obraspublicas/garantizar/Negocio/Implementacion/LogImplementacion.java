@@ -44,16 +44,8 @@ public class LogImplementacion implements LogNegocio{
             statement.execute();
         } catch (SQLException ex) {
             Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
-        }        
-    }
-
-    @Override
-    public LogDTO obtenerLog(LogDTO log) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public ArrayList<LogDTO> obtenerLogs(LogDTO log) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }finally{
+            conexion.cerrar();
+        }    
     }
 }

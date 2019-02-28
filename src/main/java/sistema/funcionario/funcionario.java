@@ -5,21 +5,13 @@
  */
 package sistema.funcionario;
 
-import sistema.contratista.*;
-import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ContratistaDTO;
-import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.DireccionDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.FuncionarioDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.LogDTO;
-import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ContratistaNegocio;
-import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.DireccionNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.FuncionarioNegocio;
-import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.ContratistaImplementacion;
-import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.DireccionImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.FuncionarioImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion.LogImplementacion;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.LogNegocio;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

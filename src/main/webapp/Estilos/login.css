@@ -90,7 +90,7 @@ body {
 
 .banner {
     height: 100vh;
-    width: 60vw;
+    width: 65vw;
     background: url(../Imagenes/guzman-barquin-595897-unsplash.jpg);
     background-position: center;
     background-size: cover;
@@ -127,7 +127,7 @@ body {
     content: "";
     position: absolute;
     height: 100vh;
-    width: 60vw;
+    width: 65vw;
     background: rgba(0, 0, 0, 0.7);
     z-index: -1;
 }
@@ -135,7 +135,7 @@ body {
 .contenedor {
     z-index: 1;
     height: 100vh;
-    width: 50vw;
+    width: 35vw;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -151,7 +151,7 @@ body {
 
 form {
     height: 40vh;
-    width: 40vw;
+    width: 35vw;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -167,7 +167,7 @@ form {
     flex-wrap: nowrap;
     align-items: center;
     height: 5vh;
-    width: 30vw;
+    width: 22vw;
     padding-left: 0.5vw;
     border-bottom: #348658 solid 2px;
     margin: 3vh 0;
@@ -191,7 +191,7 @@ span {
 
 input {
     height: 4vh;
-    width: 25vw;
+    width: 18vw;
     padding-left: 2%;
     border: none;
 }
@@ -202,7 +202,7 @@ input:focus {
 
 input[type="submit"] {
     height: 7vh;
-    width: 15vw;    
+    width: 22vw;    
     background: white;
     color: black;
     transition: 0.3s;

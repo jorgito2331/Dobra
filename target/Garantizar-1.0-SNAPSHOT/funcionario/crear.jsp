@@ -66,7 +66,7 @@
             <form class="formulario" action="../funcionario" method="POST">
                 <div class="campo">
                     <label>Id</label>
-                    <input required="true"  name="nombre" id="id" readonly="true">
+                    <input required="true"  name="nombre" id="id" readonly="true" disabled="true">
                 </div>
                 <div class="campo">
                     <label>Clave</label>

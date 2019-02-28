@@ -7,6 +7,8 @@ package edu.polijic.garantizar.obraspublicas.garantizar.Persistencia;
 
 import com.mysql.jdbc.Connection;
 import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -14,9 +16,10 @@ import java.sql.*;
  */
 public class ConexionPersistencia {
 
-    private static Connection conexion = null;
+    Connection conexion;
 
     public Connection obtener() throws SQLException, ClassNotFoundException {
+        conexion = null;
         if (conexion == null) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
@@ -30,9 +33,13 @@ public class ConexionPersistencia {
         return conexion;
     }
 
-    public void cerrar() throws SQLException {
-        if (conexion != null) {
-            conexion.close();
+    public void cerrar() {
+        try {
+            if (null != conexion) {
+                conexion.close();
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ConexionPersistencia.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

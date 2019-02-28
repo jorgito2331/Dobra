@@ -102,7 +102,7 @@
         </div>
         <div class="modal" id="direccionModal">
             <div class="direccion">
-                <div class="campo">
+                <div class="campoDir">
                     <label>Tipo de via</label>
                     <select name="TVia" id="tipVia">
                         <option value="0">Seleccione</option>
@@ -113,11 +113,11 @@
                         <option value="Avenida">Avenida</option>
                     </select>
                 </div>
-                <div class="campo">
+                <div class="campoDir">
                     <label>Número de via</label>
-                    <input type="number" maxlength="" pattern="" id="numVia" value="">
+                    <input type="number" max="999" pattern="" id="numVia" value="">
                 </div>
-                <div class="campo">
+                <div class="campoDir">
                     <label>Sufijo de via</label>
                     <select id="sufVia">
                         <option value="0">Seleccione</option>
@@ -130,7 +130,7 @@
                         %>
                     </select>
                 </div>
-                <div class="campo">
+                <div class="campoDir">
                     <label>Cardinalidad de via</label>
                     <select id="cardVia">
                         <option value="0">Seleccione</option>
@@ -144,11 +144,11 @@
                         <option value="Noroeste">Noroeste</option>
                     </select>
                 </div>
-                <div class="campo">
+                <div class="campoDir">
                     <label>Primer número</label>
-                    <input type="number" maxlength="" pattern="" id="priNum" value="">
+                    <input type="number" max="999" pattern="" id="priNum" value="">
                 </div>
-                <div class="campo">
+                <div class="campoDir">
                     <label>Sufijo primer número</label>
                     <select id="sufPriNum">
                         <option value="0">Seleccione</option>
@@ -161,7 +161,7 @@
                         %>
                     </select>
                 </div>
-                <div class="campo">
+                <div class="campoDir">
                     <label>Cardinalidad primer número</label>
                     <select id="cardPriNum">
                         <option value="0">Seleccione</option>
@@ -175,11 +175,11 @@
                         <option value="Noroeste">Noroeste</option>
                     </select>
                 </div>
-                <div class="campo">
+                <div class="campoDir">
                     <label>Segundo número</label>
-                    <input type="number" maxlength="" pattern="" id="segNum" value="">
+                    <input type="number" max="999" pattern="" id="segNum" value="">
                 </div>
-                <div class="campo">
+                <div class="campoDir">
                     <label>Sufijo segundo número</label>
                     <select id="sufSegNum">
                         <option value="0">Seleccione</option>
@@ -192,9 +192,9 @@
                         %>
                     </select>
                 </div>
-                <div class="control">
-                    <button class="cancelar" onclick="$('#direccionModal').removeClass('mostrar')">Cancelar</button>
-                    <button class="guardar" onclick="guardar()" id="guardar">Guardar</button>
+                <div class="controlDir">
+                    <button class="cancelarDir" onclick="$('#direccionModal').removeClass('mostrar')">Cancelar</button>
+                    <button class="guardarDir" onclick="guardar()" id="guardar">Guardar</button>
                 </div>
             </div>
         </div>

@@ -14,6 +14,4 @@ import java.util.ArrayList;
  */
 public interface LogNegocio {
     public void crearLog(LogDTO log);
-    public LogDTO obtenerLog(LogDTO log);
-    public ArrayList<LogDTO> obtenerLogs(LogDTO log); 
 }

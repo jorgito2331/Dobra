@@ -35,11 +35,6 @@ public class ParametroImplementacion implements ParametroNegocio {
     }
 
     @Override
-    public void crearParametro(ParametroDTO parametro) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public ParametroDTO obtenerParametro(String parametro) {
         if (parametro.equals("2")) {
             String sql = "SELECT par.ARGUMENTO FROM parametro par WHERE par.ID IN (1, 2 , 3) ORDER BY par.ID ASC";
@@ -55,11 +50,12 @@ public class ParametroImplementacion implements ParametroNegocio {
                 par.setNombre(datos);
             } catch (SQLException ex) {
                 Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                conexion.cerrar();
             }
             return par;
-        }else{
+        } else {
             String sql = "SELECT par.ARGUMENTO FROM parametro par WHERE par.ID IN (?)";
-            String datos = "";
             ParametroDTO par = new ParametroDTO();
             try {
                 statement = connection.prepareStatement(sql);
@@ -69,6 +65,8 @@ public class ParametroImplementacion implements ParametroNegocio {
                 par.setNombre(resultSet.getString(1));
             } catch (SQLException ex) {
                 Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                conexion.cerrar();
             }
             return par;
         }
@@ -138,6 +136,8 @@ public class ParametroImplementacion implements ParametroNegocio {
             } while (resultSet.next());
         } catch (SQLException ex) {
             Logger.getLogger(ContratistaImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexion.cerrar();
         }
         return parametros;
     }

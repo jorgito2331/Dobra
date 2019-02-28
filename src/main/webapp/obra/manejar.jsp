@@ -58,7 +58,7 @@
             <div class="bread">
                 <a href="manejar.jsp">Obra &#8250;</a>
             </div>
-            <form class="formulario" action="../obra" method="GET">              
+            <form class="formularioFiltro" action="../obra" method="GET">              
                 <div class="campo">
                     <label>Criterio</label>
                     <select id="busq" name="busq">

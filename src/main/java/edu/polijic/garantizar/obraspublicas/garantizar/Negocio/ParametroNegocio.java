@@ -13,7 +13,6 @@ import java.util.ArrayList;
  * @author Jorge-PC
  */
 public interface ParametroNegocio {
-    public void crearParametro(ParametroDTO parametro);
     public ParametroDTO obtenerParametro(String parametro);
     public ArrayList<ParametroDTO> obtenerParametros(String parametro);
     public ArrayList<ParametroDTO> obtenerParametrosTBL();

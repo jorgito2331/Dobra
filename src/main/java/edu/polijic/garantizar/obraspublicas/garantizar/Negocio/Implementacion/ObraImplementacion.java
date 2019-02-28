@@ -8,18 +8,20 @@ package edu.polijic.garantizar.obraspublicas.garantizar.Negocio.Implementacion;
 import com.mysql.jdbc.Connection;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.DireccionDTO;
 import edu.polijic.garantizar.obraspublicas.garantizar.DTOs.ObraDTO;
-import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.DireccionNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ObraNegocio;
-import edu.polijic.garantizar.obraspublicas.garantizar.Negocio.ParametroNegocio;
 import edu.polijic.garantizar.obraspublicas.garantizar.Persistencia.ConexionPersistencia;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import org.joda.time.DateMidnight;
+import org.joda.time.Days;
 
 /**
  *
@@ -68,11 +70,6 @@ public class ObraImplementacion implements ObraNegocio {
     }
 
     @Override
-    public ObraDTO obtenerObra(ObraDTO obra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public ArrayList<ObraDTO> obtenerObras(String parametro) {
         ArrayList<ObraDTO> obras = new ArrayList<>();
         ObraDTO obra;
@@ -106,8 +103,10 @@ public class ObraImplementacion implements ObraNegocio {
             }
         } catch (SQLException ex) {
             Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexion.cerrar();
         }
-        return obras;
+        return organizarObras(obras);
     }
 
     @Override
@@ -131,6 +130,8 @@ public class ObraImplementacion implements ObraNegocio {
             } else {
                 Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } finally {
+            conexion.cerrar();
         }
         return null;
     }
@@ -144,12 +145,64 @@ public class ObraImplementacion implements ObraNegocio {
             statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(ObraImplementacion.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            conexion.cerrar();
         }
     }
 
-    @Override
-    public void eliminarObras(ObraDTO obra) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private ArrayList<ObraDTO> organizarObras(ArrayList<ObraDTO> dTO) {
+        float tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
+        float precioDuracionPorc = 0; //guarda el precio por cada porcentaje de tiempo
+        float tiempoDesfXPorcDias = 0; //guarda la division entre la cantidad de dias desfasados y tiempoDuracionPorc
+        int diasDesfasados = 0;
+        double desfases = 0;
+        int days = 0;
+        DecimalFormat df = new DecimalFormat("#.##");
+        DateMidnight d1;
+        DateMidnight d2;
+        DateMidnight hoy = new DateMidnight(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+        NumberFormat formatter = new DecimalFormat("#.###");
+        for (ObraDTO obra : dTO) {
+            tiempoDuracionPorc = 0; //guarda el porcentaje de tiempo
+            precioDuracionPorc = 0; //guarda el precio por cada porcentaje de tiempo
+            tiempoDesfXPorcDias = 0; //guarda la division entre la cantidad de dias desfasados y tiempoDuracionPorc
+            diasDesfasados = 0;
+            desfases = 0;
+            days = 0;
+            d1 = new DateMidnight(obra.getFechaInicio());
+            d2 = new DateMidnight(obra.getFechaFin());
+            days = Days.daysBetween(d1, d2).getDays();
+            obra.setTiempoDuracion(days + "");
+            if (obra.getFinalizado() != null) {
+                d1 = new DateMidnight(obra.getFechaFin());
+                d2 = new DateMidnight(obra.getFinalizado());
+                diasDesfasados = Days.daysBetween(d1, d2).getDays();
+            } else {
+                d2 = new DateMidnight(obra.getFechaFin());
+                diasDesfasados = Days.daysBetween(d2, hoy).getDays();
+            }
+            String[] parametros = obra.getArgumentos().split(",");
+            if (diasDesfasados > 0) {
+                //multiplica el valor de la obra por el porcentaje que se cobra por primer desfase
+                desfases = Float.valueOf(df.format(desfases + Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[0]) / 100f)).replace(",", "."))).replace(",", "."));
+                //Se multiplica el tiempo de duracion por el parametro que dice cada cuanto se debe cobrar el porcentaje de desfase
+                tiempoDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getTiempoDuracion()) * (Float.parseFloat(parametros[1]) / 100f)).replace(",", "."));
+                //Se multiplica el precio de la obra por el paramtro que dice cuanto se cobra por cada porcentaje de tiempo de duracion
+                precioDuracionPorc = Float.valueOf(df.format(Float.parseFloat(obra.getValor()) * (Float.parseFloat(parametros[2]) / 100f)).replace(",", "."));
+                //Se obtiene cuantas veces se va cobrar el porcentaje de desfase de la obra
+                tiempoDesfXPorcDias = Float.valueOf(df.format(diasDesfasados / ((tiempoDuracionPorc == 0) ? 1f : tiempoDuracionPorc)).replace(",", "."));
+                //Se multiplica las veces de tiempo que se cobra el valor del desfase
+                desfases = Float.valueOf(df.format(desfases + (Float.valueOf(df.format(tiempoDesfXPorcDias * precioDuracionPorc).replace(",", ".")))).replace(",", "."));
+                obra.setDesfaces("$" + formatter.format(desfases) + " en " + diasDesfasados + " días");
+                obra.setDiasDesfase(diasDesfasados + "");
+                obra.setDesfaseDinero(formatter.format(desfases));
+            } else {
+                obra.setDesfaces("No aplica");
+            }
+            obra.setTiempoDuracion(days + "");
+            obra.setDiferenciaDias(diasDesfasados);
+        }
+        return dTO;
     }
 
 }

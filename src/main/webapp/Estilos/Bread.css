@@ -29,3 +29,15 @@ and open the template in the editor.
     flex-direction: row;    
     background-color: #606cd3;
 }
+
+.usuario{
+    display: flex;
+    height: 7vh;
+    width: 12vw;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none; 
+    color: white;
+    clear: right;
+    float: right;
+}

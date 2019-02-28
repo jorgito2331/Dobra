@@ -19,7 +19,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.websocket.Session;
 
 /**
  *
@@ -61,6 +60,11 @@ public class login extends HttpServlet {
                     validador.setClave("");
                     session.setAttribute("tipo", validador.getTipo());
                     session.setAttribute("id", validador.getId());
+                    StringBuilder builder = new StringBuilder();
+                    builder.append(validador.getPriNombre());
+                    builder.append(" ");
+                    builder.append(validador.getPriApellido());
+                    session.setAttribute("nombreUsu", builder.toString());
                     response.sendRedirect("/Garantizar/obra/manejar.jsp");
                 } else {
                     error = "Usuario o contraseña incorrectos";

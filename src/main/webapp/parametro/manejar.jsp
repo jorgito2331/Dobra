@@ -122,7 +122,7 @@
         <script>
                                                $(document).ready(function () {
                                                    $('#table_id').DataTable({
-                                                       "order": [[3, "desc"]],
+                                                       "order": [[0, "asc"]],
                                                        language: {
                                                            "decimal": "",
                                                            "emptyTable": "No hay datos",

@@ -12,6 +12,15 @@ and open the template in the editor.
     flex-flow: wrap;
     width: 90vw;
     height: 93vh;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.formularioFiltro{
+    flex-direction: row;
+    flex-flow: wrap;
+    width: 90vw;
+    height: 93vh;
     justify-content: center;
     align-items: center;
 }
@@ -19,7 +28,7 @@ and open the template in the editor.
 .campo{
     box-sizing: border-box;
     flex-direction: column;
-    width: 20vw;
+    width: 30vw;
     height: 10vh;
     justify-content: center;
     align-items: center;
@@ -27,19 +36,19 @@ and open the template in the editor.
 
 .campo label{
     height: 4vh;
-    width: 15vw;
+    width: 18vw;
 }
 
 .campo input{
     height: 6vh;
-    width: 15vw;
+    width: 18vw;
     color: black;
     padding-left: 0.5vw;
 }
 
 .campo select{
     height: 7vh;
-    width: 15vw;    
+    width: 18vw;    
     color: black;
 }
 
@@ -84,6 +93,152 @@ option{
 }
 
 .control button:hover, .control a:hover{
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+.campoDir{
+    box-sizing: border-box;
+    flex-direction: column;
+    width: 20vw;
+    height: 10vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.campoDir label{
+    height: 4vh;
+    width: 15vw;
+}
+
+.campoDir input{
+    height: 6vh;
+    width: 15vw;
+    color: black;
+    padding-left: 0.5vw;
+}
+
+.campoDir select{
+    height: 7vh;
+    width: 15vw;    
+    color: black;
+}
+
+#nombreDir{
+    text-transform: uppercase;
+}
+
+optionDir{
+    color: black;
+}
+
+.controlDir{
+    width: 90vw;
+    height: 7vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.controlDir button, .control a{
+    border: none;
+    height: 7vh;
+    width: 15vw;
+    margin: 0 1vw;
+    color: white;
+    border: 1px solid;
+}
+
+.controlDir a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #47525E;
+    text-decoration: none;
+}
+
+.guardarDir{    
+    background: #4BB867;
+}
+
+.cancelarDir{    
+    background: tomato;
+}
+
+.controlDir button:hover, .control a:hover{
+    background: white;
+    color: black;
+    cursor: pointer;
+}
+
+.campoFiltro{
+    box-sizing: border-box;
+    flex-direction: column;
+    width: 20vw;
+    height: 10vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.campoFiltro label{
+    height: 4vh;
+    width: 15vw;
+}
+
+.campoFiltro input{
+    height: 6vh;
+    width: 15vw;
+    color: black;
+    padding-left: 0.5vw;
+}
+
+.campoFiltro select{
+    height: 7vh;
+    width: 15vw;    
+    color: black;
+}
+
+#nombreFiltro{
+    text-transform: uppercase;
+}
+
+optionFiltro{
+    color: black;
+}
+
+.controlFiltro{
+    width: 90vw;
+    height: 7vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.controlFiltro button, .control a{
+    border: none;
+    height: 7vh;
+    width: 15vw;
+    margin: 0 1vw;
+    color: white;
+    border: 1px solid;
+}
+
+.controlFiltro a{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #47525E;
+    text-decoration: none;
+}
+
+.guardarFiltro{    
+    background: #4BB867;
+}
+
+.cancelarFiltro{    
+    background: tomato;
+}
+
+.controlFiltro button:hover, .control a:hover{
     background: white;
     color: black;
     cursor: pointer;

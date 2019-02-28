@@ -104,6 +104,7 @@
         crossorigin="anonymous"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script>
+                $('.tabla').hide();
                 $(document).ready(function () {
                     $('#table_id').DataTable({
                         "order": [[3, "desc"]],
@@ -132,6 +133,10 @@
                             }
                         }
                     });
+                });
+
+                $('#table_id').ready(() => {
+                    $('.tabla').show();
                 });
         </script>
     </body>
